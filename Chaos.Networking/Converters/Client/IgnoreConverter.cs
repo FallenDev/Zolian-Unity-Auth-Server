@@ -1,0 +1,45 @@
+using Chaos.DarkAges.Definitions;
+using Chaos.IO.Memory;
+using Chaos.Networking.Abstractions.Definitions;
+using Chaos.Networking.Entities.Client;
+using Chaos.Packets.Abstractions;
+
+namespace Chaos.Networking.Converters.Client;
+
+/// <summary>
+///     Provides packet serialization and deserialization logic for <see cref="IgnoreArgs" />
+/// </summary>
+public sealed class IgnoreConverter : PacketConverterBase<IgnoreArgs>
+{
+    /// <inheritdoc />
+    public override byte OpCode => (byte)ClientOpCode.Ignore;
+
+    /// <inheritdoc />
+    public override IgnoreArgs Deserialize(ref SpanReader reader)
+    {
+        var ignoreType = reader.ReadByte();
+
+        var args = new IgnoreArgs
+        {
+            IgnoreType = (IgnoreType)ignoreType
+        };
+
+        if (args.IgnoreType != IgnoreType.Request)
+        {
+            var targetName = reader.ReadString();
+
+            args.TargetName = targetName;
+        }
+
+        return args;
+    }
+
+    /// <inheritdoc />
+    public override void Serialize(ref SpanWriter writer, IgnoreArgs args)
+    {
+        writer.WriteByte((byte)args.IgnoreType);
+
+        if (args.IgnoreType != IgnoreType.Request)
+            writer.WriteString(args.TargetName!);
+    }
+}

@@ -1,0 +1,63 @@
+using Chaos.DarkAges.Definitions;
+using Chaos.IO.Memory;
+using Chaos.Networking.Abstractions.Definitions;
+using Chaos.Networking.Entities.Client;
+using Chaos.Packets.Abstractions;
+
+namespace Chaos.Networking.Converters.Client;
+
+/// <summary>
+///     Provides packet serialization and deserialization logic for <see cref="MetaDataRequestArgs" />
+/// </summary>
+public sealed class MetaDataRequestConverter : PacketConverterBase<MetaDataRequestArgs>
+{
+    /// <inheritdoc />
+    public override byte OpCode => (byte)ClientOpCode.MetaDataRequest;
+
+    /// <inheritdoc />
+    public override MetaDataRequestArgs Deserialize(ref SpanReader reader)
+    {
+        var metadataRequestType = reader.ReadByte();
+
+        var args = new MetaDataRequestArgs
+        {
+            MetaDataRequestType = (MetaDataRequestType)metadataRequestType
+        };
+
+        switch (args.MetaDataRequestType)
+        {
+            case MetaDataRequestType.DataByName:
+            {
+                var name = reader.ReadString();
+
+                args.Name = name;
+
+                break;
+            }
+            case MetaDataRequestType.AllCheckSums:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        return args;
+    }
+
+    /// <inheritdoc />
+    public override void Serialize(ref SpanWriter writer, MetaDataRequestArgs args)
+    {
+        writer.WriteByte((byte)args.MetaDataRequestType);
+
+        switch (args.MetaDataRequestType)
+        {
+            case MetaDataRequestType.DataByName:
+                writer.WriteString(args.Name!);
+
+                break;
+            case MetaDataRequestType.AllCheckSums:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+}

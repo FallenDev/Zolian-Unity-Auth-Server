@@ -1,0 +1,31 @@
+using Chaos.IO.Memory;
+using Chaos.Networking.Abstractions.Definitions;
+using Chaos.Networking.Entities.Server;
+using Chaos.Packets.Abstractions;
+
+namespace Chaos.Networking.Converters.Server;
+
+/// <summary>
+///     Provides serialization and deserialization logic for <see cref="DoorArgs" />
+/// </summary>
+public sealed class DoorConverter : PacketConverterBase<DoorArgs>
+{
+    /// <inheritdoc />
+    public override byte OpCode => (byte)ServerOpCode.Door;
+
+    /// <inheritdoc />
+    public override DoorArgs Deserialize(ref SpanReader reader) => null;
+
+    /// <inheritdoc />
+    public override void Serialize(ref SpanWriter writer, DoorArgs args)
+    {
+        writer.WriteByte((byte)args.Doors.Count);
+
+        foreach (var door in args.Doors)
+        {
+            writer.WritePoint8((byte)door.X, (byte)door.Y);
+            writer.WriteBoolean(door.Closed);
+            writer.WriteBoolean(door.OpenRight);
+        }
+    }
+}

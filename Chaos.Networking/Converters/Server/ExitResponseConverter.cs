@@ -1,0 +1,25 @@
+using Chaos.IO.Memory;
+using Chaos.Networking.Abstractions.Definitions;
+using Chaos.Networking.Entities.Server;
+using Chaos.Packets.Abstractions;
+
+namespace Chaos.Networking.Converters.Server;
+
+/// <summary>
+///     Provides serialization and deserialization logic for <see cref="ExitResponseArgs" />
+/// </summary>
+public sealed class ExitResponseConverter : PacketConverterBase<ExitResponseArgs>
+{
+    /// <inheritdoc />
+    public override byte OpCode => (byte)ServerOpCode.ExitResponse;
+
+    /// <inheritdoc />
+    public override ExitResponseArgs Deserialize(ref SpanReader reader) => null;
+
+    /// <inheritdoc />
+    public override void Serialize(ref SpanWriter writer, ExitResponseArgs args)
+    {
+        writer.WriteBoolean(args.ExitConfirmed);
+        writer.WriteBytes(new byte[2]); //LI: what does this do?
+    }
+}
