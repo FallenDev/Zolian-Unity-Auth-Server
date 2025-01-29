@@ -21,10 +21,7 @@ public abstract class LoginClientBase : ConnectedClientBase, ILoginClient
             socket,
             packetSerializer,
             logger) { }
-
-    /// <inheritdoc />
-    public virtual void SendLoginControl(LoginControlArgs args) => Send(args);
-
+    
     /// <inheritdoc />
     public virtual void SendLoginMessage(LoginMessageArgs args) => Send(args);
 

@@ -41,19 +41,7 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
             return default;
         }
     }
-
-
-    public void SendLoginControl(LoginControlsType loginControlsType, string message)
-    {
-        var args = new LoginControlArgs
-        {
-            LoginControlsType = loginControlsType,
-            Message = message
-        };
-
-        Send(args);
-    }
-
+    
     public void SendLoginMessage(LoginMessageType loginMessageType, [CanBeNull] string message = null)
     {
         var args = new LoginMessageArgs

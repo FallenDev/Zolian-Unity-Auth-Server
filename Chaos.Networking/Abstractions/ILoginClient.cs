@@ -9,11 +9,6 @@ namespace Chaos.Networking.Abstractions;
 public interface ILoginClient : IConnectedClient
 {
     /// <summary>
-    ///     Sends a login control message to the client.
-    /// </summary>
-    void SendLoginControl(LoginControlArgs args);
-
-    /// <summary>
     ///     Sends a login message to the client.
     /// </summary>
     void SendLoginMessage(LoginMessageArgs args);

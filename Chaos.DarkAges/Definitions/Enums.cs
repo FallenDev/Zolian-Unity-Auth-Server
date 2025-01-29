@@ -206,17 +206,6 @@ public enum LoginMessageType : byte
 }
 
 /// <summary>
-///     A byte switch used by ServerOpCode.LoginControls
-/// </summary>
-public enum LoginControlsType : byte
-{
-    /// <summary>
-    ///     Tells the client that the packet contains the homepage url
-    /// </summary>
-    Homepage = 3
-}
-
-/// <summary>
 ///     A byte switch as used by ServerOpCode.PublicMessage
 /// </summary>
 public enum PublicMessageType : byte

@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.Time", "Chaos.Time\Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.Time.Abstractions", "Chaos.Time.Abstractions\Chaos.Time.Abstractions.csproj", "{F133CFF1-689A-4F8D-8240-BE83B8FC956B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamOid2", "..\..\SteamOid2\SteamOid2\SteamOid2.csproj", "{DD50E61C-326D-4988-AFFC-AD60AAA6A5B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{F133CFF1-689A-4F8D-8240-BE83B8FC956B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F133CFF1-689A-4F8D-8240-BE83B8FC956B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F133CFF1-689A-4F8D-8240-BE83B8FC956B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD50E61C-326D-4988-AFFC-AD60AAA6A5B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD50E61C-326D-4988-AFFC-AD60AAA6A5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD50E61C-326D-4988-AFFC-AD60AAA6A5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD50E61C-326D-4988-AFFC-AD60AAA6A5B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
