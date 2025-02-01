@@ -11,13 +11,11 @@ public sealed class LoginConverter : PacketConverterBase<LoginArgs>
 
     public override LoginArgs Deserialize(ref SpanReader reader)
     {
-        var name = reader.ReadString();
-        var pw = reader.ReadString();
+        var id = reader.ReadInt64();
 
         return new LoginArgs
         {
-            Name = name,
-            Password = pw
+            SteamId = id
         };
     }
 }

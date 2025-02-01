@@ -369,6 +369,9 @@ public enum ClientOpCode : byte
 /// </remarks>
 public enum ServerOpCode : byte
 {
+    // ToDo: new opcodes
+    AccountList = 0x01,
+
     /// <summary>
     ///     OpCode used to send the encryption details and checksum of the details of available login servers
     ///     <br />

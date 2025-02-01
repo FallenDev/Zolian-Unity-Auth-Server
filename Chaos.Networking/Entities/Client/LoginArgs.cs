@@ -4,6 +4,5 @@ namespace Chaos.Networking.Entities.Client;
 
 public sealed record LoginArgs : IPacketSerializable
 {
-    public required string Name { get; set; }
-    public required string Password { get; set; }
+    public required long SteamId { get; set; }
 }

@@ -143,6 +143,26 @@ public static class ClassStrings
         };
     }
 
+    public static string JobValue(Job c)
+    {
+        return c switch
+        {
+            Job.None => "None",
+            Job.Thief => "Thief",
+            Job.DarkKnight => "DarkKnight",
+            Job.Templar => "Templar",
+            Job.Ninja => "Ninja",
+            Job.SharpShooter => "SharpShooter",
+            Job.Oracle => "Oracle",
+            Job.Bard => "Bard",
+            Job.Summoner => "Summoner",
+            Job.Samurai => "Samurai",
+            Job.ShaolinMonk => "ShaolinMonk",
+            Job.Necromancer => "Necromancer",
+            Job.Dragoon => "Dragoon"
+        };
+    }
+
     public static int ClassDisplayInt(string c)
     {
         return c switch

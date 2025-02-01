@@ -17,6 +17,7 @@ namespace Darkages.Database;
 
 public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingStorage, bool>
 {
+    public const string ConnectionAccountString = "Data Source=.;Initial Catalog=ZolianUnityPlayers;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True;";
     public const string ConnectionString = "Data Source=.;Initial Catalog=ZolianPlayers;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True;";
     public const string PersonalMailString = "Data Source=.;Initial Catalog=ZolianBoardsMail;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True;";
     private const string EncryptedConnectionString = "Data Source=.;Initial Catalog=ZolianPlayers;Integrated Security=True;Column Encryption Setting=enabled;TrustServerCertificate=True;MultipleActiveResultSets=True;";
@@ -205,6 +206,29 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
         {
             SentrySdk.CaptureException(e);
         }
+    }
+
+    /// <summary>
+    /// Loads a player's account from the LoginServer
+    /// </summary>
+    public static async Task<List<Aisling>> LoadAccount(long steamId)
+    {
+        var account = new List<Aisling>();
+
+        try
+        {
+            var sConn = ConnectToDatabase(ConnectionAccountString);
+            var values = new { Steam64 = steamId };
+            var records = await sConn.QueryAsync<Aisling>("[SelectAccount]", values, commandType: CommandType.StoredProcedure);
+            account = records.AsList();
+            sConn.Close();
+        }
+        catch (Exception e)
+        {
+            SentrySdk.CaptureException(e);
+        }
+
+        return account;
     }
 
     /// <summary>

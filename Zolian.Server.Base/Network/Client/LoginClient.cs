@@ -3,13 +3,14 @@ using Chaos.Networking.Entities.Server;
 using Chaos.Packets;
 using Chaos.Packets.Abstractions;
 
-using Darkages.Meta;
-using Darkages.Network.Server;
+using Darkages.Sprites;
+
 using JetBrains.Annotations;
 
 using Microsoft.Extensions.Logging;
 
 using System.Net.Sockets;
+using Darkages.Enums;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
 
 namespace Darkages.Network.Client;
@@ -53,78 +54,26 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
         Send(args);
     }
 
-    public void SendLoginNotice(bool full, Notification notice)
+    public void SendAccountData(List<Aisling> players)
     {
-        var args = new LoginNoticeArgs
+        
+        var args = new AccountListArgs
         {
-            IsFullResponse = full
+            Players = []
         };
 
-        if (full)
-            args.Data = notice.Data;
-        else
-            args.CheckSum = notice.Hash;
-
-        Send(args);
-    }
-
-    public void SendMetaData(MetaDataRequestType metaDataRequestType, MetafileManager metaDataStore, [CanBeNull] string name = null)
-    {
-        var args = new MetaDataArgs
+        foreach (var player in players)
         {
-            MetaDataRequestType = metaDataRequestType
-        };
-
-        switch (metaDataRequestType)
-        {
-            case MetaDataRequestType.DataByName:
+            args.Players.Add(new AccountListArgs.PlayerSelection
             {
-                try
-                {
-                    var metaData = ServerSetup.Instance.Game.Metafiles.Values.FirstOrDefault(file => file.Name == name);
-                    if (metaData == null) break;
-                    args.MetaDataInfo = new MetaDataInfo
-                    {
-                        Name = metaData.Name,
-                        Data = metaData.DeflatedData,
-                        CheckSum = metaData.Hash
-                    };
-                }
-                catch (Exception ex)
-                {
-                    ServerSetup.EventsLogger(ex.Message, LogLevel.Error);
-                    ServerSetup.EventsLogger(ex.StackTrace, LogLevel.Error);
-                    SentrySdk.CaptureException(ex);
-                }
-                
-                break;
-            }
-            case MetaDataRequestType.AllCheckSums:
-            {
-                try
-                {
-                    args.MetaDataCollection = [];
-                    foreach (var file in ServerSetup.Instance.Game.Metafiles.Values.Where(file => !file.Name.Contains("SClass")))
-                    {
-                        var metafileInfo = new MetaDataInfo
-                        {
-                            CheckSum = file.Hash,
-                            Data = file.DeflatedData,
-                            Name = file.Name
-                        };
-
-                        args.MetaDataCollection?.Add(metafileInfo);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ServerSetup.EventsLogger(ex.Message, LogLevel.Error);
-                    ServerSetup.EventsLogger(ex.StackTrace, LogLevel.Error);
-                    SentrySdk.CaptureException(ex);
-                }
-                
-                break;
-            }
+                Name = player.Username,
+                Level = player.ExpLevel + player.AbpLevel,
+                BaseClass = ClassStrings.ClassValue(player.PastClass),
+                AdvClass = ClassStrings.ClassValue(player.Path),
+                Job = ClassStrings.JobValue(player.JobClass),
+                Health = player.BaseHp,
+                Mana = player.BaseMp
+            });
         }
 
         Send(args);
