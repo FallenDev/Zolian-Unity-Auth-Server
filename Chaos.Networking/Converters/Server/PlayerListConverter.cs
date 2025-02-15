@@ -5,10 +5,10 @@ using Chaos.Packets.Abstractions;
 
 namespace Chaos.Networking.Converters.Server;
 
-public sealed class AccountListConverter : PacketConverterBase<AccountListArgs>
+public sealed class PlayerListConverter : PacketConverterBase<AccountListArgs>
 {
     /// <inheritdoc />
-    public override byte OpCode => (byte)ServerOpCode.AccountList;
+    public override byte OpCode => (byte)ServerOpCode.PlayerList;
 
     /// <inheritdoc />
     public override AccountListArgs Deserialize(ref SpanReader reader) => null;
@@ -20,6 +20,7 @@ public sealed class AccountListConverter : PacketConverterBase<AccountListArgs>
 
         foreach (var player in args.Players)
         {
+            writer.WriteInt64(player.Serial);
             writer.WriteString(player.Name);
             writer.WriteInt32(player.Level);
             writer.WriteString(player.BaseClass.ToString());

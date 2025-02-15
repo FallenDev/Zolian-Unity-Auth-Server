@@ -66,6 +66,7 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
         {
             args.Players.Add(new AccountListArgs.PlayerSelection
             {
+                Serial = player.Serial,
                 Name = player.Username,
                 Level = player.ExpLevel + player.AbpLevel,
                 BaseClass = ClassStrings.ClassValue(player.PastClass),
