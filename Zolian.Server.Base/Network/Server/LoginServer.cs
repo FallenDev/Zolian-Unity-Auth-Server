@@ -4,23 +4,19 @@ using Chaos.Packets;
 using Chaos.Packets.Abstractions;
 
 using Darkages.Database;
-using Darkages.Meta;
 using Darkages.Network.Client;
 using Darkages.Sprites;
 using Microsoft.Extensions.Logging;
-using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using JetBrains.Annotations;
 using ServerOptions = Chaos.Networking.Options.ServerOptions;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
-using StringExtensions = ServiceStack.StringExtensions;
 using Chaos.Networking.Abstractions.Definitions;
 using Darkages.Enums;
 using Darkages.Managers;
 using Darkages.Network.Client.Abstractions;
 using Darkages.Types;
-using Gender = Chaos.DarkAges.Definitions.Gender;
 
 namespace Darkages.Network.Server;
 
@@ -28,9 +24,6 @@ namespace Darkages.Network.Server;
 public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer<ILoginClient>
 {
     private readonly IClientFactory<LoginClient> _clientProvider;
-    private readonly Notification _notification;
-    private static readonly string[] GameMastersIPs = ServerSetup.Instance.GameMastersIPs;
-    private ConcurrentDictionary<uint, CreateCharInitialArgs> CreateCharRequests { get; }
 
     public LoginServer(
         IClientRegistry<ILoginClient> clientRegistry,
@@ -52,8 +45,6 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     {
         ServerSetup.Instance.LoginServer = this;
         _clientProvider = clientProvider;
-        _notification = Notification.FromFile("Notification.txt");
-        CreateCharRequests = [];
         IndexHandlers();
     }
 
@@ -149,103 +140,9 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
             // Need to create converter to send the data like a list. Already created it on the client end. 
 
             localClient.SendAccountData(characters);
-
-            //if (ServerSetup.Instance.GlobalPasswordAttempt.TryGetValue(localClient.RemoteIp, out var attempts))
-            //{
-            //    if (attempts >= 5)
-            //    {
-            //        localClient.SendLoginMessage(LoginMessageType.Confirm, "Your IP has been restricted for too many incorrect password attempts.");
-            //        ServerSetup.EventsLogger($"{localClient.RemoteIp} has attempted {attempts} and has been restricted.");
-            //        SentrySdk.CaptureException(new Exception($"{localClient.RemoteIp} has been restricted due to password attempts."));
-            //        return;
-            //    }
-            //}
-
-            //var result = await AislingStorage.CheckPassword(localArgs.Name);
-
-            //if (localArgs.Password == ServerSetup.Instance.Unlock)
-            //{
-            //    var unlockIp = IPAddress.Parse(ServerSetup.Instance.InternalAddress);
-
-            //    if (IPAddress.IsLoopback(localClient.RemoteIp) || localClient.RemoteIp.Equals(unlockIp))
-            //    {
-            //        result.LastAttemptIP = localClient.RemoteIp.ToString();
-            //        result.LastIP = localClient.RemoteIp.ToString();
-            //        result.PasswordAttempts = 0;
-            //        result.Hacked = false;
-            //        result.Password = "abc123";
-            //        await SavePassword(result);
-            //        localClient.SendLoginMessage(LoginMessageType.Confirm, "Account was unlocked!");
-            //        return;
-            //    }
-
-            //    ServerSetup.Instance.GlobalPasswordAttempt.AddOrUpdate(localClient.RemoteIp, 1, (remoteIp, creations) => creations += 1);
-            //    localClient.SendLoginMessage(LoginMessageType.Confirm, "GM Action, denied access and IP logged.");
-            //    ServerSetup.EventsLogger($"{localClient.RemoteIp} has attempted to use the unlock command.");
-            //    SentrySdk.CaptureException(new Exception($"{localClient.RemoteIp} has attempted to use the unlock command"));
-            //    return;
-            //}
-
-            //var passed = await OnSecurityCheck(result, localClient, localArgs.Name, localArgs.Password);
-            //if (!passed) return;
-
-            //switch (localArgs.Name.ToLowerInvariant())
-            //{
-            //    case "asdf":
-            //        localClient.SendLoginMessage(LoginMessageType.Confirm, "Locked Account, denied access");
-            //        return;
-            //    case "death":
-            //        {
-            //            var ipLocal = IPAddress.Parse(ServerSetup.Instance.InternalAddress);
-
-            //            if (IPAddress.IsLoopback(localClient.RemoteIp) || localClient.RemoteIp.Equals(ipLocal))
-            //            {
-            //                Login(result, localClient);
-            //                return;
-            //            }
-
-            //            localClient.SendLoginMessage(LoginMessageType.Confirm, "GM Account, denied access");
-            //            return;
-            //        }
-            //    case "scythe":
-            //        {
-            //            var ipLocal = IPAddress.Parse(ServerSetup.Instance.InternalAddress);
-
-            //            if (GameMastersIPs.Any(ip => localClient.RemoteIp.Equals(IPAddress.Parse(ip)))
-            //                || IPAddress.IsLoopback(localClient.RemoteIp) || localClient.RemoteIp.Equals(ipLocal))
-            //            {
-            //                Login(result, localClient);
-            //                return;
-            //            }
-
-            //            localClient.SendLoginMessage(LoginMessageType.Confirm, "GM Account, denied access");
-            //            return;
-            //        }
-            //    default:
-            //        {
-            //            if (result.Hacked)
-            //            {
-            //                localClient.SendLoginMessage(LoginMessageType.Confirm, "Bruteforce detected, we've locked the account to protect it; If this is your account, please contact the GM.");
-            //                return;
-            //            }
-
-            //            Login(result, localClient);
-            //            break;
-            //        }
-            //}
         }
     }
-
-    private void Login(Aisling player, ILoginClient loginClient)
-    {
-        player.LastAttemptIP = loginClient.RemoteIp.ToString();
-        player.LastIP = loginClient.RemoteIp.ToString();
-        player.PasswordAttempts = 0;
-        player.Hacked = false;
-        _ = SavePassword(player);
-        loginClient.SendLoginMessage(LoginMessageType.Confirm, "Logged in!");
-    }
-
+    
     /// <summary>
     /// 0x0B - Exit Request
     /// </summary>
@@ -387,42 +284,6 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     {
         var client = (ILoginClient)sender!;
         ClientRegistry.TryRemove(client.Id, out _);
-    }
-
-    private static async Task<bool> SavePassword(Aisling aisling)
-    {
-        if (aisling == null) return false;
-
-        try
-        {
-            return await AislingStorage.PasswordSave(aisling);
-        }
-        catch (Exception ex)
-        {
-            ServerSetup.ConnectionLogger(ex.Message, LogLevel.Error);
-            ServerSetup.ConnectionLogger(ex.StackTrace, LogLevel.Error);
-            SentrySdk.CaptureException(ex);
-        }
-
-        return false;
-    }
-
-    private static async Task<bool> SavePasswordAttempt(Aisling aisling)
-    {
-        if (aisling == null) return false;
-
-        try
-        {
-            return await AislingStorage.PasswordSaveAttempt(aisling);
-        }
-        catch (Exception ex)
-        {
-            ServerSetup.ConnectionLogger(ex.Message, LogLevel.Error);
-            ServerSetup.ConnectionLogger(ex.StackTrace, LogLevel.Error);
-            SentrySdk.CaptureException(ex);
-        }
-
-        return false;
     }
 
     #endregion
