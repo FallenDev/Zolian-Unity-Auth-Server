@@ -9,9 +9,11 @@
 /// </remarks>
 public enum ClientOpCode : byte
 {
+    OnClientLogin = 0x01,
     Version = 0x0A,
     ClientRedirected = 0x0B,
-    OnClientLogin = 0x01,
+    CreateCharacter = 0x0C,
+    DeleteCharacter = 0x0D,
 
     /// <summary>
     ///     Opcode used when a client requests to create a new character. This is the first step in the process and will only

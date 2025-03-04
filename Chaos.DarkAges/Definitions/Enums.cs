@@ -918,6 +918,28 @@ public enum BaseClass : byte
     Quest = 11
 }
 
+public enum BaseRace
+{
+    UnDecided = 0,
+    Human = 1,
+    HalfElf = 2,
+    HighElf = 3,
+    DarkElf = 4,
+    WoodElf = 5,
+    Orc = 6,
+    Dwarf = 7,
+    Halfling = 8,
+    Dragonkin = 9,
+    HalfBeast = 10,
+    Merfolk = 11
+}
+
+public enum Sex
+{
+    Male = 0,
+    Female = 1
+}
+
 /// <summary>
 ///     A flag representing the 'job class' of player; Modified for Zolian
 /// </summary>

@@ -16,7 +16,11 @@ using ServerOptions = Chaos.Networking.Options.ServerOptions;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
 using StringExtensions = ServiceStack.StringExtensions;
 using Chaos.Networking.Abstractions.Definitions;
+using Darkages.Enums;
+using Darkages.Managers;
 using Darkages.Network.Client.Abstractions;
+using Darkages.Types;
+using Gender = Chaos.DarkAges.Definitions.Gender;
 
 namespace Darkages.Network.Server;
 
@@ -72,71 +76,51 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     }
 
     /// <summary>
-    /// 0x02 - Character Creation Checks
+    /// 0x0C - Character Creation
     /// </summary>
-    public ValueTask OnCreateCharInitial(ILoginClient client, in Packet packet)
+    public ValueTask OnCreateChar(ILoginClient client, in Packet packet)
     {
-        var args = PacketSerializer.Deserialize<CreateCharInitialArgs>(in packet);
+        var args = PacketSerializer.Deserialize<CreateCharacterArgs>(in packet);
         return ExecuteHandler(client, args, InnerOnCreateCharRequest);
 
-        async ValueTask InnerOnCreateCharRequest(ILoginClient localClient, CreateCharInitialArgs localArgs)
+        ValueTask InnerOnCreateCharRequest(ILoginClient localClient, CreateCharacterArgs localArgs)
         {
-            //ServerSetup.Instance.GlobalCreationCount.TryGetValue(localClient.RemoteIp, out var created);
-            //var result = await ValidateUsernameAndPassword(localClient, localArgs.Name, localArgs.Password);
+            var maximumHp = Random.Shared.Next(128, 165);
+            var maximumMp = Random.Shared.Next(30, 45);
+            _ = StorageManager.AislingBucket.Create(new Aisling
+            {
+                Created = DateTime.UtcNow,
+                Username = localArgs.Username,
+                CurrentHp = maximumHp,
+                BaseHp = maximumHp,
+                CurrentMp = maximumMp,
+                BaseMp = maximumMp,
+                Gender = (Enums.Gender)localArgs.Sex,
+                Race = (Race)localArgs.Race,
+                Path = (Class)localArgs.Class,
+                SkillBook = new SkillBook(),
+                SpellBook = new SpellBook(),
+                Inventory = new InventoryManager(),
+                BankManager = new BankManager(),
+                EquipmentManager = new EquipmentManager(null)
+            });
 
-            //switch (result)
-            //{
-            //    case true when created <= 2:
-            //        CreateCharRequests.AddOrUpdate(localClient.Id, localArgs, (_, _) => localArgs);
-            //        localClient.SendLoginMessage(LoginMessageType.Confirm, string.Empty);
-            //        break;
-            //    case true:
-            //        localClient.SendLoginMessage(LoginMessageType.Confirm, "Slow down on character creation.");
-            //        break;
-            //}
+            return default;
         }
     }
 
     /// <summary>
-    /// 0x04 - Create New Player from Template
+    /// 0x0D - Delete Character
     /// </summary>
-    public ValueTask OnCreateCharFinalize(ILoginClient client, in Packet packet)
+    public ValueTask OnDeleteChar(ILoginClient client, in Packet packet)
     {
-        var args = PacketSerializer.Deserialize<CreateCharFinalizeArgs>(in packet);
+        var args = PacketSerializer.Deserialize<DeleteCharacterArgs>(in packet);
         return ExecuteHandler(client, args, InnerOnCreateCharFinalize);
 
-        async ValueTask InnerOnCreateCharFinalize(ILoginClient localClient, CreateCharFinalizeArgs localArgs)
+        ValueTask InnerOnCreateCharFinalize(ILoginClient localClient, DeleteCharacterArgs localArgs)
         {
-            if (CreateCharRequests.TryGetValue(localClient.Id, out var requestArgs))
-            {
-                //var readyTime = DateTime.UtcNow;
-                //var maximumHp = Random.Shared.Next(128, 165);
-                //var maximumMp = Random.Shared.Next(30, 45);
-                //var user = new Aisling
-                //{
-                //    Created = readyTime,
-                //    Username = requestArgs.Name,
-                //    Password = requestArgs.Password,
-                //    LastLogged = readyTime,
-                //    CurrentHp = maximumHp,
-                //    BaseHp = maximumHp,
-                //    CurrentMp = maximumMp,
-                //    BaseMp = maximumMp,
-                //    Gender = (Gender)localArgs.Gender,
-                //    HairColor = (byte)localArgs.HairColor,
-                //    HairStyle = localArgs.HairStyle,
-                //    BodyColor = 0,
-                //    SkillBook = new SkillBook(),
-                //    SpellBook = new SpellBook(),
-                //    Inventory = new InventoryManager(),
-                //    BankManager = new BankManager(),
-                //    EquipmentManager = new EquipmentManager(null)
-                //};
-
-                //await StorageManager.AislingBucket.Create(user).ConfigureAwait(true);
-                //ServerSetup.Instance.GlobalCreationCount.AddOrUpdate(localClient.RemoteIp, 1, (remoteIp, creations) => creations += 1);
-                //localClient.SendLoginMessage(LoginMessageType.Confirm);
-            }
+            //_ = StorageManager.AislingBucket.Delete(localArgs.SteamId, localArgs.Username);
+            return default;
         }
     }
 
@@ -263,85 +247,6 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     }
 
     /// <summary>
-    /// 0x26 - Change Password
-    /// </summary>
-    public ValueTask OnPasswordChange(ILoginClient client, in Packet packet)
-    {
-        var args = PacketSerializer.Deserialize<PasswordChangeArgs>(in packet);
-        if (ServerSetup.Instance.Running) return ExecuteHandler(client, args, InnerOnPasswordChange);
-
-        client.SendLoginMessage(LoginMessageType.Confirm, "Server is down for maintenance");
-        return default;
-
-        async ValueTask InnerOnPasswordChange(ILoginClient localClient, PasswordChangeArgs localArgs)
-        {
-            //if (StringExtensions.IsNullOrEmpty(localArgs.Name) || StringExtensions.IsNullOrEmpty(localArgs.CurrentPassword) || StringExtensions.IsNullOrEmpty(localArgs.NewPassword)) return;
-
-            //if (ServerSetup.Instance.GlobalPasswordAttempt.TryGetValue(localClient.RemoteIp, out var attempts))
-            //{
-            //    if (attempts >= 5)
-            //    {
-            //        localClient.SendLoginMessage(LoginMessageType.Confirm, "Your IP has been restricted for too many incorrect password attempts.");
-            //        ServerSetup.EventsLogger($"{localClient.RemoteIp} has attempted {attempts} and has been restricted.");
-            //        SentrySdk.CaptureException(new Exception($"{localClient.RemoteIp} has been restricted due to password attempts."));
-            //        return;
-            //    }
-            //}
-
-            //var aisling = await AislingStorage.CheckPassword(localArgs.Name);
-            //var passed = await OnSecurityCheck(aisling, localClient, localArgs.Name, localArgs.CurrentPassword);
-            //if (!passed) return;
-
-            //if (localArgs.NewPassword.Length < 6)
-            //{
-            //    localClient.SendLoginMessage(LoginMessageType.Confirm, "New password was not accepted. Keep it between 6 to 8 characters.");
-            //    return;
-            //}
-
-            //aisling.Password = localArgs.NewPassword;
-            //aisling.LastIP = localClient.RemoteIp.ToString();
-            //aisling.LastAttemptIP = localClient.RemoteIp.ToString();
-            //await SavePassword(aisling).ConfigureAwait(false);
-        }
-    }
-
-    private static async Task<bool> OnSecurityCheck(Aisling aisling, ILoginClient localClient, string localArgsName, string localArgsPass)
-    {
-        if (aisling == null)
-        {
-            localClient.SendLoginMessage(LoginMessageType.Confirm, $"'{localArgsName}' does not currently exist. You must first create an account!");
-            return false;
-        }
-
-        if (aisling.Hacked)
-        {
-            localClient.SendLoginMessage(LoginMessageType.Confirm, "Hacking detected, we've locked the account; If this is your account, please contact the GM.");
-            return false;
-        }
-
-        var maintCheck = localArgsName.ToLowerInvariant();
-        if (aisling.Password == localArgsPass || maintCheck == "death") return true;
-
-        ServerSetup.Instance.GlobalPasswordAttempt.AddOrUpdate(localClient.RemoteIp, 1, (remoteIp, creations) => creations += 1);
-        aisling.LastAttemptIP = localClient.RemoteIp.ToString();
-
-        if (aisling.PasswordAttempts <= 9)
-        {
-            ServerSetup.ConnectionLogger($"{aisling.Username} attempted an incorrect password.");
-            aisling.PasswordAttempts += 1;
-            await SavePasswordAttempt(aisling);
-            localClient.SendLoginMessage(LoginMessageType.WrongPassword, "Incorrect Information provided.");
-            return false;
-        }
-
-        ServerSetup.ConnectionLogger($"{aisling.Username} was locked to protect their account.");
-        localClient.SendLoginMessage(LoginMessageType.Confirm, "Hacking detected, the player has been locked.");
-        aisling.Hacked = true;
-        await SavePasswordAttempt(aisling);
-        return false;
-    }
-
-    /// <summary>
     /// 0x0B - Exit Request
     /// </summary>
     public ValueTask OnExitRequest(ILoginClient client, in Packet clientPacket)
@@ -385,10 +290,9 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     {
         base.IndexHandlers();
         ClientHandlers[(byte)ClientOpCode.ClientRedirected] = OnClientRedirected;
-        ClientHandlers[(byte)ClientOpCode.CreateCharInitial] = OnCreateCharInitial;
-        ClientHandlers[(byte)ClientOpCode.CreateCharFinalize] = OnCreateCharFinalize;
+        ClientHandlers[(byte)ClientOpCode.CreateCharacter] = OnCreateChar;
+        ClientHandlers[(byte)ClientOpCode.DeleteCharacter] = OnDeleteChar;
         ClientHandlers[(byte)ClientOpCode.OnClientLogin] = OnLogin;
-        ClientHandlers[(byte)ClientOpCode.PasswordChange] = OnPasswordChange;
         ClientHandlers[(byte)ClientOpCode.ExitRequest] = OnExitRequest;
     }
 

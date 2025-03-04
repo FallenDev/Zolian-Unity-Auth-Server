@@ -42,35 +42,34 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
         try
         {
+            // First find an account. If it doesn't exist, create one.
+            // Add the new character to the account. 
             // Serial & Mailbox number uniqueness
-            var serial = EphemeralRandomIdGenerator<uint>.Shared.NextId;
+            var serial = EphemeralRandomIdGenerator<long>.Shared.NextId;
+            // Will need to check if this needs adjustment, most likely will need to be adjusted
             var serialFound = await CheckIfPlayerExists(serial);
             if (serialFound)
                 serial = EphemeralRandomIdGenerator<uint>.Shared.NextId;
 
-            var mailBoxNumber = EphemeralRandomIdGenerator<ushort>.Shared.NextId;
-            var mailBoxFound = await CheckIfMailboxIdExists(mailBoxNumber);
-            if (mailBoxFound)
-                mailBoxNumber = EphemeralRandomIdGenerator<ushort>.Shared.NextId;
-
             // Player
             var connection = ConnectToDatabase(EncryptedConnectionString);
+            // I will need to adjust this stored procedure too
             var cmd = ConnectToDatabaseSqlCommandWithProcedure("PlayerCreation", connection);
 
             #region Parameters
 
-            cmd.Parameters.Add("@Serial", SqlDbType.BigInt).Value = (long)serial;
+            cmd.Parameters.Add("@Serial", SqlDbType.BigInt).Value = serial;
+            cmd.Parameters.Add("@SteamId", SqlDbType.BigInt).Value = obj.SteamId;
             cmd.Parameters.Add("@Created", SqlDbType.DateTime).Value = obj.Created;
             cmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = obj.Username;
-            cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = obj.Password;
             cmd.Parameters.Add("@LastLogged", SqlDbType.DateTime).Value = obj.LastLogged;
             cmd.Parameters.Add("@CurrentHp", SqlDbType.Int).Value = obj.CurrentHp;
             cmd.Parameters.Add("@BaseHp", SqlDbType.Int).Value = obj.BaseHp;
             cmd.Parameters.Add("@CurrentMp", SqlDbType.Int).Value = obj.CurrentMp;
             cmd.Parameters.Add("@BaseMp", SqlDbType.Int).Value = obj.BaseMp;
             cmd.Parameters.Add("@Gender", SqlDbType.VarChar).Value = SpriteMaker.GenderValue(obj.Gender);
-            cmd.Parameters.Add("@HairColor", SqlDbType.TinyInt).Value = obj.HairColor;
-            cmd.Parameters.Add("@HairStyle", SqlDbType.TinyInt).Value = obj.HairStyle;
+            cmd.Parameters.Add("@Path", SqlDbType.VarChar).Value = obj.Path;
+            cmd.Parameters.Add("@Race", SqlDbType.VarChar).Value = obj.Race;
 
             #endregion
 
@@ -81,21 +80,10 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
             #region Adapter Inserts
 
-            // Discovered
-            var playerDiscoveredMaps =
-                "INSERT INTO ZolianPlayers.dbo.PlayersDiscoveredMaps (Serial, MapId) VALUES " +
-                $"('{(long)serial}','{obj.CurrentMapId}')";
-
-            var cmd2 = new SqlCommand(playerDiscoveredMaps, sConn);
-            cmd2.CommandTimeout = 5;
-
-            adapter.InsertCommand = cmd2;
-            adapter.InsertCommand.ExecuteNonQuery();
-
             // PlayersSkills
             var playerSkillBook =
-                "INSERT INTO ZolianPlayers.dbo.PlayersSkillBook (Serial, Level, Slot, SkillName, Uses, CurrentCooldown) VALUES " +
-                $"('{(long)serial}','{0}','{73}','Assail','{0}','{0}')";
+                "INSERT INTO ZolianPlayers.dbo.PlayersSkillBook (Serial, SteamId, Level, Slot, SkillName, Uses, CurrentCooldown) VALUES " +
+                $"('{(long)serial}','{obj.SteamId}','{0}','{73}','Assail','{0}','{0}')";
 
             var cmd3 = new SqlCommand(playerSkillBook, sConn);
             cmd3.CommandTimeout = 5;
@@ -105,102 +93,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
             #endregion
 
-            var cmd5 = ConnectToDatabaseSqlCommandWithProcedure("InsertQuests", sConn);
-
-            #region Parameters
-
-            cmd5.Parameters.Add("@Serial", SqlDbType.BigInt).Value = (long)serial;
-            cmd5.Parameters.Add("@MailBoxNumber", SqlDbType.Int).Value = mailBoxNumber;
-            cmd5.Parameters.Add("@TutComplete", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@BetaReset", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@StoneSmith", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@StoneSmithingTier", SqlDbType.VarChar).Value = "Novice";
-            cmd5.Parameters.Add("@MilethRep", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@ArtursGift", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@CamilleGreeting", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ConnPotions", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CryptTerror", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CryptTerrorSlayed", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CryptTerrorContinued", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CryptTerrorContSlayed", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@NightTerror", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@NightTerrorSlayed", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@DreamWalking", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@DreamWalkingSlayed", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@Dar", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@DarItem", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@ReleasedTodesbaum", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@DrunkenHabit", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@Fiona", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@Keela", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@KeelaCount", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@KeelaKill", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@KeelaQuesting", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@KillerBee", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@Neal", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@NealCount", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@NealKill", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@AbelShopAccess", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@PeteKill", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@PeteComplete", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@SwampAccess", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@SwampCount", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@TagorDungeonAccess", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@Lau", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@AbelReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@RucesionReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@SuomiReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@RionnagReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@OrenReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@PietReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@LouresReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@UndineReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@TagorReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@ThievesGuildReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@AssassinsGuildReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@AdventuresGuildReputation", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@BlackSmithing", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@BlackSmithingTier", SqlDbType.VarChar).Value = "Novice";
-            cmd5.Parameters.Add("@ArmorSmithing", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@ArmorSmithingTier", SqlDbType.VarChar).Value = "Novice";
-            cmd5.Parameters.Add("@JewelCrafting", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@JewelCraftingTier", SqlDbType.VarChar).Value = "Novice";
-            cmd5.Parameters.Add("@BeltDegree", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@BeltQuest", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@SavedChristmas", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@RescuedReindeer", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@YetiKilled", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@UnknownStart", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@PirateShipAccess", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ScubaSchematics", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ScubaMaterialsQuest", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ScubaGearCrafted", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@EternalLove", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@EternalLoveStarted", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@UnhappyEnding", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@HonoringTheFallen", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ReadTheFallenNotes", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@GivenTarnishedBreastplate", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@EternalBond", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@ArmorCraftingCodex", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ArmorApothecaryAccepted", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ArmorCodexDeciphered", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ArmorCraftingCodexLearned", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@ArmorCraftingAdvancedCodexLearned", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CthonicKillTarget", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@CthonicFindTarget", SqlDbType.VarChar).Value = "";
-            cmd5.Parameters.Add("@CthonicKillCompletions", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@CthonicCleansingOne", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CthonicCleansingTwo", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CthonicDepthsCleansing", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CthonicRuinsAccess", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CthonicRemainsExplorationLevel", SqlDbType.Int).Value = 0;
-            cmd5.Parameters.Add("@EndedOmegasRein", SqlDbType.Bit).Value = false;
-            cmd5.Parameters.Add("@CraftedMoonArmor", SqlDbType.Bit).Value = false;
-
-            #endregion
-
-            ExecuteAndCloseConnection(cmd5, sConn);
+            sConn.Close();
         }
         catch (Exception e)
         {

@@ -10,13 +10,11 @@ public interface ILoginServer<in TClient> : IServer<TClient> where TClient: ICon
 {
     ValueTask OnClientRedirected(TClient client, in Packet packet);
 
-    ValueTask OnCreateCharInitial(TClient client, in Packet packet);
+    ValueTask OnCreateChar(TClient client, in Packet packet);
 
-    ValueTask OnCreateCharFinalize(TClient client, in Packet packet);
+    ValueTask OnDeleteChar(TClient client, in Packet packet);
     
     ValueTask OnLogin(TClient client, in Packet packet);
-    
-    ValueTask OnPasswordChange(TClient client, in Packet packet);
 
     ValueTask OnExitRequest(TClient client, in Packet packet);
 }
