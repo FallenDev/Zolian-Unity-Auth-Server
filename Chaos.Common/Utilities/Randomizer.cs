@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Chaos.Extensions.Common;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A Utility class for operations involving random numbers

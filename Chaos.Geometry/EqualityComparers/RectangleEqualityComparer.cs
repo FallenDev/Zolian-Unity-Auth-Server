@@ -1,6 +1,6 @@
-using Chaos.Geometry.Abstractions;
+using Zolian.Geometry.Abstractions;
 
-namespace Chaos.Geometry.EqualityComparers;
+namespace Zolian.Geometry.EqualityComparers;
 
 /// <inheritdoc />
 public sealed class RectangleEqualityComparer : IEqualityComparer<IRectangle>

@@ -1,4 +1,4 @@
-namespace Chaos.Common.Abstractions;
+namespace Zolian.Common.Abstractions;
 
 /// <summary>
 ///     Defines the pattern for a wrapper around a reference type to perform thread safe operations on it

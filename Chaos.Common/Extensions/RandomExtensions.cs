@@ -1,5 +1,5 @@
 using System.Numerics;
-using Chaos.Common.Utilities;
+using Zolian.Common.Utilities;
 
 // ReSharper disable once CheckNamespace
 namespace Chaos.Extensions.Common;

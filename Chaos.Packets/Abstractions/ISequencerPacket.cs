@@ -1,4 +1,4 @@
-namespace Chaos.Packets.Abstractions;
+namespace Zolian.Packets.Abstractions;
 
 /// <summary>
 ///     Represents a packet that changes the sequence number

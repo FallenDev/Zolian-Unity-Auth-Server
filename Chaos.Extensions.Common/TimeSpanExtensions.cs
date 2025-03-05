@@ -2,7 +2,7 @@ using System.Text;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
 
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Provides extension methods for <see cref="System.TimeSpan" />

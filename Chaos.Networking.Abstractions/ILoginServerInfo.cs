@@ -1,4 +1,4 @@
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a configuration object that is used to describe a login server

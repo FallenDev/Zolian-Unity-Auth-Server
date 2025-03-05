@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using Chaos.Common.Abstractions;
-using Chaos.Common.Converters;
+using Zolian.Common.Abstractions;
+using Zolian.Common.Converters;
 
 // ReSharper disable once CheckNamespace
 namespace Chaos.Collections.Common;

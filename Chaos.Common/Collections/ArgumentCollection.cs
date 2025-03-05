@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Chaos.Common.Converters;
-using Chaos.Common.Definitions;
+using Zolian.Common.Converters;
+using RegexCache = Zolian.Common.Definitions.RegexCache;
 
 // ReSharper disable once CheckNamespace
 namespace Chaos.Collections.Common;

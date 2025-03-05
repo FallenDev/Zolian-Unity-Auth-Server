@@ -1,4 +1,4 @@
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Provides a set of extension methods for <see cref="Func{TResult}" /> instances.

@@ -1,7 +1,6 @@
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Networking.Entities.Server;
+using Zolian.Networking.Entities.Server;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Represents a client that is connected to the world server.

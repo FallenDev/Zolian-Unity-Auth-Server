@@ -1,7 +1,6 @@
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Networking.Entities.Server;
+using Zolian.Networking.Entities.Server;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for an object that represents a client connected to a lobby server.

@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Provides extensions methods for <see cref="System.String" />

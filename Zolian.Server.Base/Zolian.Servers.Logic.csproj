@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<EnableWindowsTargeting>True</EnableWindowsTargeting>
+		<Authors>Zolian Contributors</Authors>
+		<Copyright>(C) TheBuckNetwork</Copyright>
+		<PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+		<PackageProjectUrl>https://www.thebucknetwork.com</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/FallenDev/Zolian</RepositoryUrl>
+		<AssemblyName>Darkages.Server</AssemblyName>
+		<RootNamespace>Darkages</RootNamespace>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<IsPublishable>False</IsPublishable>
+		<SelfContained>false</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<TieredPGO>true</TieredPGO>
+		<ErrorReport>send</ErrorReport>
+		<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<Optimize>False</Optimize>
+		<PlatformTarget>x64</PlatformTarget>
+		<AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+		<WarningLevel>4</WarningLevel>
+		<DebugType>embedded</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<Optimize>False</Optimize>
+		<PlatformTarget>x64</PlatformTarget>
+		<AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+		<WarningLevel>4</WarningLevel>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ComponentAce.ZLIB.NET" Version="1.0.4" />
+		<PackageReference Include="Dapper.StrongName" Version="2.1.35" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.0" />
+		<PackageReference Include="Microsoft.DependencyValidation.Analyzers" Version="0.11.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="RestSharp" Version="112.1.1-alpha.0.4" />
+		<PackageReference Include="Sentry" Version="5.0.1" />
+		<PackageReference Include="Sentry.Extensions.Logging" Version="5.0.1" />
+		<PackageReference Include="Sentry.Profiling" Version="5.0.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+		<PackageReference Include="ServiceStack" Version="8.5.2" />
+		<PackageReference Include="ServiceStack.Text" Version="8.5.2" />
+		<PackageReference Include="SunCalcNet" Version="1.2.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Chaos.Common.Abstractions\Zolian.Common.Abstractions.csproj" />
+	  <ProjectReference Include="..\Chaos.Common\Zolian.Common.csproj" />
+	  <ProjectReference Include="..\Chaos.DarkAges\Chaos.DarkAges.csproj" />
+	  <ProjectReference Include="..\Chaos.Extensions.Common\Zolian.Extensions.Common.csproj" />
+	  <ProjectReference Include="..\Chaos.Geometry.Abstractions\Zolian.Geometry.Abstractions.csproj" />
+	  <ProjectReference Include="..\Chaos.Geometry\Zolian.Geometry.csproj" />
+	  <ProjectReference Include="..\Chaos.Networking.Abstractions\Zolian.Networking.Abstractions.csproj" />
+	  <ProjectReference Include="..\Chaos.Networking\Zolian.Networking.csproj" />
+	  <ProjectReference Include="..\Chaos.Packets.Abstractions\Zolian.Packets.Abstractions.csproj" />
+	  <ProjectReference Include="..\Chaos.Packets\Zolian.Packets.csproj" />
+	  <ProjectReference Include="..\Chaos.Time.Abstractions\Zolian.Time.Abstractions.csproj" />
+	  <ProjectReference Include="..\Chaos.Time\Zolian.Time.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Using Include="Chaos.DarkAges.Definitions;" />
+	</ItemGroup>
+
+	<Import Project="..\Server.Configurations\Server.Configurations.projitems" Label="Shared" />
+
+</Project>

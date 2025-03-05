@@ -1,10 +1,8 @@
-using Chaos.Networking.Abstractions;
-using Chaos.NLog.Logging.Definitions;
-using Chaos.NLog.Logging.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Zolian.Networking.Abstractions;
 
-namespace Chaos.Networking.Entities;
+namespace Zolian.Networking.Entities;
 
 /// <summary>
 ///     Represents an object used to manage redirects
@@ -23,8 +21,7 @@ public sealed class RedirectManager : BackgroundService, IRedirectManager
     /// <inheritdoc />
     public void Add(IRedirect redirect)
     {
-        Logger.WithTopics(Topics.Actions.Redirect)
-              .LogTrace("Now tracking redirect {@RedirectId}", redirect.Id);
+        Logger.LogTrace("Now tracking redirect {@RedirectId}", redirect.Id);
 
         Redirects.TryAdd(redirect.Id, redirect);
     }
@@ -34,8 +31,7 @@ public sealed class RedirectManager : BackgroundService, IRedirectManager
     {
         if (Redirects.TryRemove(id, out redirect))
         {
-            Logger.WithTopics(Topics.Actions.Redirect)
-                  .LogTrace("Redirect {@RedirectId} has been consumed", redirect.Id);
+            Logger.LogTrace("Redirect {@RedirectId} has been consumed", redirect.Id);
 
             return true;
         }
@@ -57,8 +53,7 @@ public sealed class RedirectManager : BackgroundService, IRedirectManager
                 foreach (var redirect in Redirects.Values)
                     if (now.Subtract(redirect.Created) > Timeout)
                     {
-                        Logger.WithTopics(Topics.Actions.Redirect)
-                              .LogTrace("Redirect {@RedirectId} has timed out", redirect.Id);
+                        Logger.LogTrace("Redirect {@RedirectId} has timed out", redirect.Id);
 
                         Redirects.TryRemove(redirect.Id, out _);
                     }

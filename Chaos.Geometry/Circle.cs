@@ -1,6 +1,6 @@
-using Chaos.Geometry.Abstractions;
+using Zolian.Geometry.Abstractions;
 
-namespace Chaos.Geometry;
+namespace Zolian.Geometry;
 
 /// <summary>
 ///     Represents a circle in two-dimensional space.

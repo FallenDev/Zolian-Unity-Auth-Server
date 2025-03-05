@@ -1,11 +1,9 @@
 using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
-using Chaos.Networking.Entities.Server;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
 using Microsoft.Extensions.Logging;
+using Zolian.Networking.Entities.Server;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Represents a client that is connected to an <see cref="IServer{T}" />. This class defines the methods used to

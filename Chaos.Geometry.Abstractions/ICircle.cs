@@ -1,4 +1,4 @@
-namespace Chaos.Geometry.Abstractions;
+namespace Zolian.Geometry.Abstractions;
 
 /// <summary>
 ///     Represents a circle in two-dimensional space.

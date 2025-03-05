@@ -1,4 +1,4 @@
-﻿namespace Chaos.Geometry.Abstractions;
+﻿namespace Zolian.Geometry.Abstractions;
 
 /// <summary>
 ///     Represents a rectangle, a 4 sided polygon

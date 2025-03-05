@@ -1,8 +1,8 @@
 using System.Collections.Concurrent;
 using System.Numerics;
-using Chaos.Common.Abstractions;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A utility class for mapping string keys to numeric ids. Class is abstract because an instance should be created for

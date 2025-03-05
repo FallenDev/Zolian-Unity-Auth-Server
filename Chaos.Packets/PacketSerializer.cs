@@ -1,9 +1,9 @@
 using System.Collections.Frozen;
 using System.Text;
-using Chaos.IO.Memory;
-using Chaos.Packets.Abstractions;
+using Zolian.Packets.Abstractions;
+using Zolian.Packets.Abstractions.Memory;
 
-namespace Chaos.Packets;
+namespace Zolian.Packets;
 
 /// <summary>
 /// Provides serialization and deserialization of packets.

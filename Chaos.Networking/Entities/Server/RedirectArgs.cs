@@ -1,11 +1,11 @@
 using System.Net;
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Packets.Abstractions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
-///     Represents the serialization of the <see cref="ServerOpCode.Redirect" /> packet
+///     Represents the serialization of the <see cref="Redirect" /> packet
 /// </summary>
 public sealed record RedirectArgs : IPacketSerializable
 {

@@ -1,6 +1,6 @@
-using Chaos.IO.Memory;
+using Zolian.Packets.Abstractions.Memory;
 
-namespace Chaos.Packets.Abstractions;
+namespace Zolian.Packets.Abstractions;
 
 /// <summary>
 ///     A base packet converter that forwards non-generic methods to the associated generic methods

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Provides extension methods for <see cref="System.Collections.Generic.IDictionary{TKey,TValue}" />

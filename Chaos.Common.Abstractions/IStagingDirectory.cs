@@ -1,4 +1,4 @@
-namespace Chaos.Common.Abstractions;
+namespace Zolian.Common.Abstractions;
 
 /// <summary>
 ///     Literally just a staging directory that can be more easily pulled out of a container

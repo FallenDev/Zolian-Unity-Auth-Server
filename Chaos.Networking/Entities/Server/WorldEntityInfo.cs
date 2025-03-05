@@ -1,4 +1,4 @@
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
 ///     A base class used for serialization of any kind of WorldEntity

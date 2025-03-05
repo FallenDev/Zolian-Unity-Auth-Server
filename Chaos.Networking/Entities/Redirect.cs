@@ -1,8 +1,8 @@
 using System.Net;
 using Chaos.DarkAges.Definitions;
-using Chaos.Networking.Abstractions;
+using Zolian.Networking.Abstractions;
 
-namespace Chaos.Networking.Entities;
+namespace Zolian.Networking.Entities;
 
 /// <inheritdoc />
 public sealed record Redirect : IRedirect

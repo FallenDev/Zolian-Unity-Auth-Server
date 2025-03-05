@@ -1,7 +1,7 @@
 using Chaos.DarkAges.Definitions;
-using Chaos.Networking.Abstractions.Definitions;
+using Zolian.Networking.Abstractions.Definitions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
 ///     Represents the serialization of a spell in the <see cref="ServerOpCode.AddSpellToPane" /> and

@@ -1,6 +1,6 @@
-using Chaos.Common.Abstractions;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Synchronization;
+namespace Zolian.Common.Synchronization;
 
 /// <summary>
 ///     An object that offers subscription-style non-blocking FIFO synchronization by abusing the using pattern.
@@ -37,7 +37,7 @@ public sealed class FifoAutoReleasingSemaphoreSlim
         => Root = new FifoSemaphoreSlim(initialCount, maxCount, name);
 
     /// <summary>
-    ///     Releases the internal <see cref="Chaos.Common.Synchronization.FifoSemaphoreSlim" />.
+    ///     Releases the internal <see cref="FifoSemaphoreSlim" />.
     /// </summary>
     public void Release()
     {
@@ -51,8 +51,8 @@ public sealed class FifoAutoReleasingSemaphoreSlim
     }
 
     /// <summary>
-    ///     The same as <see cref="Chaos.Common.Synchronization.FifoSemaphoreSlim.WaitAsync()" />. Returns a disposable object
-    ///     that when disposed will release the internal <see cref="Chaos.Common.Synchronization.FifoSemaphoreSlim" />.
+    ///     The same as <see cref="FifoSemaphoreSlim.WaitAsync()" />. Returns a disposable object
+    ///     that when disposed will release the internal <see cref="FifoSemaphoreSlim" />.
     /// </summary>
     public async ValueTask<IPolyDisposable> WaitAsync()
     {

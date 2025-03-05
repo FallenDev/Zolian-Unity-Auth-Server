@@ -1,6 +1,6 @@
-using Chaos.Networking.Abstractions.Definitions;
+using Zolian.Networking.Abstractions.Definitions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
 ///     Represents the serialization of a visible entity in the <see cref="ServerOpCode.DisplayVisibleEntities" /> packet

@@ -1,6 +1,6 @@
-using Chaos.Packets;
+using Zolian.Packets;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for a server that facilitates character creation, presentation of the EULA, and the ability to

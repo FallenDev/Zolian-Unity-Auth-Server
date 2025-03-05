@@ -1,6 +1,6 @@
-using Chaos.Packets;
+using Zolian.Packets;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for a client that connects to an <see cref="IServer{T}" />

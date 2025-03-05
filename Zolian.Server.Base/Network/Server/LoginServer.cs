@@ -1,22 +1,17 @@
-using Chaos.Networking.Abstractions;
-using Chaos.Networking.Entities.Client;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
-
 using Darkages.Database;
 using Darkages.Network.Client;
-using Darkages.Sprites;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Sockets;
 using JetBrains.Annotations;
-using ServerOptions = Chaos.Networking.Options.ServerOptions;
+using ServerOptions = Zolian.Networking.Options.ServerOptions;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
-using Chaos.Networking.Abstractions.Definitions;
-using Darkages.Enums;
-using Darkages.Managers;
 using Darkages.Network.Client.Abstractions;
-using Darkages.Types;
+using Zolian.Networking.Abstractions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Networking.Entities.Client;
+using Zolian.Packets;
+using Zolian.Packets.Abstractions;
 
 namespace Darkages.Network.Server;
 
@@ -78,23 +73,10 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         {
             var maximumHp = Random.Shared.Next(128, 165);
             var maximumMp = Random.Shared.Next(30, 45);
-            _ = StorageManager.AislingBucket.Create(new Aisling
-            {
-                Created = DateTime.UtcNow,
-                Username = localArgs.Username,
-                CurrentHp = maximumHp,
-                BaseHp = maximumHp,
-                CurrentMp = maximumMp,
-                BaseMp = maximumMp,
-                Gender = (Enums.Gender)localArgs.Sex,
-                Race = (Race)localArgs.Race,
-                Path = (Class)localArgs.Class,
-                SkillBook = new SkillBook(),
-                SpellBook = new SpellBook(),
-                Inventory = new InventoryManager(),
-                BankManager = new BankManager(),
-                EquipmentManager = new EquipmentManager(null)
-            });
+            // Creation of Player from model
+            //_ = StorageManager.AislingBucket.Create(new Aisling
+            //{
+            //});
 
             return default;
         }
@@ -190,7 +172,6 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         ClientHandlers[(byte)ClientOpCode.CreateCharacter] = OnCreateChar;
         ClientHandlers[(byte)ClientOpCode.DeleteCharacter] = OnDeleteChar;
         ClientHandlers[(byte)ClientOpCode.OnClientLogin] = OnLogin;
-        ClientHandlers[(byte)ClientOpCode.ExitRequest] = OnExitRequest;
     }
 
     protected override void OnConnected(Socket clientSocket)

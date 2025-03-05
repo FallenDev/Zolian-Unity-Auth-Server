@@ -1,6 +1,6 @@
-﻿using Darkages.Models;
+﻿using System.Numerics;
+using Darkages.Models;
 using Darkages.Network.Server.Abstractions;
-using Darkages.Types;
 
 namespace Darkages.Network.Server;
 
@@ -13,9 +13,10 @@ public class ServerConstants : IServerConstants
     public bool CancelWalkingIfRefreshing { get; set; }
     public double NationReturnHours { get; set; }
     public int StartingMap { get; set; }
-    public Position StartingPosition { get; set; }
+    public Vector3 StartingPosition { get; set; }
     public short TransitionPointX { get; set; }
     public short TransitionPointY { get; set; }
+    public short TransitionPointZ { get; set; }
     public int TransitionZone { get; set; }
 
     // Scripts
@@ -49,6 +50,7 @@ public class ServerConstants : IServerConstants
     public bool CanMoveDuringReap { get; set; }
     public int DeathMapX { get; set; }
     public int DeathMapY { get; set; }
+    public int DeathMapZ { get; set; }
 
     // Monsters | NPCs
     public double MundaneRespawnInterval { get; set; }
@@ -81,7 +83,6 @@ public class ServerConstants : IServerConstants
     public string ServerWelcomeMessage { get; set; }
     public IEnumerable<string> GameMasters { get; set; }
     public string[] DevModeExemptions { get; set; }
-    public ReservedRedirectInfo[] ReservedRedirects { get; set; } = [];
 
     // Check Packet 00
     public string ClientVersion { get; set; }

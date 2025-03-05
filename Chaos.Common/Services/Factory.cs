@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Chaos.Common.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Services;
+namespace Zolian.Common.Services;
 
 /// <inheritdoc />
 [ExcludeFromCodeCoverage(Justification = "Wrapper around external code")]

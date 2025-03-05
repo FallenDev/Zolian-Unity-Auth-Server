@@ -1,4 +1,4 @@
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Provides extensions methods for <see cref="System.Threading.CancellationToken" />.

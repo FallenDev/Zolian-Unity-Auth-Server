@@ -1,7 +1,7 @@
-﻿using Chaos.Geometry.Abstractions;
-using Chaos.Geometry.Definitions;
+﻿using Zolian.Geometry.Abstractions;
+using Zolian.Geometry.Definitions;
 
-namespace Chaos.Geometry;
+namespace Zolian.Geometry;
 
 /// <inheritdoc cref="IPoint" />
 public readonly ref struct ValuePoint : IPoint, IEquatable<IPoint>, IEquatable<ValuePoint>

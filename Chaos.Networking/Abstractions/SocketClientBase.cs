@@ -4,13 +4,12 @@ using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using Chaos.Common.Identity;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
-
 using Microsoft.Extensions.Logging;
+using Zolian.Common.Identity;
+using Zolian.Packets;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Provides the ability to send and receive packets over a socket.

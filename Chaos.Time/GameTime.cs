@@ -1,6 +1,6 @@
 using Chaos.DarkAges.Definitions;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     A <see cref="System.DateTime" /> replacement that runs at 24x speed, to be used for in-game time measurement

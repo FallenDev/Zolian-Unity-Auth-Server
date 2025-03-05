@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Chaos.Geometry.JsonConverters;
+namespace Zolian.Geometry.JsonConverters;
 
 /// <inheritdoc />
 public sealed class RectangleConverter : JsonConverter<Rectangle>

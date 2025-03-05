@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     Generic static helper for doing a shallow copy from one object to another.

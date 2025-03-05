@@ -1,5 +1,5 @@
-﻿using Darkages.Models;
-using Darkages.Types;
+﻿using System.Numerics;
+using Darkages.Models;
 
 namespace Darkages.Network.Server.Abstractions;
 
@@ -25,6 +25,7 @@ public interface IServerConstants
     int DeathMap { get; }
     int DeathMapX { get; }
     int DeathMapY { get; }
+    int DeathMapZ { get; }
     string DeathReapingMessage { get; }
     uint DefaultItemDurability { get; }
     uint DefaultItemValue { get; }
@@ -71,17 +72,17 @@ public interface IServerConstants
     int SERVER_PORT { get; }
     string SERVER_TITLE { get; }
     string ServerWelcomeMessage { get; }
-    public ReservedRedirectInfo[] ReservedRedirects { get; }
     string SomethingWentWrong { get; }
     string SpellFailedMessage { get; }
     int StartingMap { get; }
-    Position StartingPosition { get; }
+    Vector3 StartingPosition { get; }
     int StatCap { get; }
     int StatsPerLevel { get; }
     string StrAddedMessage { get; }
     string ToWeakToLift { get; }
     short TransitionPointX { get; }
     short TransitionPointY { get; }
+    short TransitionPointZ { get; }
     int TransitionZone { get; }
     string UserDroppedGoldMsg { get; }
     int VeryNearByProximity { get; }

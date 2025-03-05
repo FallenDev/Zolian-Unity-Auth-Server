@@ -1,4 +1,4 @@
-namespace Chaos.Time.Abstractions;
+namespace Zolian.Time.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for an <see cref="IIntervalTimer" /> that times a sequences of events in order. Contains multiple

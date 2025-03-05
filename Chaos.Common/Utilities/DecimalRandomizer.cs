@@ -1,7 +1,7 @@
-using Chaos.Common.Definitions;
 using Chaos.Extensions.Common;
+using Zolian.Common.Definitions;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A Utility class for operations involving random DECIMALS

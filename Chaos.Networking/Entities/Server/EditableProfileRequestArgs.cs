@@ -1,7 +1,7 @@
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Packets.Abstractions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
 ///     Represents the serialization of the <see cref="ServerOpCode.EditableProfileRequest" /> packet

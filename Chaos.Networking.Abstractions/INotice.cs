@@ -1,4 +1,4 @@
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Represents the notice shown when logging into a server

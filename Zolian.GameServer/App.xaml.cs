@@ -1,22 +1,4 @@
-﻿using Chaos.Extensions.Common;
-using Chaos.Extensions.DependencyInjection;
-using Chaos.Networking;
-using Chaos.Networking.Abstractions;
-using Chaos.Networking.Entities;
-using Darkages.Models;
-using Darkages.Network.Client;
-using Darkages.Network.Server;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using Serilog;
-using Serilog.Events;
-using Serilog.Extensions.Logging;
-using Serilog.Sinks.SystemConsole.Themes;
-
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,15 +6,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Chaos.Extensions.DependencyInjection;
+using Darkages.Models;
+using Darkages.Network.Client;
+using Darkages.Network.Client.Abstractions;
+using Darkages.Network.Server;
+using Darkages.Network.Server.Abstractions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Sentry;
+using Serilog;
+using Serilog.Events;
+using Serilog.Extensions.Logging;
+using Serilog.Sinks.SystemConsole.Themes;
+using Zolian.Extensions.Common;
+using Zolian.Networking;
+using Zolian.Networking.Abstractions;
+using Zolian.Networking.Entities;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using ILobbyClient = Darkages.Network.Client.Abstractions.ILobbyClient;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
 using IWorldClient = Darkages.Network.Client.Abstractions.IWorldClient;
-using Darkages.Network.Client.Abstractions;
-using Darkages.Network.Server.Abstractions;
 
-namespace Zolian.GameServer;
+namespace Zolian;
 
 public partial class App
 {

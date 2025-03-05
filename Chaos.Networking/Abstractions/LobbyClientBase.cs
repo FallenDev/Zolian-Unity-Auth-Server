@@ -1,11 +1,9 @@
 using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
-
-using Chaos.Networking.Entities.Server;
-using Chaos.Packets.Abstractions;
 using Microsoft.Extensions.Logging;
+using Zolian.Networking.Entities.Server;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Represents a client connected to a lobby server.

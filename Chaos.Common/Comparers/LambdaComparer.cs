@@ -1,4 +1,4 @@
-namespace Chaos.Common.Comparers;
+namespace Zolian.Common.Comparers;
 
 /// <summary>
 ///     Represents a comparer that uses a lambda expression to compare two objects.

@@ -1,6 +1,6 @@
-using Chaos.Networking.Abstractions;
+using Zolian.Networking.Abstractions;
 
-namespace Chaos.Networking;
+namespace Zolian.Networking;
 
 /// <summary>
 ///     A registry that facilitates discovery of clients

@@ -1,24 +1,15 @@
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using Chaos.Common.Identity;
-using Chaos.Common.Synchronization;
-using Chaos.Extensions.Networking;
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Networking.Entities.Client;
-using Chaos.Networking.Options;
-using Chaos.NLog.Logging.Definitions;
-using Chaos.NLog.Logging.Extensions;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Chaos.Extensions.Common;
+using Zolian.Common.Synchronization;
+using Zolian.Extensions.Common;
+using Zolian.Networking.Options;
+using Zolian.Packets;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Represents a base class for server implementations.
@@ -134,8 +125,7 @@ public abstract class ServerBase<T> : BackgroundService, IServer<T> where T : IC
         Socket.Bind(endPoint);
         Socket.Listen(100);
 
-        Logger.WithTopics(Topics.Actions.Listening)
-              .LogInformation("Listening on {@EndPoint}", endPoint.Port.ToString());
+        Logger.LogInformation("Listening on {@EndPoint}", endPoint.Port.ToString());
 
         Socket.BeginAccept(OnConnection, Socket);
 
@@ -245,9 +235,7 @@ public abstract class ServerBase<T> : BackgroundService, IServer<T> where T : IC
     /// </summary>
     protected virtual void IndexHandlers()
     {
-        ClientHandlers[(byte)ClientOpCode.HeartBeat] = OnHeartBeatAsync;
-        ClientHandlers[(byte)ClientOpCode.SequenceChange] = OnSequenceChangeAsync;
-        ClientHandlers[(byte)ClientOpCode.SynchronizeTicks] = OnSynchronizeTicksAsync;
+
     }
 
     /// <inheritdoc />
@@ -319,9 +307,7 @@ public abstract class ServerBase<T> : BackgroundService, IServer<T> where T : IC
         }
         catch (Exception e)
         {
-            Logger.WithTopics(Topics.Entities.Packet, Topics.Actions.Processing)
-                  .WithProperty(client)
-                  .LogError(e, "{@ClientType} failed to execute inner handler with args type {@ArgsType} ({@Args})", client.GetType().Name, args.GetType().Name, args);
+            Logger.LogError(e, "{@ClientType} failed to execute inner handler with args type {@ArgsType} ({@Args})", client.GetType().Name, args.GetType().Name, args);
         }
     }
 
@@ -346,31 +332,8 @@ public abstract class ServerBase<T> : BackgroundService, IServer<T> where T : IC
         }
         catch (Exception e)
         {
-            Logger.WithTopics(Topics.Entities.Packet, Topics.Actions.Processing)
-                  .WithProperty(client)
-                  .LogError(e, "{@ClientType} failed to execute inner handler", client.GetType().Name);
+            Logger.LogError(e, "{@ClientType} failed to execute inner handler", client.GetType().Name);
         }
-    }
-
-    /// <inheritdoc />
-    public virtual ValueTask OnHeartBeatAsync(T client, in Packet packet)
-    {
-        _ = PacketSerializer.Deserialize<HeartBeatArgs>(in packet);
-        return default;
-    }
-
-    /// <inheritdoc />
-    public ValueTask OnSequenceChangeAsync(T client, in Packet packet)
-    {
-        client.SetSequence(packet.Sequence);
-        return default;
-    }
-
-    /// <inheritdoc />
-    public virtual ValueTask OnSynchronizeTicksAsync(T client, in Packet packet)
-    {
-        _ = PacketSerializer.Deserialize<SynchronizeTicksArgs>(in packet);
-        return default;
     }
 
     #endregion

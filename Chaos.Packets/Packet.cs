@@ -1,8 +1,6 @@
 using System.Text;
 
-using Microsoft.Extensions.Logging;
-
-namespace Chaos.Packets
+namespace Zolian.Packets
 {
     /// <summary>
     /// Represents a packet of data in the custom application protocol.

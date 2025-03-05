@@ -1,6 +1,6 @@
-using Chaos.IO.Memory;
+using Zolian.Packets.Abstractions.Memory;
 
-namespace Chaos.Packets.Abstractions;
+namespace Zolian.Packets.Abstractions;
 
 /// <summary>
 ///     Defines a pattern to deserialize a span of bytes into an object
@@ -34,7 +34,7 @@ public interface IPacketConverter
 
 /// <inheritdoc />
 /// <typeparam name="T">
-///     A type that inherits from <see cref="Chaos.Packets.Abstractions.IPacketSerializable" />
+///     A type that inherits from <see cref="IPacketSerializable" />
 /// </typeparam>
 public interface IPacketConverter<T> : IPacketConverter where T: IPacketSerializable
 {

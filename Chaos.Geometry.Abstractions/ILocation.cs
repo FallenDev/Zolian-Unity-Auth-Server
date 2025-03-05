@@ -1,4 +1,4 @@
-﻿namespace Chaos.Geometry.Abstractions;
+﻿namespace Zolian.Geometry.Abstractions;
 
 /// <summary>
 ///     Defines a combination of a map id and a coordinate pair

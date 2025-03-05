@@ -1,13 +1,13 @@
-using Chaos.IO.Memory;
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Networking.Entities.Client;
-using Chaos.Packets.Abstractions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Networking.Entities.Client;
+using Zolian.Packets.Abstractions;
+using Zolian.Packets.Abstractions.Memory;
 
-namespace Chaos.Networking.Converters.Client;
+namespace Zolian.Networking.Converters.Client;
 
 public sealed class DeleteCharacterConverter : PacketConverterBase<DeleteCharacterArgs>
 {
-    public override byte OpCode => (byte)ClientOpCode.OnClientLogin;
+    public override byte OpCode => (byte)ClientOpCode.DeleteCharacter;
 
     public override DeleteCharacterArgs Deserialize(ref SpanReader reader)
     {

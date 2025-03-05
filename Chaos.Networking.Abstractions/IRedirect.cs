@@ -1,7 +1,7 @@
 using System.Net;
 using Chaos.DarkAges.Definitions;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Represents an object used to instruct and track a client during a redirect operation

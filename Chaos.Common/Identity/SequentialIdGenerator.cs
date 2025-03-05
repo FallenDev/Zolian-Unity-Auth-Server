@@ -1,7 +1,7 @@
 using System.Numerics;
-using Chaos.Common.Abstractions;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Identity;
+namespace Zolian.Common.Identity;
 
 /// <summary>
 ///     A generic class for generating unique sequential numeric identifiers.

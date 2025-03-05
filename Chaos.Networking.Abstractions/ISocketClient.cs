@@ -1,13 +1,10 @@
-using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
+using Zolian.Packets;
+using Zolian.Packets.Abstractions;
 
-using Chaos.Common.Synchronization;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
-
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for an object that has the ability to send and receive packets over a socket connection.
@@ -43,7 +40,7 @@ public interface ISocketClient
 
     /// <summary>
     ///     Disconnects the client from the server and calls the
-    ///     <see cref="Chaos.Networking.Abstractions.ISocketClient.OnDisconnected" /> event.
+    ///     <see cref="OnDisconnected" /> event.
     /// </summary>
     void Disconnect();
 
@@ -64,7 +61,7 @@ public interface ISocketClient
     ///     The object to be serialized and sent.
     /// </param>
     /// <typeparam name="T">
-    ///     The type must inherit <see cref="Chaos.Packets.Abstractions.IPacketSerializable" /> and have a
+    ///     The type must inherit <see cref="IPacketSerializable" /> and have a
     ///     <see cref="IPacketConverter{T}" /> created for it.
     /// </typeparam>
     void Send<T>(T obj) where T : IPacketSerializable;

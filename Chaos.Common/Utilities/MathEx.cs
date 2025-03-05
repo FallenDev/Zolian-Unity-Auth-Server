@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A static utility for performing math operations

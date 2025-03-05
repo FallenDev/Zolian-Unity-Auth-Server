@@ -1,6 +1,6 @@
-using Chaos.Packets;
+using Zolian.Packets;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for server that presents a list of available login servers to connect to

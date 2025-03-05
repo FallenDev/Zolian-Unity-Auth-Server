@@ -1,4 +1,4 @@
-using Chaos.Networking.Abstractions;
+using Zolian.Networking.Abstractions;
 
 namespace Darkages.Network.Client.Abstractions;
 

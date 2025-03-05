@@ -1,8 +1,8 @@
-﻿using Chaos.Networking.Abstractions;
-using Darkages.Network.Client.Abstractions;
+﻿using Darkages.Network.Client.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Net.Sockets;
+using Zolian.Networking.Abstractions;
 
 namespace Darkages.Network.Server
 {

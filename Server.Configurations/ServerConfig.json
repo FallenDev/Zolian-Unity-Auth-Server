@@ -42,14 +42,15 @@
     // Default Map: 7000, X: 7, Y: 23
     "StartingMap": 7000,
     "StartingPosition": {
-      "X": 7,
-      "Y": 23
+      "X": 0,
+      "Y": 0,
+      "Z": 0
     },
 
     // Limbo map used during world server transitions
-    // Default Map: 1001, X: 5, Y: 5
-    "TransitionPointX": 5,
-    "TransitionPointY": 5,
+    "TransitionPointX": 0,
+    "TransitionPointY": 0,
+    "TransitionPointZ": 0,
     "TransitionZone": 1001,
 
     // Scripts
@@ -105,8 +106,9 @@
     // Default Map: 23352, X: 21, Y: 21, CanMove?: false
     "DeathMap": 23352,
     "CanMoveDuringReap": false,
-    "DeathMapX": 21,
-    "DeathMapY": 21,
+    "DeathMapX": 0,
+    "DeathMapY": 0,
+    "DeathMapZ": 0,
 
     // Monsters | NPCs
     // Seconds to wait until mundanes respawn
@@ -185,14 +187,6 @@
     // Default: "learning_predicates"
     "DevModeExemptions": [
       "learning_predicates"
-    ],
-
-    // Redirects
-    "ReservedRedirects": [
-      {
-        "Id": 1,
-        "Name": "Zolian Beta"
-      }
     ],
 
     // Check Packet 00

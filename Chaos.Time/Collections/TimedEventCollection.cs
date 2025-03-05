@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
-using Chaos.Time;
-using Chaos.Time.Abstractions;
-using Chaos.Time.Converters;
+using Zolian.Time;
+using Zolian.Time.Abstractions;
+using Zolian.Time.Converters;
 
 // ReSharper disable once CheckNamespace
 namespace Chaos.Collections.Time;

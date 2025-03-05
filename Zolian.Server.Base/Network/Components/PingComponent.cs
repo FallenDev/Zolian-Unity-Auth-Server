@@ -40,11 +40,12 @@ public class PingComponent(WorldServer server) : WorldServerComponent(server)
 
     private static void Ping()
     {
-        Parallel.ForEach(Server.Aislings, (player) =>
-        {
-            if (player?.Client == null) return;
-            if (!player.LoggedIn) return;
-            player.Client.SendHeartBeat(0x20, 0x14);
-        });
+        //ToDo: Change to each connected World Client
+        //Parallel.ForEach(Server.Aislings, (player) =>
+        //{
+        //    if (player?.Client == null) return;
+        //    if (!player.LoggedIn) return;
+        //    player.Client.SendHeartBeat(0x20, 0x14);
+        //});
     }
 }

@@ -1,4 +1,4 @@
-namespace Chaos.Time.Abstractions;
+namespace Zolian.Time.Abstractions;
 
 /// <summary>
 ///     Defines a pattern for a timer that utilizes a time delta to increment the timer

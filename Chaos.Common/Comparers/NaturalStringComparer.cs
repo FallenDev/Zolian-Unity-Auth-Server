@@ -1,4 +1,4 @@
-namespace Chaos.Common.Comparers;
+namespace Zolian.Common.Comparers;
 
 /// <summary>
 ///     A natural string comparer intended to work similarly to how windows orders files. Strings with numbers will be

@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
-using Chaos.Geometry.Abstractions;
-using Chaos.Geometry.Definitions;
-using Chaos.Geometry.JsonConverters;
+using Zolian.Geometry.Abstractions;
+using Zolian.Geometry.Definitions;
+using Zolian.Geometry.JsonConverters;
 
-namespace Chaos.Geometry;
+namespace Zolian.Geometry;
 
 /// <inheritdoc cref="ILocation" />
 [JsonConverter(typeof(LocationConverter))]
@@ -81,8 +81,8 @@ public sealed record Location : ILocation, IEquatable<ILocation>
     }
 
     /// <summary>
-    ///     Creates a new <see cref="Chaos.Geometry.Location" /> from an existing
-    ///     <see cref="Chaos.Geometry.Abstractions.ILocation" />
+    ///     Creates a new <see cref="Location" /> from an existing
+    ///     <see cref="ILocation" />
     /// </summary>
     /// <param name="location">
     ///     An implementation of ILocation

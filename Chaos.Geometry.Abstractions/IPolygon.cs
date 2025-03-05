@@ -1,4 +1,4 @@
-﻿namespace Chaos.Geometry.Abstractions;
+﻿namespace Zolian.Geometry.Abstractions;
 
 /// <summary>
 ///     Represents a polygon with any number of sides

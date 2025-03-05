@@ -1,13 +1,11 @@
-﻿using Darkages.Models;
-
+﻿using System;
+using Darkages.Network.Server;
+using Darkages.Network.Server.Abstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ServerOptions = Darkages.Models.ServerOptions;
 
-using System;
-using Darkages.Network.Server.Abstractions;
-using Darkages.Network.Server;
-
-namespace Zolian.GameServer;
+namespace Zolian;
 
 public interface IServer;
 

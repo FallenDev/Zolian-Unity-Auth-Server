@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Contains extension methods for any object

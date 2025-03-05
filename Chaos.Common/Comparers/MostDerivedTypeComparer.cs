@@ -1,4 +1,4 @@
-namespace Chaos.Common.Comparers;
+namespace Zolian.Common.Comparers;
 
 /// <summary>
 ///     Compares two types to determine which is the most derived.

@@ -1,10 +1,8 @@
-using Chaos.NLog.Logging.Definitions;
-using Chaos.NLog.Logging.Extensions;
-using Chaos.Time.Abstractions;
 using Microsoft.Extensions.Logging;
 using TDigestNet;
+using Zolian.Time.Abstractions;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     Monitors the execution time of a tight loop. Logs output so the used has better insight into how long execution is
@@ -95,8 +93,7 @@ public sealed class DeltaMonitor : IDeltaUpdatable
 
                 //depending on how the loop is performing, log the output at different levels
                 if ((average > MaxDelta) || (max > 250))
-                    Logger.WithTopics(Topics.Entities.DeltaMonitor, Topics.Actions.Update)
-                          .LogError(
+                    Logger.LogError(
                               FORMAT,
                               Name,
                               average,
@@ -105,8 +102,7 @@ public sealed class DeltaMonitor : IDeltaUpdatable
                               max,
                               count);
                 else if ((upperPct > (MaxDelta / 2)) || (max > 100))
-                    Logger.WithTopics(Topics.Entities.DeltaMonitor, Topics.Actions.Update)
-                          .LogWarning(
+                    Logger.LogWarning(
                               FORMAT,
                               Name,
                               average,
@@ -115,8 +111,7 @@ public sealed class DeltaMonitor : IDeltaUpdatable
                               max,
                               count);
                 else
-                    Logger.WithTopics(Topics.Entities.DeltaMonitor, Topics.Actions.Update)
-                          .LogTrace(
+                    Logger.LogTrace(
                               FORMAT,
                               Name,
                               average,

@@ -1,9 +1,9 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Text.Json.Serialization;
-using Chaos.Geometry.Abstractions;
-using Chaos.Geometry.JsonConverters;
+using Zolian.Geometry.Abstractions;
+using Zolian.Geometry.JsonConverters;
 
-namespace Chaos.Geometry;
+namespace Zolian.Geometry;
 
 /// <inheritdoc cref="IPolygon" />
 [JsonConverter(typeof(PolygonConverter))]

@@ -1,9 +1,9 @@
-using Chaos.Geometry.Abstractions;
-using Chaos.Geometry.Abstractions.Definitions;
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Packets.Abstractions;
+using Zolian.Geometry.Abstractions;
+using Zolian.Geometry.Abstractions.Definitions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
 ///     Represents the serialization of the <see cref="ServerOpCode.CreatureWalk" /> packet

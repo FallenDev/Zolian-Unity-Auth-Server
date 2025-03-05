@@ -1,6 +1,6 @@
-using Chaos.Time.Abstractions;
+using Zolian.Time.Abstractions;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     A counter that resets each time a specified time period has elapsed, utilizing a delta time value

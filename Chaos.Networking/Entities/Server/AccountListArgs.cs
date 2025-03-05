@@ -1,7 +1,6 @@
-using Chaos.DarkAges.Definitions;
-using Chaos.Packets.Abstractions;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 public sealed record AccountListArgs : IPacketSerializable
 {

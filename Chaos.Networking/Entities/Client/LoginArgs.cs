@@ -1,6 +1,6 @@
-using Chaos.Packets.Abstractions;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Entities.Client;
+namespace Zolian.Networking.Entities.Client;
 
 public sealed record LoginArgs : IPacketSerializable
 {

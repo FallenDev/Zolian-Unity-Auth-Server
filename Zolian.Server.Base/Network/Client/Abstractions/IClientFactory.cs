@@ -1,5 +1,5 @@
-﻿using Chaos.Networking.Abstractions;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
+using Zolian.Networking.Abstractions;
 
 namespace Darkages.Network.Client.Abstractions
 {

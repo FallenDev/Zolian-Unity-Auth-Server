@@ -1,10 +1,11 @@
-using Chaos.DarkAges.Definitions;
-using Chaos.IO.Memory;
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Networking.Entities.Client;
-using Chaos.Packets.Abstractions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Networking.Definitions;
+using Zolian.Networking.Entities.Client;
+using Zolian.Packets.Abstractions;
+using Zolian.Packets.Abstractions.Memory;
+using BaseClass = Chaos.DarkAges.Definitions.BaseClass;
 
-namespace Chaos.Networking.Converters.Client;
+namespace Zolian.Networking.Converters.Client;
 
 public sealed class CreateCharacterConverter : PacketConverterBase<CreateCharacterArgs>
 {
@@ -15,7 +16,7 @@ public sealed class CreateCharacterConverter : PacketConverterBase<CreateCharact
         var id = reader.ReadInt64();
         var username = reader.ReadString();
         var className = (BaseClass)reader.ReadByte();
-        var race = (BaseRace)reader.ReadByte();
+        var race = (Race)reader.ReadByte();
         var sex = (Sex)reader.ReadByte();
 
         return new CreateCharacterArgs

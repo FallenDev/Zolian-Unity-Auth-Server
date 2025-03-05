@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace Chaos.Common.Synchronization;
+namespace Zolian.Common.Synchronization;
 
 /// <summary>
 ///     The same as <see cref="System.Threading.SemaphoreSlim" />, except with first-in-first-out (FIFO) behavior.

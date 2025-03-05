@@ -1,16 +1,14 @@
-﻿using Chaos.Networking.Abstractions;
-using Chaos.Networking.Entities.Server;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
-
-using Darkages.Sprites;
-
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 using Microsoft.Extensions.Logging;
 
 using System.Net.Sockets;
 using Darkages.Enums;
+using Darkages.Sprites.Entity;
+using Zolian.Networking.Abstractions;
+using Zolian.Networking.Entities.Server;
+using Zolian.Packets;
+using Zolian.Packets.Abstractions;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
 
 namespace Darkages.Network.Client;

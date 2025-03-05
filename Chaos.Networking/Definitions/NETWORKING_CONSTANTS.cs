@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using Chaos.DarkAges.Definitions;
 
-namespace Chaos.Networking.Definitions;
+namespace Zolian.Networking.Definitions;
 
 /// <summary>
 ///     Represents the constants used by the networking layer

@@ -1,7 +1,7 @@
-using Chaos.Common.Abstractions;
 using Microsoft.Extensions.Options;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Configuration;
+namespace Zolian.Common.Configuration;
 
 /// <summary>
 ///     Configures an options object that implements <see cref="IDirectoryBound" /> to use the staging directory

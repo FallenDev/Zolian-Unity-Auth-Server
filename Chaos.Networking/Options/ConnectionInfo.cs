@@ -1,7 +1,7 @@
 using System.Net;
-using Chaos.Networking.Abstractions;
+using Zolian.Networking.Abstractions;
 
-namespace Chaos.Networking.Options;
+namespace Zolian.Networking.Options;
 
 /// <summary>
 ///     Represents the information needed to connect to a server

@@ -1,6 +1,6 @@
 using System.Collections.Frozen;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A helper class that simulates switch-expression behavior on type objects

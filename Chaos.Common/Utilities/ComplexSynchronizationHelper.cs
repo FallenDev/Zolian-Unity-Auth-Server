@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Chaos.Common.Abstractions;
-using Chaos.Common.Synchronization;
+using Zolian.Common.Abstractions;
+using Zolian.Common.Synchronization;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A helper class for synchronizing multiple semaphores at once

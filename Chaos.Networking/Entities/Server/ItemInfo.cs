@@ -1,6 +1,6 @@
 using Chaos.DarkAges.Definitions;
 
-namespace Chaos.Networking.Entities.Server;
+namespace Zolian.Networking.Entities.Server;
 
 /// <summary>
 ///     Represents the serialization of an item used by several packets

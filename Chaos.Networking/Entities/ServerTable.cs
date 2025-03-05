@@ -1,9 +1,7 @@
-using System.Text;
-using Chaos.IO.Compression;
-using Chaos.IO.Memory;
-using Chaos.Networking.Abstractions;
+using Zolian.Networking.Abstractions;
+using Zolian.Packets.Abstractions.Memory;
 
-namespace Chaos.Networking.Entities;
+namespace Zolian.Networking.Entities;
 
 /// <inheritdoc />
 public sealed class ServerTable : IServerTable

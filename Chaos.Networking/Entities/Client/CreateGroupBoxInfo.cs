@@ -1,6 +1,6 @@
-using Chaos.Networking.Abstractions.Definitions;
+using Zolian.Networking.Abstractions.Definitions;
 
-namespace Chaos.Networking.Entities.Client;
+namespace Zolian.Networking.Entities.Client;
 
 /// <summary>
 ///     Represents the serialization of the group box in the <see cref="ClientOpCode.GroupInvite" /> packet

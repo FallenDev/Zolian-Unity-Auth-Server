@@ -1,4 +1,4 @@
-namespace Chaos.Common.Abstractions;
+namespace Zolian.Common.Abstractions;
 
 /// <summary>
 ///     Defines a pattern of dynamic retreival from an underlying collection

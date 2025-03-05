@@ -1,6 +1,6 @@
-using Chaos.Time.Abstractions;
+using Zolian.Time.Abstractions;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     A timer that runs a sequence of timers in order. When one timer has elapsed, the next timer begins elapsing. When

@@ -1,6 +1,6 @@
 // ReSharper disable AsyncVoidLambda
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A utility class used to run tasks synchronously. Class was pulled from the microsoft unity mixed reality toolkit.

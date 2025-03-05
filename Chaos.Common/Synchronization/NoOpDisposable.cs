@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Chaos.Common.Abstractions;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Synchronization;
+namespace Zolian.Common.Synchronization;
 
 /// <summary>
 ///     A class that does nothing when disposed

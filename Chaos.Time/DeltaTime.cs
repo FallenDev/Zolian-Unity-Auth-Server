@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     Provides an easy way to obtain a high-precision time-based delta value.

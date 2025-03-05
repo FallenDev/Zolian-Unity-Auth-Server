@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Chaos.Common.Abstractions;
-using Chaos.Common.Converters;
+using Zolian.Common.Abstractions;
+using Zolian.Common.Converters;
 
 // ReSharper disable once CheckNamespace
 namespace Chaos.Collections.Common;

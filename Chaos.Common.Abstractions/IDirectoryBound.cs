@@ -1,4 +1,4 @@
-namespace Chaos.Common.Abstractions;
+namespace Zolian.Common.Abstractions;
 
 /// <summary>
 ///     Defines the pattern for an object that is bound to a base directory

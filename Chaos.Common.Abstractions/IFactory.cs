@@ -1,4 +1,4 @@
-namespace Chaos.Common.Abstractions;
+namespace Zolian.Common.Abstractions;
 
 /// <summary>
 ///     Represents a factory that can create an instance of <typeparamref name="T" />.

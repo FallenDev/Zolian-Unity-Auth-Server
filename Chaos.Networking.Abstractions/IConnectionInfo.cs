@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines a configuration object thats contains connection information for a server

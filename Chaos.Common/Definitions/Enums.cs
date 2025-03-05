@@ -1,5 +1,5 @@
 #pragma warning disable CS1591
-namespace Chaos.Common.Definitions;
+namespace Zolian.Common.Definitions;
 
 public enum RandomizationType
 {

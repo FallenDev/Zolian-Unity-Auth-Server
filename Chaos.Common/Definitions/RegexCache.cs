@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Chaos.Common.Definitions;
+namespace Zolian.Common.Definitions;
 
 // ReSharper disable once PartialTypeWithSinglePart
 internal static partial class RegexCache

@@ -1,4 +1,4 @@
-namespace Chaos.Common.Synchronization;
+namespace Zolian.Common.Synchronization;
 
 /// <summary>
 ///     An object that offers subscription-style blocking synchronization by abusing the using pattern.

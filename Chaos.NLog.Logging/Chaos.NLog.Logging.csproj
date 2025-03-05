@@ -26,7 +26,7 @@
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Chaos.Extensions.Common\Chaos.Extensions.Common.csproj" />
+		<ProjectReference Include="..\Chaos.Extensions.Common\Zolian.Extensions.Common.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<InternalsVisibleTo Include="Chaos.Testing.Infrastructure" />

@@ -1,6 +1,6 @@
-using Chaos.Time.Abstractions;
+using Zolian.Time.Abstractions;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     A timer that utilizes a delta time value to increment elapsed time

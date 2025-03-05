@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Chaos.Collections.Time;
 
-namespace Chaos.Time.Converters;
+namespace Zolian.Time.Converters;
 
 /// <summary>
 ///     A converter for <see cref="TimedEventCollection" />

@@ -1,8 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Chaos.Geometry.Abstractions;
+using Zolian.Geometry.Abstractions;
 
-namespace Chaos.Geometry.JsonConverters;
+namespace Zolian.Geometry.JsonConverters;
 
 /// <inheritdoc />
 public sealed class LocationConverter : JsonConverter<Location>

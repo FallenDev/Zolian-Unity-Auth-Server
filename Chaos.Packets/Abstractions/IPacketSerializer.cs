@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Chaos.Packets.Abstractions;
+namespace Zolian.Packets.Abstractions;
 
 /// <summary>
 ///     Defines a contract for a packet serializer used to serialize and deserialize packets.

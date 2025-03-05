@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Chaos.Collections.Common;
 
-namespace Chaos.Common.Converters;
+namespace Zolian.Common.Converters;
 
 /// <summary>
 ///     A converter for <see cref="DynamicVars" />

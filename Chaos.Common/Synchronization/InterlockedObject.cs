@@ -1,6 +1,6 @@
-using Chaos.Common.Abstractions;
+using Zolian.Common.Abstractions;
 
-namespace Chaos.Common.Synchronization;
+namespace Zolian.Common.Synchronization;
 
 /// <summary>
 ///     A threadsafe object wrapper

@@ -1,13 +1,12 @@
-﻿using Chaos.Networking.Abstractions;
-using Chaos.Networking.Entities.Server;
-using Chaos.Packets;
-using Chaos.Packets.Abstractions;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 using Microsoft.Extensions.Logging;
 
 using System.Net.Sockets;
-using Darkages.Network.Server;
+using Zolian.Networking.Abstractions;
+using Zolian.Networking.Entities.Server;
+using Zolian.Packets;
+using Zolian.Packets.Abstractions;
 using ILobbyClient = Darkages.Network.Client.Abstractions.ILobbyClient;
 
 namespace Darkages.Network.Client;

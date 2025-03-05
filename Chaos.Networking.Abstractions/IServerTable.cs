@@ -1,4 +1,4 @@
-namespace Chaos.Networking.Abstractions;
+namespace Zolian.Networking.Abstractions;
 
 /// <summary>
 ///     Defines the requirements for a server table. The server table is used to display available servers to connect to

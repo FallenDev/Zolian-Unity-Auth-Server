@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
-using Chaos.Common.Abstractions;
-using Chaos.Common.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Zolian.Common.Abstractions;
+using Zolian.Common.Services;
 
-namespace Chaos.Extensions.Common;
+namespace Zolian.Extensions.Common;
 
 /// <summary>
 ///     Provides extension methods for <see cref="IServiceCollection" />.

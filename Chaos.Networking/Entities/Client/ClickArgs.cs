@@ -1,9 +1,9 @@
 using Chaos.DarkAges.Definitions;
-using Chaos.Geometry.Abstractions;
-using Chaos.Networking.Abstractions.Definitions;
-using Chaos.Packets.Abstractions;
+using Zolian.Geometry.Abstractions;
+using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Packets.Abstractions;
 
-namespace Chaos.Networking.Entities.Client;
+namespace Zolian.Networking.Entities.Client;
 
 /// <summary>
 ///     Represents the serialization of the <see cref="ClientOpCode.Click" /> packet

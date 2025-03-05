@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Chaos.Common.Converters;
+namespace Zolian.Common.Converters;
 
 /// <summary>
 ///     A converter for <see cref="IEnumerable{T}" />

@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Chaos.Common.Abstractions;
+namespace Zolian.Common.Abstractions;
 
 /// <summary>
 ///     A generic class for generating unique identifiers.

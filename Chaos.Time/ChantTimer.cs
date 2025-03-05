@@ -1,6 +1,6 @@
-using Chaos.Time.Abstractions;
+using Zolian.Time.Abstractions;
 
-namespace Chaos.Time;
+namespace Zolian.Time;
 
 /// <summary>
 ///     Keeps track of when spell chants start and end, and validates whether or not a spell should be allowed to finish

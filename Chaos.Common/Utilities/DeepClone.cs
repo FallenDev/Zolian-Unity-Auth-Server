@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Chaos.Extensions.Common;
 
-namespace Chaos.Common.Utilities;
+namespace Zolian.Common.Utilities;
 
 /// <summary>
 ///     A utlity class for creating deep clones of objects.

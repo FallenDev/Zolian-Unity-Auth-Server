@@ -1,4 +1,4 @@
-namespace Chaos.Networking.Options;
+namespace Zolian.Networking.Options;
 
 /// <summary>
 ///     A marker type for ConnectionInfo objects used as options objects for servers

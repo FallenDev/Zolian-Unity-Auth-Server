@@ -1,9 +1,9 @@
-﻿﻿using System.Text.Json.Serialization;
-using Chaos.Geometry.Abstractions;
-using Chaos.Geometry.Definitions;
-using Chaos.Geometry.JsonConverters;
+﻿using System.Text.Json.Serialization;
+using Zolian.Geometry.Abstractions;
+using Zolian.Geometry.Definitions;
+using Zolian.Geometry.JsonConverters;
 
-namespace Chaos.Geometry;
+namespace Zolian.Geometry;
 
 /// <inheritdoc cref="IPoint" />
 [JsonConverter(typeof(PointConverter))]

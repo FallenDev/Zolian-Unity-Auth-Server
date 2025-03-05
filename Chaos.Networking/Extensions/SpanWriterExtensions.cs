@@ -1,5 +1,5 @@
-using Chaos.Geometry.Abstractions;
-using Chaos.IO.Memory;
+using Zolian.Geometry.Abstractions;
+using Zolian.Packets.Abstractions.Memory;
 
 // ReSharper disable once CheckNamespace
 namespace Chaos.Extensions.Networking;
