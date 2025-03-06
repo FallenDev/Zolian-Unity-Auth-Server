@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Provides extension methods for <see cref="System.Type" />.

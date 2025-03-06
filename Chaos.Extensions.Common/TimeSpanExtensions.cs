@@ -2,7 +2,7 @@ using System.Text;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
 
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Provides extension methods for <see cref="System.TimeSpan" />

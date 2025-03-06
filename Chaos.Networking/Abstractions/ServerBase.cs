@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Zolian.Common.Synchronization;
-using Zolian.Extensions.Common;
+using Zolian.Extensions;
 using Zolian.Networking.Options;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;

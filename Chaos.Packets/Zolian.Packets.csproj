@@ -20,6 +20,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Chaos.Extensions.Common\Zolian.Extensions.Common.csproj" />
+		<ProjectReference Include="..\Chaos.Extensions.Common\Zolian.Extensions.csproj" />
 		<ProjectReference Include="..\Chaos.Packets.Abstractions\Zolian.Packets.Abstractions.csproj" />
 	</ItemGroup>
 	<ItemGroup>

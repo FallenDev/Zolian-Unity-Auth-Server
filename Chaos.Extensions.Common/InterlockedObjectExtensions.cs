@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Zolian.Common.Abstractions;
 
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Provides extension methods for <see cref="IInterlockedObject{T}" />.

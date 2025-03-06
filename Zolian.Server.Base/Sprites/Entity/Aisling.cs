@@ -1,14 +1,13 @@
-﻿using Darkages.Enums;
-using Darkages.Models;
-using Darkages.Network.Client;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Numerics;
-using Darkages.Sprites.Abstractions;
-using ServiceStack;
+using Darkages.Enums;
+using Darkages.Models;
+using Darkages.Network.Client;
 using Darkages.Network.Server;
+using Darkages.Sprites.Abstractions;
 
-namespace Darkages.Sprites;
+namespace Darkages.Sprites.Entity;
 
 public record KillRecord : IEqualityOperators<KillRecord, KillRecord, bool>
 {

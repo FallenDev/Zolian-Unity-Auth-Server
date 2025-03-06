@@ -1,4 +1,4 @@
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Provides extensions methods for <see cref="System.Threading.CancellationToken" />.

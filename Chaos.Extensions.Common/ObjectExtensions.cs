@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Contains extension methods for any object

@@ -6,6 +6,7 @@ using System.Data;
 using System.Numerics;
 using Darkages.Network.Server;
 using Darkages.Sprites;
+using Darkages.Sprites.Entity;
 using Zolian.Common.Identity;
 
 namespace Darkages.Database;

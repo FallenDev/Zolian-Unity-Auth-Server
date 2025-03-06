@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Sockets;
 using Darkages.Enums;
 using Darkages.Sprites;
+using Darkages.Sprites.Entity;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Entities.Server;
 using Zolian.Packets;

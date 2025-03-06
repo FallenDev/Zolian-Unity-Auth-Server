@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Zolian.Common.Abstractions;
 using Zolian.Common.Services;
 
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Provides extension methods for <see cref="IServiceCollection" />.

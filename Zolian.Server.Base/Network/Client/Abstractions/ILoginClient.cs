@@ -1,4 +1,5 @@
 using Darkages.Sprites;
+using Darkages.Sprites.Entity;
 using JetBrains.Annotations;
 using Zolian.Networking.Abstractions;
 

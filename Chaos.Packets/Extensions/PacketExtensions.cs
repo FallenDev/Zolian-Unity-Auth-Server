@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using Zolian.Extensions.Common;
-using Zolian.Packets;
+using Zolian.Extensions;
 using Zolian.Packets.Abstractions;
 
-// ReSharper disable once CheckNamespace
-namespace Chaos.Extensions.DependencyInjection;
+namespace Zolian.Packets.Extensions;
 
 /// <summary>
 ///     <see cref="Chaos.Packets" /> DI extensions

@@ -20,7 +20,7 @@
 		<IsTrimmable>False</IsTrimmable>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Chaos.Extensions.Common\Zolian.Extensions.Common.csproj" />
+		<ProjectReference Include="..\Chaos.Extensions.Common\Zolian.Extensions.csproj" />
 		<ProjectReference Include="..\Chaos.Geometry\Zolian.Geometry.csproj" />
 		<ProjectReference Include="..\Chaos.Networking.Abstractions\Zolian.Networking.Abstractions.csproj" />
 		<ProjectReference Include="..\Chaos.Packets\Zolian.Packets.csproj" />

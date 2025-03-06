@@ -30,8 +30,4 @@
 		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.1" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<InternalsVisibleTo Include="Chaos.Testing.Infrastructure" />
-	</ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-namespace Zolian.Extensions.Common;
+namespace Zolian.Extensions;
 
 /// <summary>
 ///     Provides a set of extension methods for <see cref="Func{TResult}" /> instances.

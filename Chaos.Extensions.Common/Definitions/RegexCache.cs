@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 // ReSharper disable ArrangeAttributes
 
-namespace Zolian.Extensions.Common.Definitions;
+namespace Zolian.Extensions.Definitions;
 
 // ReSharper disable once PartialTypeWithSinglePart
 internal static partial class RegexCache

@@ -7,7 +7,7 @@ using ServiceStack;
 using ServerOptions = Zolian.Networking.Options.ServerOptions;
 using ILobbyClient = Darkages.Network.Client.Abstractions.ILobbyClient;
 using Darkages.Network.Client.Abstractions;
-using Zolian.Extensions.Common;
+using Zolian.Extensions;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Client;
