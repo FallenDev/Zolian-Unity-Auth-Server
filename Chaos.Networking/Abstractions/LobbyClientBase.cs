@@ -22,7 +22,4 @@ public abstract class LobbyClientBase : ConnectedClientBase, ILobbyClient
 
     /// <inheritdoc />
     public virtual void SendConnectionInfo(ConnectionInfoArgs args) => Send(args);
-
-    /// <inheritdoc />
-    public virtual void SendServerTableResponse(ServerTableResponseArgs args) => Send(args);
 }

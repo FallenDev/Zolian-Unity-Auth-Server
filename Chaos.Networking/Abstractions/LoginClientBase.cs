@@ -22,10 +22,4 @@ public abstract class LoginClientBase : ConnectedClientBase, ILoginClient
     
     /// <inheritdoc />
     public virtual void SendLoginMessage(LoginMessageArgs args) => Send(args);
-
-    /// <inheritdoc />
-    public virtual void SendLoginNotice(LoginNoticeArgs args) => Send(args);
-
-    /// <inheritdoc />
-    public virtual void SendMetaData(MetaDataArgs args) => Send(args);
 }

@@ -11,9 +11,4 @@ public interface ILobbyClient : IConnectedClient
     ///     Sends the connection information to the client.
     /// </summary>
     void SendConnectionInfo(ConnectionInfoArgs args);
-
-    /// <summary>
-    ///     Sends the server table response to the client.
-    /// </summary>
-    void SendServerTableResponse(ServerTableResponseArgs args);
 }

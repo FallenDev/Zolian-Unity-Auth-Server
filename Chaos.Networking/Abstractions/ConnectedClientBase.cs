@@ -31,31 +31,4 @@ public abstract class ConnectedClientBase : SocketClientBase, IConnectedClient
 
         Send(args);
     }
-
-    /// <inheritdoc />
-    public virtual void SendHeartBeat(byte first, byte second)
-    {
-        var args = new HeartBeatResponseArgs
-        {
-            First = first,
-            Second = second
-        };
-
-        Send(args);
-    }
-
-    /// <inheritdoc />
-    public virtual void SendRedirect(IRedirect redirect)
-    {
-        var args = new RedirectArgs
-        {
-            EndPoint = redirect.EndPoint,
-            Seed = redirect.Seed,
-            Key = redirect.Key,
-            Name = redirect.Name,
-            Id = redirect.Id
-        };
-
-        Send(args);
-    }
 }

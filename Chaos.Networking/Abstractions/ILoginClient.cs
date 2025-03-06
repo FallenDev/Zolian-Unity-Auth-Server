@@ -11,14 +11,4 @@ public interface ILoginClient : IConnectedClient
     ///     Sends a login message to the client.
     /// </summary>
     void SendLoginMessage(LoginMessageArgs args);
-
-    /// <summary>
-    ///     Sends a login notice to the client.
-    /// </summary>
-    void SendLoginNotice(LoginNoticeArgs args);
-
-    /// <summary>
-    ///     Sends metadata to the client.
-    /// </summary>
-    void SendMetaData(MetaDataArgs args);
 }
