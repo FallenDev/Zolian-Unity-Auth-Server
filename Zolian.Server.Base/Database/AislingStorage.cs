@@ -4,17 +4,16 @@ using Darkages.Enums;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Numerics;
-using Darkages.Models;
-using Microsoft.Extensions.Logging;
 using Darkages.Network.Server;
+using Darkages.Sprites;
 using Zolian.Common.Identity;
-using Zolian.Common.Synchronization;
 
 namespace Darkages.Database;
 
 public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingStorage, bool>
 {
     public const string ConnectionString = "Data Source=.;Initial Catalog=ZolianUnityPlayers;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True;";
+    private const string EncryptedConnectionString = "Data Source=.;Initial Catalog=ZolianPlayers;Integrated Security=True;Column Encryption Setting=enabled;TrustServerCertificate=True;MultipleActiveResultSets=True;";
 
     #region LoginServer Operations
 
@@ -23,14 +22,6 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// </summary>
     public async Task Create(Aisling obj)
     {
-        await using var @lock = await CreateLock.WaitAsync(TimeSpan.FromSeconds(1));
-
-        if (@lock == null)
-        {
-            ServerSetup.EventsLogger("Failed to acquire lock for Create", LogLevel.Error);
-            return;
-        }
-
         try
         {
             // First find an account. If it doesn't exist, create one.
@@ -101,7 +92,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
         try
         {
-            var sConn = ConnectToDatabase(ConnectionAccountString);
+            var sConn = ConnectToDatabase(ConnectionString);
             var values = new { Steam64 = steamId };
             var records = await sConn.QueryAsync<Aisling>("[SelectAccount]", values, commandType: CommandType.StoredProcedure);
             account = records.AsList();
@@ -120,14 +111,6 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// </summary>
     public async Task<Aisling> LoadAisling(string name, long serial)
     {
-        await using var @lock = await LoadLock.WaitAsync(TimeSpan.FromSeconds(1));
-
-        if (@lock == null)
-        {
-            ServerSetup.EventsLogger("Failed to acquire lock for Create", LogLevel.Error);
-            return default;
-        }
-
         var aisling = new Aisling();
 
         try
@@ -147,7 +130,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
         return aisling;
     }
-    
+
     #endregion
 
     #region Player Save Methods
@@ -182,6 +165,143 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
         }
 
         return true;
+    }
+
+    private static Task PlayerSaveRoutine(Aisling player, SqlConnection connection)
+    {
+        if (player.Client == null) return Task.CompletedTask;
+        //player.Client.LastSave = DateTime.UtcNow;
+        var dt = PlayerDataTable();
+        //var qDt = QuestDataTable();
+        var cDt = ComboScrollDataTable();
+        var iDt = ItemsDataTable();
+        var skillDt = SkillDataTable();
+        var spellDt = SpellDataTable();
+        var buffDt = BuffsDataTable();
+        var debuffDt = DeBuffsDataTable();
+        dt = PlayerStatSave(player, dt);
+        //qDt = PlayerQuestSave(player, qDt);
+        //cDt = PlayerComboSave(player, cDt);
+        //iDt = PlayerItemSave(player, iDt);
+        //skillDt = PlayerSkillSave(player, skillDt);
+        //spellDt = PlayerSpellSave(player, spellDt);
+        //buffDt = PlayerBuffSave(player, buffDt);
+        //debuffDt = PlayerDebuffSave(player, debuffDt);
+
+        using (var cmd = new SqlCommand("PlayerSave", connection))
+        {
+            cmd.CommandType = CommandType.StoredProcedure;
+            var param = cmd.Parameters.AddWithValue("@Players", dt);
+            param.SqlDbType = SqlDbType.Structured;
+            param.TypeName = "dbo.PlayerType";
+            cmd.ExecuteNonQuery();
+        }
+
+        //using (var cmd2 = new SqlCommand("PlayerQuestSave", connection))
+        //{
+        //    cmd2.CommandType = CommandType.StoredProcedure;
+        //    var param2 = cmd2.Parameters.AddWithValue("@Quests", qDt);
+        //    param2.SqlDbType = SqlDbType.Structured;
+        //    param2.TypeName = "dbo.QuestType";
+        //    cmd2.ExecuteNonQuery();
+        //}
+
+        //using (var cmd3 = new SqlCommand("PlayerComboSave", connection))
+        //{
+        //    cmd3.CommandType = CommandType.StoredProcedure;
+        //    var param3 = cmd3.Parameters.AddWithValue("@Combos", cDt);
+        //    param3.SqlDbType = SqlDbType.Structured;
+        //    param3.TypeName = "dbo.ComboType";
+        //    cmd3.ExecuteNonQuery();
+        //}
+
+        //using (var cmd4 = new SqlCommand("ItemUpsert", connection))
+        //{
+        //    cmd4.CommandType = CommandType.StoredProcedure;
+        //    var param4 = cmd4.Parameters.AddWithValue("@Items", iDt);
+        //    param4.SqlDbType = SqlDbType.Structured;
+        //    param4.TypeName = "dbo.ItemType";
+        //    cmd4.ExecuteNonQuery();
+        //}
+
+        //using (var cmd5 = new SqlCommand("PlayerSaveSkills", connection))
+        //{
+        //    cmd5.CommandType = CommandType.StoredProcedure;
+        //    var param5 = cmd5.Parameters.AddWithValue("@Skills", skillDt);
+        //    param5.SqlDbType = SqlDbType.Structured;
+        //    param5.TypeName = "dbo.SkillType";
+        //    cmd5.ExecuteNonQuery();
+        //}
+
+        //using (var cmd6 = new SqlCommand("PlayerSaveSpells", connection))
+        //{
+        //    cmd6.CommandType = CommandType.StoredProcedure;
+        //    var param6 = cmd6.Parameters.AddWithValue("@Spells", spellDt);
+        //    param6.SqlDbType = SqlDbType.Structured;
+        //    param6.TypeName = "dbo.SpellType";
+        //    cmd6.ExecuteNonQuery();
+        //}
+
+        //using (var cmd7 = new SqlCommand("BuffSave", connection))
+        //{
+        //    cmd7.CommandType = CommandType.StoredProcedure;
+        //    var param7 = cmd7.Parameters.AddWithValue("@Buffs", buffDt);
+        //    param7.SqlDbType = SqlDbType.Structured;
+        //    param7.TypeName = "dbo.BuffType";
+        //    cmd7.ExecuteNonQuery();
+        //}
+
+        //using (var cmd8 = new SqlCommand("DeBuffSave", connection))
+        //{
+        //    cmd8.CommandType = CommandType.StoredProcedure;
+        //    var param8 = cmd8.Parameters.AddWithValue("@Debuffs", debuffDt);
+        //    param8.SqlDbType = SqlDbType.Structured;
+        //    param8.TypeName = "dbo.DebuffType";
+        //    cmd8.ExecuteNonQuery();
+        //}
+
+        return Task.CompletedTask;
+    }
+
+    private static DataTable PlayerStatSave(Aisling obj, DataTable dt)
+    {
+        dt.Rows.Add(obj.Serial, obj.Created, obj.Username, obj.LoggedIn, obj.LastLogged, /*obj.X, obj.Y,*/ obj.CurrentMapId,
+            /*obj.Direction,*/ obj.CurrentHp, obj.BaseHp, obj.CurrentMp, obj.BaseMp, obj._ac,
+            obj._Regen, obj._Dmg, obj._Hit, obj._Mr, obj._Str, obj._Int, obj._Wis, obj._Con, obj._Dex, obj._Luck, obj.AbpLevel,
+            obj.AbpNext, obj.AbpTotal, obj.ExpLevel, obj.ExpNext, obj.ExpTotal, obj.Stage.ToString(), obj.JobClass.ToString(),
+            obj.Path.ToString(), obj.PastClass.ToString(), obj.Race.ToString(), obj.Afflictions.ToString(), obj.Gender.ToString(),
+            obj.HairColor, obj.HairStyle, obj.NameColor, obj.Nation, obj.Clan, obj.ClanRank, obj.ClanTitle,
+            obj.MonsterForm, obj.ActiveStatus.ToString(), obj.Flags.ToString(), obj.CurrentWeight, obj.World,
+            obj.Lantern, /*obj.IsInvisible,*/ obj.Resting.ToString(), obj.FireImmunity, obj.WaterImmunity, obj.WindImmunity, obj.EarthImmunity,
+            obj.LightImmunity, obj.DarkImmunity, obj.PoisonImmunity, obj.EnticeImmunity, obj.PartyStatus.ToString(), obj.RaceSkill,
+            obj.RaceSpell, obj.GameMaster, obj.ArenaHost, obj.Knight, obj.GoldPoints, obj.StatPoints, obj.GamePoints,
+            obj.BankedGold, obj.ArmorImg, obj.HelmetImg, obj.ShieldImg, obj.WeaponImg, obj.BootsImg, obj.HeadAccessoryImg, obj.Accessory1Img,
+            obj.Accessory2Img, obj.Accessory3Img, obj.Accessory1Color, obj.Accessory2Color, obj.Accessory3Color, obj.BodyColor, obj.BodySprite,
+            obj.FaceSprite, obj.OverCoatImg, obj.BootColor, obj.OverCoatColor, obj.Pants);
+
+        return dt;
+    }
+
+    private static DataTable PlayerQuestSave(Aisling obj, DataTable qDt)
+    {
+        qDt.Rows.Add(obj.Serial, obj.QuestManager.MailBoxNumber, obj.QuestManager.TutorialCompleted, obj.QuestManager.BetaReset, obj.QuestManager.ArtursGift, obj.QuestManager.CamilleGreetingComplete,
+            obj.QuestManager.ConnPotions, obj.QuestManager.CryptTerror, obj.QuestManager.CryptTerrorSlayed, obj.QuestManager.CryptTerrorContinued, obj.QuestManager.CryptTerrorContSlayed,
+            obj.QuestManager.NightTerror, obj.QuestManager.NightTerrorSlayed, obj.QuestManager.DreamWalking, obj.QuestManager.DreamWalkingSlayed, obj.QuestManager.Dar, obj.QuestManager.DarItem, obj.QuestManager.ReleasedTodesbaum,
+            obj.QuestManager.DrunkenHabit, obj.QuestManager.FionaDance, obj.QuestManager.Keela, obj.QuestManager.KeelaCount, obj.QuestManager.KeelaKill, obj.QuestManager.KeelaQuesting,
+            obj.QuestManager.KillerBee, obj.QuestManager.Neal, obj.QuestManager.NealCount, obj.QuestManager.NealKill, obj.QuestManager.AbelShopAccess, obj.QuestManager.PeteKill, obj.QuestManager.PeteComplete,
+            obj.QuestManager.SwampAccess, obj.QuestManager.SwampCount, obj.QuestManager.TagorDungeonAccess, obj.QuestManager.Lau, obj.QuestManager.BeltDegree, obj.QuestManager.MilethReputation,
+            obj.QuestManager.AbelReputation, obj.QuestManager.RucesionReputation, obj.QuestManager.SuomiReputation, obj.QuestManager.RionnagReputation, obj.QuestManager.OrenReputation,
+            obj.QuestManager.PietReputation, obj.QuestManager.LouresReputation, obj.QuestManager.UndineReputation, obj.QuestManager.TagorReputation, obj.QuestManager.BlackSmithing,
+            obj.QuestManager.BlackSmithingTier, obj.QuestManager.ArmorSmithing, obj.QuestManager.ArmorSmithingTier, obj.QuestManager.JewelCrafting, obj.QuestManager.JewelCraftingTier,
+            obj.QuestManager.StoneSmithing, obj.QuestManager.StoneSmithingTier, obj.QuestManager.ThievesGuildReputation, obj.QuestManager.AssassinsGuildReputation,
+            obj.QuestManager.AdventuresGuildReputation, obj.QuestManager.BeltQuest, obj.QuestManager.SavedChristmas, obj.QuestManager.RescuedReindeer, obj.QuestManager.YetiKilled, obj.QuestManager.UnknownStart, obj.QuestManager.PirateShipAccess,
+            obj.QuestManager.ScubaSchematics, obj.QuestManager.ScubaMaterialsQuest, obj.QuestManager.ScubaGearCrafted, obj.QuestManager.EternalLove, obj.QuestManager.EternalLoveStarted, obj.QuestManager.UnhappyEnding,
+            obj.QuestManager.HonoringTheFallen, obj.QuestManager.ReadTheFallenNotes, obj.QuestManager.GivenTarnishedBreastplate, obj.QuestManager.EternalBond, obj.QuestManager.ArmorCraftingCodex,
+            obj.QuestManager.ArmorApothecaryAccepted, obj.QuestManager.ArmorCodexDeciphered, obj.QuestManager.ArmorCraftingCodexLearned, obj.QuestManager.ArmorCraftingAdvancedCodexLearned,
+            obj.QuestManager.CthonicKillTarget, obj.QuestManager.CthonicFindTarget, obj.QuestManager.CthonicKillCompletions, obj.QuestManager.CthonicCleansingOne, obj.QuestManager.CthonicCleansingTwo,
+            obj.QuestManager.CthonicDepthsCleansing, obj.QuestManager.CthonicRuinsAccess, obj.QuestManager.CthonicRemainsExplorationLevel, obj.QuestManager.EndedOmegasRein, obj.QuestManager.CraftedMoonArmor);
+
+        return qDt;
     }
 
     #endregion
@@ -283,7 +403,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     }
 
     #endregion
-    
+
     #region Data Tables
 
     private static DataTable PlayerDataTable()
