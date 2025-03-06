@@ -3,31 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zolian.Server.Bootstrap", "Zolian.GameServer\Zolian.Server.Bootstrap.csproj", "{4275224B-1A23-4334-9DF6-6F746F34A8A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zolian.Server.Bootstrap", "Zolian.Server.Bootstrap\Zolian.Server.Bootstrap.csproj", "{4275224B-1A23-4334-9DF6-6F746F34A8A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zolian.Server.Engine", "Zolian.Server.Base\Zolian.Server.Engine.csproj", "{F2A7E04E-65A8-44A6-A642-01C8F4A6149C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zolian.Server.Engine", "Zolian.Server.Engine\Zolian.Server.Engine.csproj", "{F2A7E04E-65A8-44A6-A642-01C8F4A6149C}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Server.Configurations", "Server.Configurations\Server.Configurations.shproj", "{BA99DF5E-E48A-411A-8B1A-4458116CB513}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zolian.Watchdog", "Zolian.AlwaysOn\Zolian.Watchdog.csproj", "{398955D1-BAB0-4495-A672-966371167D76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zolian.Watchdog", "Zolian.Watchdog\Zolian.Watchdog.csproj", "{398955D1-BAB0-4495-A672-966371167D76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Networking", "Chaos.Networking\Zolian.Networking.csproj", "{F9D26148-0D27-4BE8-88EE-55177889288A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Networking", "Zolian.Networking\Zolian.Networking.csproj", "{F9D26148-0D27-4BE8-88EE-55177889288A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Networking.Abstractions", "Chaos.Networking.Abstractions\Zolian.Networking.Abstractions.csproj", "{354C031F-741D-4354-BB26-EDFE86095111}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Networking.Abstractions", "Zolian.Networking.Abstractions\Zolian.Networking.Abstractions.csproj", "{354C031F-741D-4354-BB26-EDFE86095111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Packets", "Chaos.Packets\Zolian.Packets.csproj", "{1730C117-031B-41AC-AB7A-0A3722287FEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Packets", "Zolian.Packets\Zolian.Packets.csproj", "{1730C117-031B-41AC-AB7A-0A3722287FEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Packets.Abstractions", "Chaos.Packets.Abstractions\Zolian.Packets.Abstractions.csproj", "{1FCF7E5A-DED1-49DD-92B3-F92E75E1B6F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Packets.Abstractions", "Zolian.Packets.Abstractions\Zolian.Packets.Abstractions.csproj", "{1FCF7E5A-DED1-49DD-92B3-F92E75E1B6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Common", "Chaos.Common\Zolian.Common.csproj", "{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Common", "Zolian.Common\Zolian.Common.csproj", "{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Common.Abstractions", "Chaos.Common.Abstractions\Zolian.Common.Abstractions.csproj", "{4D807B2E-0CE6-4A82-A403-A082C32417FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Common.Abstractions", "Zolian.Common.Abstractions\Zolian.Common.Abstractions.csproj", "{4D807B2E-0CE6-4A82-A403-A082C32417FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Extensions", "Chaos.Extensions.Common\Zolian.Extensions.csproj", "{873369BB-F7B6-4790-B8FD-986109D4BBDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Extensions", "Zolian.Extensions\Zolian.Extensions.csproj", "{873369BB-F7B6-4790-B8FD-986109D4BBDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Geometry", "Chaos.Geometry\Zolian.Geometry.csproj", "{B848E234-6F27-40BD-A749-443FE05B4CD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Geometry", "Zolian.Geometry\Zolian.Geometry.csproj", "{B848E234-6F27-40BD-A749-443FE05B4CD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Geometry.Abstractions", "Chaos.Geometry.Abstractions\Zolian.Geometry.Abstractions.csproj", "{576597F5-8837-466F-BBFC-2BD41FD8F7C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Geometry.Abstractions", "Zolian.Geometry.Abstractions\Zolian.Geometry.Abstractions.csproj", "{576597F5-8837-466F-BBFC-2BD41FD8F7C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
