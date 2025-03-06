@@ -4,13 +4,12 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<EnableWindowsTargeting>True</EnableWindowsTargeting>
-		<Authors>Zolian Contributors</Authors>
-		<Copyright>(C) TheBuckNetwork</Copyright>
-		<PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+		<Authors>FallenDev</Authors>
+		<Copyright>(C) FallenDev Gaming LLC</Copyright>
 		<PackageProjectUrl>https://www.thebucknetwork.com</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/FallenDev/Zolian</RepositoryUrl>
-		<AssemblyName>Darkages.Server</AssemblyName>
-		<RootNamespace>Darkages</RootNamespace>
+		<AssemblyName>Zolian.Server.Engine</AssemblyName>
+		<RootNamespace>Zolian</RootNamespace>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<IsPublishable>False</IsPublishable>

@@ -5,15 +5,12 @@
 		<TargetFramework>net9.0-windows</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<EnableWindowsTargeting>True</EnableWindowsTargeting>
-		<Authors>Zolian Contributors</Authors>
-		<Copyright>(C) TheBuckNetwork</Copyright>
-		<PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+		<Authors>FallenDev</Authors>
+		<Copyright>(C) FallenDev Gaming LLC</Copyright>
 		<PackageProjectUrl>https://www.thebucknetwork.com</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/FallenDev/Zolian</RepositoryUrl>
 		<Nullable>disable</Nullable>
-		<UseWPF>true</UseWPF>
 		<ApplicationIcon>Dragon_and_sword.ico</ApplicationIcon>
-		<StartupObject />
 		<Version>9.1.0</Version>
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>

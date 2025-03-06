@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 using Chaos.Extensions.DependencyInjection;
 using Darkages.Models;
 using Darkages.Network.Client;
@@ -31,37 +30,44 @@ using ILobbyClient = Darkages.Network.Client.Abstractions.ILobbyClient;
 using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
 using IWorldClient = Darkages.Network.Client.Abstractions.IWorldClient;
 
-namespace Zolian;
+namespace Zolian.Server.Bootstrap;
 
-public partial class App
+public class Program
 {
-    private CancellationTokenSource ServerCtx { get; set; }
+    private static CancellationTokenSource ServerCtx { get; set; }
 
-    protected override async void OnStartup(StartupEventArgs e)
+    public static async Task Main(string[] args)
     {
-        DispatcherUnhandledException += App_DispatcherUnhandledException;
-        AppDomain.CurrentDomain.UnhandledException += GlobalUnhandledException;
-
-        base.OnStartup(e);
         ServerCtx = new CancellationTokenSource();
-        var path = Directory.GetCurrentDirectory() + "\\SentrySecrets.txt";
-        var secret = File.ReadLines(path).First();
 
-        SentrySdk.Init(o =>
+        try
         {
-            // Tells which project in Sentry to send events to:
-            o.Dsn = secret;
-            // When configuring for the first time, to see what the SDK is doing:
-            o.Debug = false;
-            // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-            // We recommend adjusting this value in production.
-            o.TracesSampleRate = 1.0;
-            // Sample rate for profiling, applied on top of the TracesSampleRate,
-            // e.g. 0.2 means we want to profile 20 % of the captured transactions.
-            // We recommend adjusting this value in production.
-            o.ProfilesSampleRate = 0.2;
-        });
+            var path = Directory.GetCurrentDirectory() + "\\SentrySecrets.txt";
+            var secret = File.ReadLines(path).First();
 
+            SentrySdk.Init(o =>
+            {
+                // Tells which project in Sentry to send events to:
+                o.Dsn = secret;
+                // When configuring for the first time, to see what the SDK is doing:
+                o.Debug = false;
+                // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+                // We recommend adjusting this value in production.
+                o.TracesSampleRate = 1.0;
+                // Sample rate for profiling, applied on top of the TracesSampleRate,
+                // e.g. 0.2 means we want to profile 20 % of the captured transactions.
+                // We recommend adjusting this value in production.
+                o.ProfilesSampleRate = 0.2;
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        AppDomain.CurrentDomain.UnhandledException += GlobalUnhandledException;
+        TaskScheduler.UnobservedTaskException += GlobalUnobservedTaskException;
         var providers = new LoggerProviderCollection();
         const string logTemplate = "[{Timestamp:MMM-dd HH:mm:ss} {Level:u3}] {Message}{NewLine}{Exception}";
 
@@ -69,8 +75,6 @@ public partial class App
             .WriteTo.File("_Zolian_logs_.txt", LogEventLevel.Verbose, logTemplate, rollingInterval: RollingInterval.Day)
             .WriteTo.Console(LogEventLevel.Verbose, logTemplate, theme: AnsiConsoleTheme.Literate)
             .CreateLogger();
-
-        Win32.AllocConsole();
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var builder = new ConfigurationBuilder()
@@ -98,7 +102,7 @@ public partial class App
                 .Configure<ServerOptions>(config.GetSection("Content"));
             serviceCollection.AddSingleton<IServerConstants, ServerConstants>(_ => constants)
                 .AddSingleton<IServerContext, ServerSetup>()
-                .AddSingleton<IServer, Server>();
+                .AddSingleton<IServer, ServerStart>();
             serviceCollection.AddPacketSerializer();
             serviceCollection.AddSingleton<IRedirectManager, RedirectManager>();
 
@@ -133,21 +137,30 @@ public partial class App
         }
     }
 
-    private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-    {
-        SentrySdk.CaptureException(e.Exception);
-        e.Handled = true;
-    }
-
     private static void GlobalUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
-        if (e.IsTerminating)
+        // Attempt to cast to an actual Exception
+        if (e.ExceptionObject is Exception ex)
         {
-            SentrySdk.CaptureException(e.ExceptionObject as Exception ?? throw new InvalidOperationException());
+            SentrySdk.CaptureException(ex);
         }
         else
         {
-            SentrySdk.CaptureMessage($"{e.ExceptionObject}");
+            // Fallback if it's not a typical .NET Exception
+            SentrySdk.CaptureMessage($"Unhandled non-Exception object: {e.ExceptionObject}");
         }
+
+        // If the process is about to terminate, force-flush Sentry to prevent losing the event
+        if (e.IsTerminating)
+        {
+            // Synchronous flush in a terminating scenario
+            SentrySdk.FlushAsync(TimeSpan.FromSeconds(2)).GetAwaiter().GetResult();
+        }
+    }
+
+    private static void GlobalUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+        SentrySdk.CaptureException(e.Exception);
+        e.SetObserved();
     }
 }

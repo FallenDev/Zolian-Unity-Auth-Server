@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ServerOptions = Darkages.Models.ServerOptions;
 
-namespace Zolian;
+namespace Zolian.Server.Bootstrap;
 
 public interface IServer;
 
-public class Server : IServer
+public class ServerStart : IServer
 {
-    public Server(ILogger<ServerSetup> logger, IServerContext context, IServerConstants configConstants, IOptions<ServerOptions> serverOptions)
+    public ServerStart(ILogger<ServerSetup> logger, IServerContext context, IServerConstants configConstants, IOptions<ServerOptions> serverOptions)
     {
         if (serverOptions.Value.Location == null) return;
         context.InitFromConfig(serverOptions.Value.Location, serverOptions.Value.ServerIp);

@@ -2,10 +2,12 @@
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
+		<Authors>FallenDev</Authors>
+		<Copyright>(C) FallenDev Gaming LLC</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PlatformTarget>x64</PlatformTarget>
+		<TieredPGO>true</TieredPGO>
 		<EnablePreviewFeatures>true</EnablePreviewFeatures>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DebugType>embedded</DebugType>
