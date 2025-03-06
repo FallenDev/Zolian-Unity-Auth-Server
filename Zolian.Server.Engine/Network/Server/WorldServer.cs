@@ -1,20 +1,20 @@
-using Darkages.Network.Client;
-using Darkages.Network.Components;
+using Zolian.Network.Client;
+using Zolian.Network.Components;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using JetBrains.Annotations;
 using ServerOptions = Zolian.Networking.Options.ServerOptions;
-using IWorldClient = Darkages.Network.Client.Abstractions.IWorldClient;
-using Darkages.Network.Client.Abstractions;
+using IWorldClient = Zolian.Network.Client.Abstractions.IWorldClient;
+using Zolian.Network.Client.Abstractions;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 [UsedImplicitly]
 public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldClient>

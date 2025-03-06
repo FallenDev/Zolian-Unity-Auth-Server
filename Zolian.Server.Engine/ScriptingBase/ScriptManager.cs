@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Darkages.ScriptingBase;
+namespace Zolian.ScriptingBase;
 
 public static class ScriptManager
 {

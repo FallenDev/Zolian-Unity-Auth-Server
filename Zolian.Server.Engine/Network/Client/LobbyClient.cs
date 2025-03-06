@@ -8,9 +8,9 @@ using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Server;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
-using ILobbyClient = Darkages.Network.Client.Abstractions.ILobbyClient;
+using ILobbyClient = Zolian.Network.Client.Abstractions.ILobbyClient;
 
-namespace Darkages.Network.Client;
+namespace Zolian.Network.Client;
 
 [UsedImplicitly]
 public class LobbyClient([NotNull] ILobbyServer<ILobbyClient> server, [NotNull] Socket socket,

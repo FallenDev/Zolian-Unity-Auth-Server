@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-using Darkages.Network.Server;
+using Zolian.Network.Server;
 
-namespace Darkages.Network.Components;
+namespace Zolian.Network.Components;
 
 public class ClientCreationLimit(WorldServer server) : WorldServerComponent(server)
 {

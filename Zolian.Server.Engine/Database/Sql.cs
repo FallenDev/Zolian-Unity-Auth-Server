@@ -2,7 +2,7 @@
 
 using System.Data;
 
-namespace Darkages.Database;
+namespace Zolian.Database;
 
 public abstract record Sql
 {

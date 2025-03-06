@@ -1,4 +1,4 @@
-﻿namespace Darkages.Enums;
+﻿namespace Zolian.Enums;
 
 public static class SpriteMaker
 {

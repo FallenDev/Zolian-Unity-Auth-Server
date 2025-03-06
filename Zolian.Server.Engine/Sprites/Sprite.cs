@@ -1,9 +1,9 @@
-﻿using Darkages.Enums;
+﻿using Zolian.Enums;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace Darkages.Sprites;
+namespace Zolian.Sprites;
 
 public abstract class Sprite : INotifyPropertyChanged
 {

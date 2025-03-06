@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 
-namespace Darkages.Network.Client;
+namespace Zolian.Network.Client;
 
 public class ClientPacketLogger
 {

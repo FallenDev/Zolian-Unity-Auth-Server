@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 
-using Darkages.Models;
+using Zolian.Models;
 
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +11,7 @@ using RestSharp;
 
 using ServiceStack;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 public class ReportInfo
 {

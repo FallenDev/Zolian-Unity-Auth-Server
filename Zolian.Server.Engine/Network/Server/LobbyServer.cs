@@ -1,12 +1,12 @@
-using Darkages.Network.Client;
+using Zolian.Network.Client;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Sockets;
 using JetBrains.Annotations;
 using ServiceStack;
 using ServerOptions = Zolian.Networking.Options.ServerOptions;
-using ILobbyClient = Darkages.Network.Client.Abstractions.ILobbyClient;
-using Darkages.Network.Client.Abstractions;
+using ILobbyClient = Zolian.Network.Client.Abstractions.ILobbyClient;
+using Zolian.Network.Client.Abstractions;
 using Zolian.Extensions;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
@@ -14,7 +14,7 @@ using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 /// <summary>
 /// Connections to the server enter here, in order

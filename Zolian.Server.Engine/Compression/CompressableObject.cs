@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Darkages.Compression;
+namespace Zolian.Compression;
 
 public class CompressableObject
 {

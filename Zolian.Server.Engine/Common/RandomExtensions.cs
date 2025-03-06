@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using ServiceStack;
 
-namespace Darkages.Common;
+namespace Zolian.Common;
 
 public static class RandomExtensions
 {

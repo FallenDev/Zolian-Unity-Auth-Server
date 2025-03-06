@@ -1,13 +1,13 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Numerics;
-using Darkages.Enums;
-using Darkages.Models;
-using Darkages.Network.Client;
-using Darkages.Network.Server;
-using Darkages.Sprites.Abstractions;
+using Zolian.Enums;
+using Zolian.Models;
+using Zolian.Network.Client;
+using Zolian.Network.Server;
+using Zolian.Sprites.Abstractions;
 
-namespace Darkages.Sprites.Entity;
+namespace Zolian.Sprites.Entity;
 
 public record KillRecord : IEqualityOperators<KillRecord, KillRecord, bool>
 {

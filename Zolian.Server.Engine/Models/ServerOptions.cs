@@ -1,4 +1,4 @@
-﻿namespace Darkages.Models;
+﻿namespace Zolian.Models;
 
 public class ServerOptions
 {

@@ -3,16 +3,16 @@
 using Microsoft.Extensions.Logging;
 
 using System.Net.Sockets;
-using Darkages.Enums;
-using Darkages.Sprites.Entity;
+using Zolian.Enums;
+using Zolian.Sprites.Entity;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Server;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
-using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
+using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
 
-namespace Darkages.Network.Client;
+namespace Zolian.Network.Client;
 
 [UsedImplicitly]
 public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] Socket socket,

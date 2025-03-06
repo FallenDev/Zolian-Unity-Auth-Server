@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
-using Darkages.Models;
-using Darkages.Network.Server.Abstractions;
+using Zolian.Models;
+using Zolian.Network.Server.Abstractions;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 public class ServerConstants : IServerConstants
 {

@@ -1,7 +1,7 @@
 ﻿using ComponentAce.Compression.Libs.zlib;
-using Darkages.Network.Server;
+using Zolian.Network.Server;
 
-namespace Darkages.Compression;
+namespace Zolian.Compression;
 
 public static class CompressionProvider
 {

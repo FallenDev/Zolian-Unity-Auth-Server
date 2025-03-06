@@ -1,15 +1,15 @@
 ﻿using Dapper;
 
-using Darkages.Enums;
+using Zolian.Enums;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Numerics;
-using Darkages.Network.Server;
-using Darkages.Sprites;
-using Darkages.Sprites.Entity;
+using Zolian.Network.Server;
+using Zolian.Sprites;
+using Zolian.Sprites.Entity;
 using Zolian.Common.Identity;
 
-namespace Darkages.Database;
+namespace Zolian.Database;
 
 public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingStorage, bool>
 {

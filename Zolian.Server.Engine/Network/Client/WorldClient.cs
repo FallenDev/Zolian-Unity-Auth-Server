@@ -2,12 +2,12 @@
 using System.Net.Sockets;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
-using IWorldClient = Darkages.Network.Client.Abstractions.IWorldClient;
+using IWorldClient = Zolian.Network.Client.Abstractions.IWorldClient;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Packets.Abstractions;
 
-namespace Darkages.Network.Client;
+namespace Zolian.Network.Client;
 
 [UsedImplicitly]
 public class WorldClient : WorldClientBase, IWorldClient

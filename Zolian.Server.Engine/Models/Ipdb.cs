@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Darkages.Models;
+namespace Zolian.Models;
 
 public class Source
 {

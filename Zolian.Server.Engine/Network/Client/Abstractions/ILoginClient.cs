@@ -1,9 +1,9 @@
-using Darkages.Sprites.Entity;
+using Zolian.Sprites.Entity;
 using JetBrains.Annotations;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 
-namespace Darkages.Network.Client.Abstractions;
+namespace Zolian.Network.Client.Abstractions;
 
 public interface ILoginClient : IConnectedClient
 {

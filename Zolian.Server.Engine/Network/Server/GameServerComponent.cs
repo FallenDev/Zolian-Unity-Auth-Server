@@ -1,4 +1,4 @@
-﻿namespace Darkages.Network.Server;
+﻿namespace Zolian.Network.Server;
 
 public abstract class WorldServerComponent
 {

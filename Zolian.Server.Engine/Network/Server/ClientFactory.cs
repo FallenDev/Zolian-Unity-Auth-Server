@@ -1,10 +1,10 @@
-﻿using Darkages.Network.Client.Abstractions;
+﻿using Zolian.Network.Client.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Net.Sockets;
 using Zolian.Networking.Abstractions;
 
-namespace Darkages.Network.Server
+namespace Zolian.Network.Server
 {
     public class ClientFactory<T>(IServiceProvider service) : IClientFactory<T>
         where T : SocketClientBase

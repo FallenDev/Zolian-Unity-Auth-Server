@@ -1,6 +1,6 @@
-﻿using Darkages.Network.Client;
+﻿using Zolian.Network.Client;
 
-namespace Darkages.Sprites.Abstractions;
+namespace Zolian.Sprites.Abstractions;
 
 public interface IAisling
 {

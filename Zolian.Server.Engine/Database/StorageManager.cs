@@ -1,4 +1,4 @@
-﻿namespace Darkages.Database;
+﻿namespace Zolian.Database;
 
 public abstract record StorageManager
 {

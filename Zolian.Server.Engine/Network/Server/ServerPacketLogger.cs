@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 public class ServerPacketLogger
 {

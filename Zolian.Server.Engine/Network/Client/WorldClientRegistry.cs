@@ -1,8 +1,8 @@
-﻿using Darkages.Network.Client.Abstractions;
+﻿using Zolian.Network.Client.Abstractions;
 using ServiceStack;
 using Zolian.Networking;
 
-namespace Darkages.Network.Client;
+namespace Zolian.Network.Client;
 
 public sealed class WorldClientRegistry : ClientRegistry<IWorldClient>
 {

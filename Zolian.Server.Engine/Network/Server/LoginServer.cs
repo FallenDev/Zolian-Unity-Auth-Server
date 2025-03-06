@@ -1,19 +1,19 @@
-using Darkages.Database;
-using Darkages.Network.Client;
+using Zolian.Database;
+using Zolian.Network.Client;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Net.Sockets;
 using JetBrains.Annotations;
 using ServerOptions = Zolian.Networking.Options.ServerOptions;
-using ILoginClient = Darkages.Network.Client.Abstractions.ILoginClient;
-using Darkages.Network.Client.Abstractions;
+using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
+using Zolian.Network.Client.Abstractions;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 [UsedImplicitly]
 public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer<ILoginClient>

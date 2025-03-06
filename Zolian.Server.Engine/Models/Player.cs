@@ -1,10 +1,10 @@
-﻿using Darkages.Enums;
-using Darkages.Sprites;
-using Gender = Darkages.Enums.Gender;
-using Nation = Darkages.Enums.Nation;
-using RestPosition = Darkages.Enums.RestPosition;
+﻿using Zolian.Enums;
+using Zolian.Sprites;
+using Gender = Zolian.Enums.Gender;
+using Nation = Zolian.Enums.Nation;
+using RestPosition = Zolian.Enums.RestPosition;
 
-namespace Darkages.Models;
+namespace Zolian.Models;
 
 public class Player : Damageable
 {

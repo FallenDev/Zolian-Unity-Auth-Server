@@ -1,9 +1,9 @@
 ﻿using System;
-using Darkages.Network.Server;
-using Darkages.Network.Server.Abstractions;
+using Zolian.Network.Server;
+using Zolian.Network.Server.Abstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ServerOptions = Darkages.Models.ServerOptions;
+using ServerOptions = Zolian.Models.ServerOptions;
 
 namespace Zolian.Server.Bootstrap;
 

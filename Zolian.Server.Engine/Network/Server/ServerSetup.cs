@@ -1,4 +1,4 @@
-﻿using Darkages.Database;
+﻿using Zolian.Database;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Frozen;
 using System.Data;
 using System.Net;
-using Darkages.Network.Server.Abstractions;
+using Zolian.Network.Server.Abstractions;
 using Microsoft.Data.SqlClient;
 using RestSharp;
 using Serilog;
@@ -15,7 +15,7 @@ using Serilog.Events;
 using Zolian.Common.Identity;
 using Zolian.Networking.Options;
 
-namespace Darkages.Network.Server;
+namespace Zolian.Network.Server;
 
 public class ServerSetup : IServerContext
 {

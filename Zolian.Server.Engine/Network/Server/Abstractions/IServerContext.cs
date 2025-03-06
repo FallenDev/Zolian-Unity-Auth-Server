@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Darkages.Network.Server.Abstractions;
+namespace Zolian.Network.Server.Abstractions;
 
 public interface IServerContext
 {
