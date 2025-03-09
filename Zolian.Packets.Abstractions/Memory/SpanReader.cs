@@ -236,6 +236,27 @@ public ref struct SpanReader
     }
 
     /// <summary>
+    /// Reads a 128-bit GUID from the buffer.
+    /// </summary>
+    public Guid ReadGuid()
+    {
+        var guidBytes = Buffer[Position..(Position + 16)];
+        Position += 16;
+        return new Guid(guidBytes);
+    }
+
+    /// <summary>
+    /// Reads a packed vector3 from the buffer.
+    /// </summary>
+    public Vector3 ReadPackedVector3()
+    {
+        var x = HalfPrecisionHelper.HalfToFloat(ReadUInt16());
+        var y = HalfPrecisionHelper.HalfToFloat(ReadUInt16());
+        var z = HalfPrecisionHelper.HalfToFloat(ReadUInt16());
+        return new Vector3(x, y, z);
+    }
+
+    /// <summary>
     /// Returns a span of the unread portion of the buffer.
     /// </summary>
     /// <returns>A span of the unread portion of the buffer.</returns>

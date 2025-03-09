@@ -20,9 +20,9 @@ public sealed class PlayerListConverter : PacketConverterBase<AccountListArgs>
 
         foreach (var player in args.Players)
         {
-            writer.WriteInt64(player.Serial);
+            writer.WriteGuid(player.Serial);
             writer.WriteString(player.Name);
-            writer.WriteInt32(player.Level);
+            writer.WriteUInt32(player.Level);
             writer.WriteString(player.BaseClass.ToString());
             writer.WriteString(player.AdvClass.ToString());
             writer.WriteString(player.Job.ToString());

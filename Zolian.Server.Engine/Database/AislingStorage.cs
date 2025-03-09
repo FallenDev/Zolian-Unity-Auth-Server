@@ -5,9 +5,8 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Numerics;
 using Zolian.Network.Server;
-using Zolian.Sprites;
-using Zolian.Sprites.Entity;
 using Zolian.Common.Identity;
+using Zolian.Sprites.Entities;
 
 namespace Zolian.Database;
 
@@ -21,7 +20,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// <summary>
     /// Creation of a new player from the LoginServer
     /// </summary>
-    public async Task Create(Aisling obj)
+    public async Task Create(Player obj)
     {
         try
         {
@@ -41,7 +40,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
             #region Parameters
 
-            cmd.Parameters.Add("@Serial", SqlDbType.BigInt).Value = serial;
+            cmd.Parameters.Add("@Serial", SqlDbType.UniqueIdentifier).Value = serial;
             cmd.Parameters.Add("@SteamId", SqlDbType.BigInt).Value = obj.SteamId;
             cmd.Parameters.Add("@Created", SqlDbType.DateTime).Value = obj.Created;
             cmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = obj.Username;
@@ -51,7 +50,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
             cmd.Parameters.Add("@CurrentMp", SqlDbType.Int).Value = obj.CurrentMp;
             cmd.Parameters.Add("@BaseMp", SqlDbType.Int).Value = obj.BaseMp;
             cmd.Parameters.Add("@Gender", SqlDbType.VarChar).Value = SpriteMaker.GenderValue(obj.Gender);
-            cmd.Parameters.Add("@Path", SqlDbType.VarChar).Value = obj.Path;
+            cmd.Parameters.Add("@Path", SqlDbType.VarChar).Value = obj.FirstClass;
             cmd.Parameters.Add("@Race", SqlDbType.VarChar).Value = obj.Race;
 
             #endregion
@@ -87,15 +86,15 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// <summary>
     /// Loads a player's account from the LoginServer
     /// </summary>
-    public static async Task<List<Aisling>> LoadAccount(long steamId)
+    public static async Task<List<Player>> LoadAccount(long steamId)
     {
-        var account = new List<Aisling>();
+        var account = new List<Player>();
 
         try
         {
             var sConn = ConnectToDatabase(ConnectionString);
             var values = new { Steam64 = steamId };
-            var records = await sConn.QueryAsync<Aisling>("[SelectAccount]", values, commandType: CommandType.StoredProcedure);
+            var records = await sConn.QueryAsync<Player>("[SelectAccount]", values, commandType: CommandType.StoredProcedure);
             account = records.AsList();
             sConn.Close();
         }
@@ -110,9 +109,9 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// <summary>
     /// Loads a player's data from the LoginServer
     /// </summary>
-    public async Task<Aisling> LoadAisling(string name, long serial)
+    public async Task<Player> LoadAisling(string name, long serial)
     {
-        var aisling = new Aisling();
+        var aisling = new Player();
 
         try
         {
@@ -121,7 +120,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
             var sConn = ConnectToDatabase(ConnectionString);
             var values = new { Name = name };
-            aisling = await sConn.QueryFirstAsync<Aisling>("[SelectPlayer]", values, commandType: CommandType.StoredProcedure);
+            aisling = await sConn.QueryFirstAsync<Player>("[SelectPlayer]", values, commandType: CommandType.StoredProcedure);
             sConn.Close();
         }
         catch (Exception e)
@@ -140,10 +139,9 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// Saves a player's state on disconnect or error
     /// Utilizes an active connection that self-heals if closed
     /// </summary>
-    public static async Task<bool> Save(Aisling obj)
+    public static async Task<bool> Save(Player obj)
     {
         if (obj == null) return false;
-        if (obj.Loading) return false;
         var connection = ServerSetup.Instance.ServerSaveConnection;
 
         try
@@ -168,7 +166,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
         return true;
     }
 
-    private static Task PlayerSaveRoutine(Aisling player, SqlConnection connection)
+    private static Task PlayerSaveRoutine(Player player, SqlConnection connection)
     {
         if (player.Client == null) return Task.CompletedTask;
         //player.Client.LastSave = DateTime.UtcNow;
@@ -264,43 +262,16 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
         return Task.CompletedTask;
     }
 
-    private static DataTable PlayerStatSave(Aisling obj, DataTable dt)
+    private static DataTable PlayerStatSave(Player obj, DataTable dt)
     {
-        dt.Rows.Add(obj.Serial, obj.Created, obj.Username, obj.LoggedIn, obj.LastLogged, /*obj.X, obj.Y,*/ obj.CurrentMapId,
-            /*obj.Direction,*/ obj.CurrentHp, obj.BaseHp, obj.CurrentMp, obj.BaseMp, obj._ac,
-            obj._Regen, obj._Dmg, obj._Hit, obj._Mr, obj._Str, obj._Int, obj._Wis, obj._Con, obj._Dex, obj._Luck, obj.AbpLevel,
-            obj.AbpNext, obj.AbpTotal, obj.ExpLevel, obj.ExpNext, obj.ExpTotal, obj.Stage.ToString(), obj.JobClass.ToString(),
-            obj.Path.ToString(), obj.PastClass.ToString(), obj.Race.ToString(), obj.Afflictions.ToString(), obj.Gender.ToString(),
-            obj.HairColor, obj.HairStyle, obj.NameColor, obj.Nation, obj.Clan, obj.ClanRank, obj.ClanTitle,
-            obj.MonsterForm, obj.ActiveStatus.ToString(), obj.Flags.ToString(), obj.CurrentWeight, obj.World,
-            obj.Lantern, /*obj.IsInvisible,*/ obj.Resting.ToString(), obj.FireImmunity, obj.WaterImmunity, obj.WindImmunity, obj.EarthImmunity,
-            obj.LightImmunity, obj.DarkImmunity, obj.PoisonImmunity, obj.EnticeImmunity, obj.PartyStatus.ToString(), obj.RaceSkill,
-            obj.RaceSpell, obj.GameMaster, obj.ArenaHost, obj.Knight, obj.GoldPoints, obj.StatPoints, obj.GamePoints,
-            obj.BankedGold, obj.ArmorImg, obj.HelmetImg, obj.ShieldImg, obj.WeaponImg, obj.BootsImg, obj.HeadAccessoryImg, obj.Accessory1Img,
-            obj.Accessory2Img, obj.Accessory3Img, obj.Accessory1Color, obj.Accessory2Color, obj.Accessory3Color, obj.BodyColor, obj.BodySprite,
-            obj.FaceSprite, obj.OverCoatImg, obj.BootColor, obj.OverCoatColor, obj.Pants);
+        dt.Rows.Add(obj.Serial);
 
         return dt;
     }
 
-    private static DataTable PlayerQuestSave(Aisling obj, DataTable qDt)
+    private static DataTable PlayerQuestSave(Player obj, DataTable qDt)
     {
-        qDt.Rows.Add(obj.Serial, obj.QuestManager.MailBoxNumber, obj.QuestManager.TutorialCompleted, obj.QuestManager.BetaReset, obj.QuestManager.ArtursGift, obj.QuestManager.CamilleGreetingComplete,
-            obj.QuestManager.ConnPotions, obj.QuestManager.CryptTerror, obj.QuestManager.CryptTerrorSlayed, obj.QuestManager.CryptTerrorContinued, obj.QuestManager.CryptTerrorContSlayed,
-            obj.QuestManager.NightTerror, obj.QuestManager.NightTerrorSlayed, obj.QuestManager.DreamWalking, obj.QuestManager.DreamWalkingSlayed, obj.QuestManager.Dar, obj.QuestManager.DarItem, obj.QuestManager.ReleasedTodesbaum,
-            obj.QuestManager.DrunkenHabit, obj.QuestManager.FionaDance, obj.QuestManager.Keela, obj.QuestManager.KeelaCount, obj.QuestManager.KeelaKill, obj.QuestManager.KeelaQuesting,
-            obj.QuestManager.KillerBee, obj.QuestManager.Neal, obj.QuestManager.NealCount, obj.QuestManager.NealKill, obj.QuestManager.AbelShopAccess, obj.QuestManager.PeteKill, obj.QuestManager.PeteComplete,
-            obj.QuestManager.SwampAccess, obj.QuestManager.SwampCount, obj.QuestManager.TagorDungeonAccess, obj.QuestManager.Lau, obj.QuestManager.BeltDegree, obj.QuestManager.MilethReputation,
-            obj.QuestManager.AbelReputation, obj.QuestManager.RucesionReputation, obj.QuestManager.SuomiReputation, obj.QuestManager.RionnagReputation, obj.QuestManager.OrenReputation,
-            obj.QuestManager.PietReputation, obj.QuestManager.LouresReputation, obj.QuestManager.UndineReputation, obj.QuestManager.TagorReputation, obj.QuestManager.BlackSmithing,
-            obj.QuestManager.BlackSmithingTier, obj.QuestManager.ArmorSmithing, obj.QuestManager.ArmorSmithingTier, obj.QuestManager.JewelCrafting, obj.QuestManager.JewelCraftingTier,
-            obj.QuestManager.StoneSmithing, obj.QuestManager.StoneSmithingTier, obj.QuestManager.ThievesGuildReputation, obj.QuestManager.AssassinsGuildReputation,
-            obj.QuestManager.AdventuresGuildReputation, obj.QuestManager.BeltQuest, obj.QuestManager.SavedChristmas, obj.QuestManager.RescuedReindeer, obj.QuestManager.YetiKilled, obj.QuestManager.UnknownStart, obj.QuestManager.PirateShipAccess,
-            obj.QuestManager.ScubaSchematics, obj.QuestManager.ScubaMaterialsQuest, obj.QuestManager.ScubaGearCrafted, obj.QuestManager.EternalLove, obj.QuestManager.EternalLoveStarted, obj.QuestManager.UnhappyEnding,
-            obj.QuestManager.HonoringTheFallen, obj.QuestManager.ReadTheFallenNotes, obj.QuestManager.GivenTarnishedBreastplate, obj.QuestManager.EternalBond, obj.QuestManager.ArmorCraftingCodex,
-            obj.QuestManager.ArmorApothecaryAccepted, obj.QuestManager.ArmorCodexDeciphered, obj.QuestManager.ArmorCraftingCodexLearned, obj.QuestManager.ArmorCraftingAdvancedCodexLearned,
-            obj.QuestManager.CthonicKillTarget, obj.QuestManager.CthonicFindTarget, obj.QuestManager.CthonicKillCompletions, obj.QuestManager.CthonicCleansingOne, obj.QuestManager.CthonicCleansingTwo,
-            obj.QuestManager.CthonicDepthsCleansing, obj.QuestManager.CthonicRuinsAccess, obj.QuestManager.CthonicRemainsExplorationLevel, obj.QuestManager.EndedOmegasRein, obj.QuestManager.CraftedMoonArmor);
+        qDt.Rows.Add(obj.Serial);
 
         return qDt;
     }

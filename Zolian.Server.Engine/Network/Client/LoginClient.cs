@@ -3,13 +3,15 @@
 using Microsoft.Extensions.Logging;
 
 using System.Net.Sockets;
+
 using Zolian.Enums;
-using Zolian.Sprites.Entity;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Server;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
+using Zolian.Sprites.Entities;
+
 using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
 
 namespace Zolian.Network.Client;
@@ -53,7 +55,7 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
         Send(args);
     }
 
-    public void SendAccountData(List<Aisling> players)
+    public void SendAccountData(List<Player> players)
     {
         
         var args = new AccountListArgs
@@ -67,9 +69,9 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
             {
                 Serial = player.Serial,
                 Name = player.Username,
-                Level = player.ExpLevel + player.AbpLevel,
-                BaseClass = ClassStrings.ClassValue(player.PastClass),
-                AdvClass = ClassStrings.ClassValue(player.Path),
+                Level = player.EntityLevel + player.JobLevel,
+                BaseClass = ClassStrings.ClassValue(player.FirstClass),
+                AdvClass = ClassStrings.ClassValue(player.SecondClass),
                 Job = ClassStrings.JobValue(player.JobClass),
                 Health = player.BaseHp,
                 Mana = player.BaseMp

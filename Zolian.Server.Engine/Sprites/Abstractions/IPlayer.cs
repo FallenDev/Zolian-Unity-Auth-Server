@@ -2,7 +2,7 @@
 
 namespace Zolian.Sprites.Abstractions;
 
-public interface IAisling
+public interface IPlayer
 {
     WorldClient Client { get; set; }
 }

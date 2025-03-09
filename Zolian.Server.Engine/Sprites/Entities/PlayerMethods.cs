@@ -1,13 +1,13 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Numerics;
+
 using Zolian.Enums;
-using Zolian.Models;
 using Zolian.Network.Client;
 using Zolian.Network.Server;
 using Zolian.Sprites.Abstractions;
 
-namespace Zolian.Sprites.Entity;
+namespace Zolian.Sprites.Entities;
 
 public record KillRecord : IEqualityOperators<KillRecord, KillRecord, bool>
 {
@@ -17,15 +17,18 @@ public record KillRecord : IEqualityOperators<KillRecord, KillRecord, bool>
 
 public record IgnoredRecord : IEqualityOperators<IgnoredRecord, IgnoredRecord, bool>
 {
-    public int Serial { get; init; }
+    public ulong Serial { get; init; }
     public string PlayerIgnored { get; init; }
 }
 
-public sealed class Aisling : Player, IAisling
+/// <summary>
+/// Represents methods for a player entity in the game.
+/// </summary>
+public sealed class PlayerMethods : Player, IPlayer
 {
     public WorldClient Client { get; set; }
     public bool ObjectsUpdating { get; set; }
-    public readonly ConcurrentDictionary<uint, Sprite> SpritesInView = [];
+    public readonly ConcurrentDictionary<uint, Entity> SpritesInView = [];
     public bool GameMasterChaosCancel { get; set; }
     public int EquipmentDamageTaken = 0;
     public ConcurrentDictionary<string, KillRecord> MonsterKillCounters = [];
@@ -37,9 +40,9 @@ public sealed class Aisling : Player, IAisling
     public uint MaximumWeight => GameMaster switch
     {
         true => 999,
-        false => (uint)(Math.Round(ExpLevel / 2d) + _Str + ServerSetup.Instance.Config.WeightIncreaseModifer + 200)
+        false => (uint)(Math.Round(EntityLevel / 2d) + CarryingStr + ServerSetup.Instance.Config.WeightIncreaseModifer + 200)
     };
-
+    public uint CurrentWeight { get; set; }
     public bool Overburden => CurrentWeight > MaximumWeight;
     public byte MeleeBodyAnimation;
     public byte CastBodyAnimation;
@@ -48,13 +51,6 @@ public sealed class Aisling : Player, IAisling
     public string SpellTrainOne;
     public string SpellTrainTwo;
     public string SpellTrainThree;
-    public int AreaId => CurrentMapId;
-
-    public Aisling()
-    {
-
-    }
-
     public bool Loading { get; set; }
     public long DamageCounter { get; set; }
     public long ThreatMeter { get; set; }
@@ -81,6 +77,9 @@ public sealed class Aisling : Player, IAisling
     public Vector2 DeathLocation { get; set; }
     public int DeathMapId { get; set; }
     public bool HasteFlag { get; set; }
-    public bool Lycanisim => Afflictions.AfflictionFlagIsSet(Afflictions.Lycanisim);
-    public bool Vampirisim => Afflictions.AfflictionFlagIsSet(Afflictions.Vampirisim);
+
+    public PlayerMethods()
+    {
+
+    }
 }

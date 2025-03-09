@@ -1,5 +1,4 @@
 ﻿using Zolian.Network.Client.Abstractions;
-using ServiceStack;
 using Zolian.Networking;
 
 namespace Zolian.Network.Client;

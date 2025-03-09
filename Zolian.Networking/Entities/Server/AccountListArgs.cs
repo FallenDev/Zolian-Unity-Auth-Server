@@ -8,9 +8,9 @@ public sealed record AccountListArgs : IPacketSerializable
 
     public sealed record PlayerSelection
     {
-        public long Serial { get; set; }
+        public Guid Serial { get; set; }
         public string Name { get; set; }
-        public int Level { get; set; }
+        public uint Level { get; set; }
         public string BaseClass { get; set; }
         public string AdvClass { get; set; }
         public string Job { get; set; }
@@ -18,3 +18,8 @@ public sealed record AccountListArgs : IPacketSerializable
         public long Mana { get; set; }
     }
 }
+
+
+// Next steps are to pull the entity values into the database and do a full load to the server
+// then send that to the client OnLogin. This will allow the client to display the character selection screen.
+// The client will then send the selected character to the server and the server will load the player entity
