@@ -16,5 +16,5 @@ public sealed record ServerMessageArgs : IPacketSerializable
     /// <summary>
     ///     The type of message to display
     /// </summary>
-    public ServerMessageType ServerMessageType { get; set; }
+    public PopupMessageType ServerMessageType { get; set; }
 }

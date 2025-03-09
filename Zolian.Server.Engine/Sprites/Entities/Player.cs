@@ -1,9 +1,8 @@
 ﻿using Zolian.Enums;
 using Zolian.Network.Client;
-using Zolian.Sprites;
+using Zolian.Networking.Definitions;
 using Zolian.Sprites.Abstractions;
-
-using Gender = Zolian.Enums.Gender;
+using Race = Zolian.Networking.Definitions.Race;
 
 namespace Zolian.Sprites.Entities;
 
@@ -20,10 +19,10 @@ public class Player : Damageable, IPlayer
     public ClassStage Stage { get; set; }
     public Job JobClass { get; set; }
     public uint JobLevel { get; set; }
-    public Class FirstClass { get; set; }
-    public Class SecondClass { get; set; }
+    public BaseClass FirstClass { get; set; }
+    public BaseClass SecondClass { get; set; }
     public Race Race { get; set; }
-    public Gender Gender { get; set; }
+    public Sex Gender { get; set; }
     public bool GameMaster { get; set; }
 }
 

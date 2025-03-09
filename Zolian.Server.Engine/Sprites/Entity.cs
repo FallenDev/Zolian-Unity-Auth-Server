@@ -33,14 +33,14 @@ public abstract class Entity
     public long CurrentMp { get; set; } // Live Value
 
     // Stamina
-    private uint BaseStamina { get; set; }
+    public uint BaseStamina { get; set; }
     public uint BonusStamina { get; set; }
     public uint GearedStamina { get; set; }
     public uint CalculatedMaxStamina => Math.Clamp(BaseStamina + BonusStamina + GearedStamina, 0, uint.MaxValue);
     public uint CurrentStamina { get; set; } // Live Value
 
     // Rage
-    private uint BaseRage { get; set; }
+    public uint BaseRage { get; set; }
     public uint BonusRage { get; set; }
     public uint GearedRage { get; set; }
     public uint CalculatedMaxRage => Math.Clamp(BaseRage + BonusRage + GearedRage, 0, uint.MaxValue);
@@ -106,38 +106,38 @@ public abstract class Entity
     public ElementManager.Element SecondaryDefensiveElement { get; set; }
 
     // Strength
-    private int BaseStr { get; set; }
+    public int BaseStr { get; set; }
     public int CarryingStr => BaseStr;
     public int BonusStr { get; set; }
     public int GearedStr { get; set; }
     public int Str => BaseStr + BonusStr + GearedStr;
 
     // Intelligence
-    private int BaseInt { get; set; }
+    public int BaseInt { get; set; }
     public int BonusInt { get; set; }
     public int GearedInt { get; set; }
     public int Int => BaseInt + BonusInt + GearedInt;
 
     // Wisdom
-    private int BaseWis { get; set; }
+    public int BaseWis { get; set; }
     public int BonusWis { get; set; }
     public int GearedWis { get; set; }
     public int Wis => BaseWis + BonusWis + GearedWis;
 
     // Constitution
-    private int BaseCon { get; set; }
+    public int BaseCon { get; set; }
     public int BonusCon { get; set; }
     public int GearedCon { get; set; }
     public int Con => BaseCon + BonusCon + GearedCon;
 
     // Dexterity
-    private int BaseDex { get; set; }
+    public int BaseDex { get; set; }
     public int BonusDex { get; set; }
     public int GearedDex { get; set; }
     public int Dex => BaseDex + BonusDex + GearedDex;
 
     // Luck
-    private int BaseLuck { get; set; }
+    public int BaseLuck { get; set; }
     public int BonusLuck { get; set; }
     public int GearedLuck { get; set; }
     public int Luck => BaseLuck + BonusLuck + GearedLuck;

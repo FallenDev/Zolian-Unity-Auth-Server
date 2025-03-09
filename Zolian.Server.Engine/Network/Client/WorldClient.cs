@@ -27,7 +27,7 @@ public class WorldClient : WorldClientBase, IWorldClient
         throw new NotImplementedException();
     }
 
-    public void SendServerMessage(ServerMessageType serverMessageType, string message)
+    public void SendServerMessage(PopupMessageType serverMessageType, string message)
     {
         throw new NotImplementedException();
     }

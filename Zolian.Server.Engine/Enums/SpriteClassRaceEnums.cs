@@ -1,4 +1,6 @@
-﻿namespace Zolian.Enums;
+﻿using Zolian.Networking.Definitions;
+
+namespace Zolian.Enums;
 
 [Flags]
 public enum SClassMapper
@@ -113,6 +115,7 @@ public enum SubClassDragonkin
 
 public static class SpriteClassRaceExtensions
 {
+    public static bool BaseClassFlagIsSet(this BaseClass self, BaseClass flag) => (self & flag) == flag;
     public static bool ClassFlagIsSet(this Class self, Class flag) => (self & flag) == flag;
     public static bool JobFlagIsSet(this Job self, Job flag) => (self & flag) == flag;
     public static bool RaceFlagIsSet(this Race self, Race flag) => (self & flag) == flag;
@@ -123,6 +126,23 @@ public static class SpriteClassRaceExtensions
 
 public static class ClassStrings
 {
+    public static string BaseClassValue(BaseClass c)
+    {
+        return c switch
+        {
+            BaseClass.Berserker => "Berserker",
+            BaseClass.Defender => "Defender",
+            BaseClass.Assassin => "Assassin",
+            BaseClass.Cleric => "Cleric",
+            BaseClass.Arcanus => "Arcanus",
+            BaseClass.Monk => "Monk",
+            BaseClass.Racial => "Racial",
+            BaseClass.Monster => "Monster",
+            BaseClass.Quest => "Quest",
+            _ => "Quest"
+        };
+    }
+
     public static string ClassValue(Class c)
     {
         return c switch

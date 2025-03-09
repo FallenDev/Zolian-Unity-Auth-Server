@@ -3,6 +3,7 @@
 [Flags]
 public enum BaseClass : byte
 {
+    None = 0,
     Berserker = 1,
     Defender = 2,
     Assassin = 3,

@@ -44,7 +44,7 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
         }
     }
     
-    public void SendLoginMessage(LoginMessageType loginMessageType, [CanBeNull] string message = null)
+    public void SendLoginMessage(PopupMessageType loginMessageType, string message = null)
     {
         var args = new LoginMessageArgs
         {
@@ -70,14 +70,20 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
                 Serial = player.Serial,
                 Name = player.Username,
                 Level = player.EntityLevel + player.JobLevel,
-                BaseClass = ClassStrings.ClassValue(player.FirstClass),
-                AdvClass = ClassStrings.ClassValue(player.SecondClass),
+                BaseClass = ClassStrings.BaseClassValue(player.FirstClass),
+                AdvClass = ClassStrings.BaseClassValue(player.SecondClass),
                 Job = ClassStrings.JobValue(player.JobClass),
                 Health = player.BaseHp,
                 Mana = player.BaseMp
             });
         }
 
+        Send(args);
+    }
+
+    public void SendCharacterFinalized()
+    {
+        var args = new CharacterFinalizedArgs();
         Send(args);
     }
 }

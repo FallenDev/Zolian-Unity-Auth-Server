@@ -7,19 +7,11 @@ public enum ServerType : byte
     World = 2
 }
 
-public enum LoginMessageType : byte
+public enum PopupMessageType : byte
 {
-    Confirm = 0,
-    WrongPassword = 1,
-    CheckName = 2,
-    CheckPassword = 3
-}
-
-public enum ServerMessageType : byte
-{
-    Whisper = 0,
-    Informational = 3,
-    Popup = 5,
+    Login = 0,
+    System = 3,
+    Screen = 5,
     WoodenBoard = 9,
     AdminMessage = 99
 }

@@ -12,6 +12,7 @@ using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
+using Zolian.Sprites.Entities;
 
 namespace Zolian.Network.Server;
 
@@ -54,7 +55,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         {
             if (localArgs.Message == "Redirect Successful")
             {
-                localClient.SendLoginMessage(LoginMessageType.Confirm, "Redirected.. Welcome!");
+                localClient.SendLoginMessage(PopupMessageType.System, "Redirected.. Welcome!");
             }
 
             return default;
@@ -69,16 +70,42 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         var args = PacketSerializer.Deserialize<CreateCharacterArgs>(in packet);
         return ExecuteHandler(client, args, InnerOnCreateCharRequest);
 
-        ValueTask InnerOnCreateCharRequest(ILoginClient localClient, CreateCharacterArgs localArgs)
+        async ValueTask InnerOnCreateCharRequest(ILoginClient localClient, CreateCharacterArgs localArgs)
         {
-            var maximumHp = Random.Shared.Next(128, 165);
-            var maximumMp = Random.Shared.Next(30, 45);
+            var maximumHp = Random.Shared.Next(140, 165);
+            var maximumMp = Random.Shared.Next(45, 70);
             // Creation of Player from model
-            //_ = StorageManager.AislingBucket.Create(new Aisling
-            //{
-            //});
+            _ = StorageManager.AislingBucket.Create(new Player
+            {
+                SteamId = localArgs.SteamId,
+                Created = DateTime.UtcNow,
+                LastLogged = DateTime.UtcNow,
+                Username = localArgs.Username,
+                BaseHp = maximumHp,
+                CurrentHp = maximumHp,
+                BaseMp = maximumMp,
+                CurrentMp = maximumMp,
+                // ToDo: Adjust these values based on race & class
+                BaseStamina = 100,
+                CurrentStamina = 100,
+                BaseRage = 100,
+                CurrentRage = 100,
+                BaseRegen = 0,
+                BaseDmg = 0,
+                BaseStr = 5,
+                BaseInt = 5,
+                BaseWis = 5,
+                BaseCon = 5,
+                BaseDex = 5,
+                BaseLuck = 0,
+                FirstClass = localArgs.Class,
+                EntityLevel = 1,
+                JobLevel = 0,
+                Race = localArgs.Race,
+                Gender = localArgs.Sex
+            });
 
-            return default;
+            localClient.SendCharacterFinalized();
         }
     }
 
@@ -105,14 +132,14 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         var args = PacketSerializer.Deserialize<LoginArgs>(in packet);
         if (ServerSetup.Instance.Running) return ExecuteHandler(client, args, InnerOnLogin);
 
-        client.SendLoginMessage(LoginMessageType.Confirm, "Server is down for maintenance");
+        client.SendLoginMessage(PopupMessageType.Screen, "Server is down for maintenance");
         return default;
 
         async ValueTask InnerOnLogin(ILoginClient localClient, LoginArgs localArgs)
         {
             if (localArgs.SteamId == 0)
             {
-                localClient.SendLoginMessage(LoginMessageType.Confirm, "Invalid ID");
+                localClient.SendLoginMessage(PopupMessageType.System, "Invalid ID");
                 return;
             }
 

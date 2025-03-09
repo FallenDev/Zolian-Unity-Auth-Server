@@ -8,7 +8,7 @@ public interface IWorldClient : IConnectedClient
 {
     Stopwatch Latency { get; set; }
     void SendConfirmExit();
-    void SendServerMessage(ServerMessageType serverMessageType, string message);
+    void SendServerMessage(PopupMessageType serverMessageType, string message);
     void SendSound(byte sound, bool isMusic);
     WorldClient SystemMessage(string message);
     Task<bool> Save();

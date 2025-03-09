@@ -50,7 +50,7 @@ public class LobbyClient([NotNull] ILobbyServer<ILobbyClient> server, [NotNull] 
         Send(args);
     }
 
-    public void SendLoginMessage(LoginMessageType loginMessageType, [CanBeNull] string message = null)
+    public void SendLoginMessage(PopupMessageType loginMessageType, string message = null)
     {
         var args = new LoginMessageArgs
         {

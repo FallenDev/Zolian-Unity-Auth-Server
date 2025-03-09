@@ -8,6 +8,7 @@ namespace Zolian.Network.Client.Abstractions;
 
 public interface ILoginClient : IConnectedClient
 {
-    void SendLoginMessage(LoginMessageType loginMessageType, [CanBeNull] string message = null);
+    void SendLoginMessage(PopupMessageType loginMessageType, [CanBeNull] string message = null);
     void SendAccountData(List<Player> players);
+    void SendCharacterFinalized();
 }

@@ -59,7 +59,7 @@ public sealed class LobbyServer : ServerBase<ILobbyClient>, ILobbyServer<ILobbyC
         {
             if (!localArgs.Version.EqualsI(ServerSetup.Instance.Config.ClientVersion))
             {
-                localClient.SendLoginMessage(LoginMessageType.Confirm, "You're not using an authorized client. Please visit https://www.TheBuckNetwork.com/Zolian for the latest client.");
+                localClient.SendLoginMessage(PopupMessageType.System, "You're not using an authorized client. Please visit https://www.TheBuckNetwork.com/Zolian for the latest client.");
                 localClient.Disconnect();
                 return default;
             }

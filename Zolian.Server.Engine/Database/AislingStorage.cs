@@ -24,58 +24,101 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     {
         try
         {
-            // First find an account. If it doesn't exist, create one.
-            // Add the new character to the account. 
-            // Serial & Mailbox number uniqueness
-            var serial = EphemeralRandomIdGenerator<long>.Shared.NextId;
-            // Will need to check if this needs adjustment, most likely will need to be adjusted
-            var serialFound = await CheckIfPlayerExists(serial);
+            var serial = Guid.NewGuid();
+            var serialFound = await CheckIfSerialExists(serial);
             if (serialFound)
-                serial = EphemeralRandomIdGenerator<uint>.Shared.NextId;
+                serial = Guid.NewGuid();
 
-            // Player
-            var connection = ConnectToDatabase(EncryptedConnectionString);
-            // I will need to adjust this stored procedure too
+            var connection = ConnectToDatabase(ConnectionString);
             var cmd = ConnectToDatabaseSqlCommandWithProcedure("PlayerCreation", connection);
 
             #region Parameters
 
             cmd.Parameters.Add("@Serial", SqlDbType.UniqueIdentifier).Value = serial;
-            cmd.Parameters.Add("@SteamId", SqlDbType.BigInt).Value = obj.SteamId;
+            cmd.Parameters.Add("@Steam64", SqlDbType.Decimal).Value = obj.SteamId;
+            cmd.Parameters["@Steam64"].Precision = 20;
+            cmd.Parameters["@Steam64"].Scale = 0;
             cmd.Parameters.Add("@Created", SqlDbType.DateTime).Value = obj.Created;
-            cmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = obj.Username;
             cmd.Parameters.Add("@LastLogged", SqlDbType.DateTime).Value = obj.LastLogged;
-            cmd.Parameters.Add("@CurrentHp", SqlDbType.Int).Value = obj.CurrentHp;
-            cmd.Parameters.Add("@BaseHp", SqlDbType.Int).Value = obj.BaseHp;
-            cmd.Parameters.Add("@CurrentMp", SqlDbType.Int).Value = obj.CurrentMp;
-            cmd.Parameters.Add("@BaseMp", SqlDbType.Int).Value = obj.BaseMp;
-            cmd.Parameters.Add("@Gender", SqlDbType.VarChar).Value = SpriteMaker.GenderValue(obj.Gender);
-            cmd.Parameters.Add("@Path", SqlDbType.VarChar).Value = obj.FirstClass;
+            cmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = obj.Username;
+            cmd.Parameters.Add("@BaseHp", SqlDbType.Decimal).Value = obj.BaseHp;
+            cmd.Parameters["@BaseHp"].Precision = 10;
+            cmd.Parameters["@BaseHp"].Scale = 0;
+            cmd.Parameters.Add("@CurrentHp", SqlDbType.Decimal).Value = obj.CurrentHp;
+            cmd.Parameters["@CurrentHp"].Precision = 10;
+            cmd.Parameters["@CurrentHp"].Scale = 0;
+            cmd.Parameters.Add("@BaseMp", SqlDbType.Decimal).Value = obj.BaseMp;
+            cmd.Parameters["@BaseMp"].Precision = 10;
+            cmd.Parameters["@BaseMp"].Scale = 0;
+            cmd.Parameters.Add("@CurrentMp", SqlDbType.Decimal).Value = obj.CurrentMp;
+            cmd.Parameters["@CurrentMp"].Precision = 10;
+            cmd.Parameters["@CurrentMp"].Scale = 0;
+            cmd.Parameters.Add("@BaseStamina", SqlDbType.Decimal).Value = obj.BaseStamina;
+            cmd.Parameters["@BaseStamina"].Precision = 10;
+            cmd.Parameters["@BaseStamina"].Scale = 0;
+            cmd.Parameters.Add("@CurrentStamina", SqlDbType.Decimal).Value = obj.CurrentStamina;
+            cmd.Parameters["@CurrentStamina"].Precision = 10;
+            cmd.Parameters["@CurrentStamina"].Scale = 0;
+            cmd.Parameters.Add("@BaseRage", SqlDbType.Decimal).Value = obj.BaseRage;
+            cmd.Parameters["@BaseRage"].Precision = 10;
+            cmd.Parameters["@BaseRage"].Scale = 0;
+            cmd.Parameters.Add("@CurrentRage", SqlDbType.Decimal).Value = obj.CurrentRage;
+            cmd.Parameters["@CurrentRage"].Precision = 10;
+            cmd.Parameters["@CurrentRage"].Scale = 0;
+            cmd.Parameters.Add("@BaseRegen", SqlDbType.Decimal).Value = obj.BaseRegen;
+            cmd.Parameters["@BaseRegen"].Precision = 10;
+            cmd.Parameters["@BaseRegen"].Scale = 0;
+            cmd.Parameters.Add("@BaseDmg", SqlDbType.Decimal).Value = obj.BaseDmg;
+            cmd.Parameters["@BaseDmg"].Precision = 10;
+            cmd.Parameters["@BaseDmg"].Scale = 0;
+            cmd.Parameters.Add("@BaseHit", SqlDbType.Decimal).Value = 5;
+            cmd.Parameters["@BaseHit"].Precision = 10;
+            cmd.Parameters["@BaseHit"].Scale = 0;
+            cmd.Parameters.Add("@BaseFortitude", SqlDbType.Decimal).Value = 5;
+            cmd.Parameters["@BaseFortitude"].Precision = 10;
+            cmd.Parameters["@BaseFortitude"].Scale = 0;
+            cmd.Parameters.Add("@BaseMagicResist", SqlDbType.Decimal).Value = 5;
+            cmd.Parameters["@BaseMagicResist"].Precision = 10;
+            cmd.Parameters["@BaseMagicResist"].Scale = 0;
+            cmd.Parameters.Add("@BaseStr", SqlDbType.Int).Value = obj.BaseStr;
+            cmd.Parameters.Add("@BaseInt", SqlDbType.Int).Value = obj.BaseInt;
+            cmd.Parameters.Add("@BaseWis", SqlDbType.Int).Value = obj.BaseWis;
+            cmd.Parameters.Add("@BaseCon", SqlDbType.Int).Value = obj.BaseCon;
+            cmd.Parameters.Add("@BaseDex", SqlDbType.Int).Value = obj.BaseDex;
+            cmd.Parameters.Add("@BaseLuck", SqlDbType.Int).Value = obj.BaseLuck;
+            cmd.Parameters.Add("@FirstClass", SqlDbType.VarChar).Value = obj.FirstClass;
+            cmd.Parameters.Add("@EntityLevel", SqlDbType.Decimal).Value = 1;
+            cmd.Parameters["@EntityLevel"].Precision = 10;
+            cmd.Parameters["@EntityLevel"].Scale = 0;
+            cmd.Parameters.Add("@JobLevel", SqlDbType.Decimal).Value = 0;
+            cmd.Parameters["@JobLevel"].Precision = 10;
+            cmd.Parameters["@JobLevel"].Scale = 0;
             cmd.Parameters.Add("@Race", SqlDbType.VarChar).Value = obj.Race;
+            cmd.Parameters.Add("@Gender", SqlDbType.Bit).Value = obj.Gender;
 
             #endregion
 
             ExecuteAndCloseConnection(cmd, connection);
 
-            var sConn = ConnectToDatabase(ConnectionString);
-            var adapter = new SqlDataAdapter();
+            //var sConn = ConnectToDatabase(ConnectionString);
+            //var adapter = new SqlDataAdapter();
 
-            #region Adapter Inserts
+            //#region Adapter Inserts
 
-            // PlayersSkills
-            var playerSkillBook =
-                "INSERT INTO ZolianPlayers.dbo.PlayersSkillBook (Serial, SteamId, Level, Slot, SkillName, Uses, CurrentCooldown) VALUES " +
-                $"('{(long)serial}','{obj.SteamId}','{0}','{73}','Assail','{0}','{0}')";
+            //// PlayersSkills
+            //var playerSkillBook =
+            //    "INSERT INTO ZolianPlayers.dbo.PlayersSkillBook (Serial, SteamId, Level, Slot, SkillName, Uses, CurrentCooldown) VALUES " +
+            //    $"('{serial}','{obj.SteamId}','{0}','{73}','Assail','{0}','{0}')";
 
-            var cmd3 = new SqlCommand(playerSkillBook, sConn);
-            cmd3.CommandTimeout = 5;
+            //var cmd3 = new SqlCommand(playerSkillBook, sConn);
+            //cmd3.CommandTimeout = 5;
 
-            adapter.InsertCommand = cmd3;
-            adapter.InsertCommand.ExecuteNonQuery();
+            //adapter.InsertCommand = cmd3;
+            //adapter.InsertCommand.ExecuteNonQuery();
 
-            #endregion
+            //#endregion
 
-            sConn.Close();
+            //sConn.Close();
         }
         catch (Exception e)
         {
@@ -109,18 +152,18 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// <summary>
     /// Loads a player's data from the LoginServer
     /// </summary>
-    public async Task<Player> LoadAisling(string name, long serial)
+    public async Task<Player> LoadPlayer(Guid serial)
     {
-        var aisling = new Player();
+        var player = new Player();
 
         try
         {
-            var continueLoad = await CheckIfPlayerExists(name, serial);
+            var continueLoad = await CheckIfSerialExists(serial);
             if (!continueLoad) return null;
 
             var sConn = ConnectToDatabase(ConnectionString);
-            var values = new { Name = name };
-            aisling = await sConn.QueryFirstAsync<Player>("[SelectPlayer]", values, commandType: CommandType.StoredProcedure);
+            var values = new { Serial = serial };
+            player = await sConn.QueryFirstAsync<Player>("[SelectPlayer]", values, commandType: CommandType.StoredProcedure);
             sConn.Close();
         }
         catch (Exception e)
@@ -128,7 +171,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
             SentrySdk.CaptureException(e);
         }
 
-        return aisling;
+        return player;
     }
 
     #endregion
@@ -278,15 +321,13 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
     #endregion
 
-    #region DB Checks
-
-    private static async Task<bool> CheckIfPlayerExists(long serial)
+    private static async Task<bool> CheckIfSerialExists(Guid serial)
     {
         try
         {
             var sConn = ConnectToDatabase(ConnectionString);
             var cmd = ConnectToDatabaseSqlCommandWithProcedure("CheckIfPlayerSerialExists", sConn);
-            cmd.Parameters.Add("@Serial", SqlDbType.BigInt).Value = serial;
+            cmd.Parameters.Add("@Serial", SqlDbType.UniqueIdentifier).Value = serial;
             var reader = await cmd.ExecuteReaderAsync();
             var userFound = false;
 
@@ -308,73 +349,6 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
         return false;
     }
-
-    public static async Task<bool> CheckIfPlayerExists(string name)
-    {
-        try
-        {
-            var sConn = ConnectToDatabase(ConnectionString);
-            var cmd = ConnectToDatabaseSqlCommandWithProcedure("CheckIfPlayerExists", sConn);
-            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = name;
-            var reader = await cmd.ExecuteReaderAsync();
-            var userFound = false;
-
-            while (reader.Read())
-            {
-                var userName = reader["Username"].ToString();
-                if (!string.Equals(userName, name, StringComparison.CurrentCultureIgnoreCase)) continue;
-                if (string.Equals(name, userName, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    userFound = true;
-                }
-            }
-
-            reader.Close();
-            sConn.Close();
-            return userFound;
-        }
-        catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-        }
-
-        return false;
-    }
-
-    private static async Task<bool> CheckIfPlayerExists(string name, long serial)
-    {
-        try
-        {
-            var sConn = ConnectToDatabase(ConnectionString);
-            var cmd = ConnectToDatabaseSqlCommandWithProcedure("CheckIfPlayerHashExists", sConn);
-            cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = name;
-            cmd.Parameters.Add("@Serial", SqlDbType.BigInt).Value = serial;
-            var reader = await cmd.ExecuteReaderAsync();
-            var userFound = false;
-
-            while (reader.Read())
-            {
-                var userName = reader["Username"].ToString();
-                if (!string.Equals(userName, name, StringComparison.CurrentCultureIgnoreCase)) continue;
-                if (string.Equals(name, userName, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    userFound = true;
-                }
-            }
-
-            reader.Close();
-            sConn.Close();
-            return userFound;
-        }
-        catch (Exception e)
-        {
-            SentrySdk.CaptureException(e);
-        }
-
-        return false;
-    }
-
-    #endregion
 
     #region Data Tables
 
