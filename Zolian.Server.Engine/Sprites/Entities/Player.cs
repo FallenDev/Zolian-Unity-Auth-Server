@@ -13,6 +13,7 @@ public class Player : Damageable, IPlayer
 {
     public WorldClient Client { get; set; }
     public long SteamId { get; set; }
+    public bool Disabled { get; set; }
     public DateTime Created { get; set; }
     public DateTime LastLogged { get; set; }
     public string Username { get; set; }

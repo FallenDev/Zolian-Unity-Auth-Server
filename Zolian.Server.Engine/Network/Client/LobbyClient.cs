@@ -48,6 +48,9 @@ public class LobbyClient([NotNull] ILobbyServer<ILobbyClient> server, [NotNull] 
         };
 
         Send(args);
+
+        // After sending the connection info for login client redirection, disconnect the lobby client, recovering resources
+        Disconnect();
     }
 
     public void SendLoginMessage(PopupMessageType loginMessageType, string message = null)

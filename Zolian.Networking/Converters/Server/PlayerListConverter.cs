@@ -21,6 +21,7 @@ public sealed class PlayerListConverter : PacketConverterBase<AccountListArgs>
         foreach (var player in args.Players)
         {
             writer.WriteGuid(player.Serial);
+            writer.WriteBoolean(player.Disabled);
             writer.WriteString(player.Name);
             writer.WriteUInt32(player.Level);
             writer.WriteString(player.BaseClass.ToString());

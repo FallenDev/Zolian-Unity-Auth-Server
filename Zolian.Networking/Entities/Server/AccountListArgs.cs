@@ -9,6 +9,7 @@ public sealed record AccountListArgs : IPacketSerializable
     public sealed record PlayerSelection
     {
         public Guid Serial { get; set; }
+        public bool Disabled { get; set; }
         public string Name { get; set; }
         public uint Level { get; set; }
         public string BaseClass { get; set; }

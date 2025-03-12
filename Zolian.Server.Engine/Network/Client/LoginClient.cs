@@ -43,6 +43,16 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
             return default;
         }
     }
+
+    public void SendConnectionInfo(ushort port)
+    {
+        var args = new ConnectionInfoArgs
+        {
+            PortNumber = port
+        };
+
+        Send(args);
+    }
     
     public void SendLoginMessage(PopupMessageType loginMessageType, string message = null)
     {
@@ -68,6 +78,7 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
             args.Players.Add(new AccountListArgs.PlayerSelection
             {
                 Serial = player.Serial,
+                Disabled = player.Disabled,
                 Name = player.Username,
                 Level = player.EntityLevel + player.JobLevel,
                 BaseClass = ClassStrings.BaseClassValue(player.FirstClass),
