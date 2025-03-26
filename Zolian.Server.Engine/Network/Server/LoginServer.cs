@@ -9,6 +9,7 @@ using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
 using Zolian.Network.Client.Abstractions;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Networking.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
@@ -74,6 +75,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         {
             var maximumHp = Random.Shared.Next(140, 165);
             var maximumMp = Random.Shared.Next(45, 70);
+
             // Creation of Player from model
             _ = StorageManager.AislingBucket.Create(new Player
             {
@@ -102,7 +104,15 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
                 EntityLevel = 1,
                 JobLevel = 0,
                 Race = localArgs.Race,
-                Gender = localArgs.Sex
+                Gender = localArgs.Sex,
+                Hair = localArgs.Hair,
+                HairColor = localArgs.HairColor,
+                HairHighlightColor = localArgs.HairHighlightColor,
+                SkinColor = localArgs.SkinColor,
+                EyeColor = localArgs.EyeColor,
+                Beard = localArgs.Beard,
+                Mustache = localArgs.Mustache,
+                Bangs = localArgs.Bangs
             });
 
             localClient.SendCharacterFinalized();
@@ -151,7 +161,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
             localClient.SendAccountData(characters);
         }
     }
-    
+
     /// <summary>
     /// 0x0B - Exit Request
     /// </summary>
@@ -178,7 +188,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
 
         try
         {
-            if (handler is not null) 
+            if (handler is not null)
                 return handler(client, in packet);
 
             // Log unknown packet

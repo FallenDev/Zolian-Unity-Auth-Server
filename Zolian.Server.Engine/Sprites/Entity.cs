@@ -9,10 +9,16 @@ namespace Zolian.Sprites;
 /// </summary>
 public abstract class Entity
 {
-    protected Entity() { }
+    protected Entity()
+    {
+        Position = new Vector3(PositionX, PositionY, PositionZ);
+    }
 
     public Guid Serial { get; set; }
     public uint CurrentMapId { get; set; }
+    public float PositionX { get; set; }
+    public float PositionY { get; set; }
+    public float PositionZ { get; set; }
     public Vector3 Position { get; set; }
     public uint EntityLevel { get; set; }
 

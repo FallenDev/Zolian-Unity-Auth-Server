@@ -17,6 +17,14 @@ public sealed class CreateCharacterConverter : PacketConverterBase<CreateCharact
         var className = (BaseClass)reader.ReadByte();
         var race = (Race)reader.ReadByte();
         var sex = (Sex)reader.ReadByte();
+        var hair = reader.ReadInt16();
+        var hairColor = reader.ReadInt16();
+        var hairHighlightColor = reader.ReadInt16();
+        var skinTone = reader.ReadInt16();
+        var eyeColor = reader.ReadInt16();
+        var beard = reader.ReadInt16();
+        var mustache = reader.ReadInt16();
+        var bangs = reader.ReadInt16();
 
         return new CreateCharacterArgs
         {
@@ -24,7 +32,15 @@ public sealed class CreateCharacterConverter : PacketConverterBase<CreateCharact
             Username = username,
             Class = className,
             Race = race,
-            Sex = sex
+            Sex = sex,
+            Hair = hair,
+            HairColor = hairColor,
+            HairHighlightColor = hairHighlightColor,
+            SkinColor = skinTone,
+            EyeColor = eyeColor,
+            Beard = beard,
+            Mustache = mustache,
+            Bangs = bangs
         };
     }
 }

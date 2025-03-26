@@ -93,32 +93,27 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
             cmd.Parameters.Add("@JobLevel", SqlDbType.Decimal).Value = 0;
             cmd.Parameters["@JobLevel"].Precision = 10;
             cmd.Parameters["@JobLevel"].Scale = 0;
-            cmd.Parameters.Add("@Race", SqlDbType.VarChar).Value = obj.Race;
-            cmd.Parameters.Add("@Gender", SqlDbType.Bit).Value = obj.Gender;
+
+            var cmd2 = ConnectToDatabaseSqlCommandWithProcedure("PlayerCreationLooks", connection);
+            cmd2.Parameters.Add("@Serial", SqlDbType.UniqueIdentifier).Value = serial;
+            cmd2.Parameters.Add("@Steam64", SqlDbType.Decimal).Value = obj.SteamId;
+            cmd2.Parameters["@Steam64"].Precision = 20;
+            cmd2.Parameters["@Steam64"].Scale = 0;
+            cmd2.Parameters.Add("@Race", SqlDbType.VarChar).Value = obj.Race;
+            cmd2.Parameters.Add("@Gender", SqlDbType.Bit).Value = obj.Gender;
+            cmd2.Parameters.Add("@Hair", SqlDbType.SmallInt).Value = obj.Hair;
+            cmd2.Parameters.Add("@HairColor", SqlDbType.SmallInt).Value = obj.HairColor;
+            cmd2.Parameters.Add("@HairHighlightColor", SqlDbType.SmallInt).Value = obj.HairHighlightColor;
+            cmd2.Parameters.Add("@SkinColor", SqlDbType.SmallInt).Value = obj.SkinColor;
+            cmd2.Parameters.Add("@EyeColor", SqlDbType.SmallInt).Value = obj.EyeColor;
+            cmd2.Parameters.Add("@Beard", SqlDbType.SmallInt).Value = obj.Beard;
+            cmd2.Parameters.Add("@Mustache", SqlDbType.SmallInt).Value = obj.Mustache;
+            cmd2.Parameters.Add("@Bangs", SqlDbType.SmallInt).Value = obj.Bangs;
+            cmd2.ExecuteNonQuery();
 
             #endregion
 
             ExecuteAndCloseConnection(cmd, connection);
-
-            //var sConn = ConnectToDatabase(ConnectionString);
-            //var adapter = new SqlDataAdapter();
-
-            //#region Adapter Inserts
-
-            //// PlayersSkills
-            //var playerSkillBook =
-            //    "INSERT INTO ZolianPlayers.dbo.PlayersSkillBook (Serial, SteamId, Level, Slot, SkillName, Uses, CurrentCooldown) VALUES " +
-            //    $"('{serial}','{obj.SteamId}','{0}','{73}','Assail','{0}','{0}')";
-
-            //var cmd3 = new SqlCommand(playerSkillBook, sConn);
-            //cmd3.CommandTimeout = 5;
-
-            //adapter.InsertCommand = cmd3;
-            //adapter.InsertCommand.ExecuteNonQuery();
-
-            //#endregion
-
-            //sConn.Close();
         }
         catch (Exception e)
         {

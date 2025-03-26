@@ -1,4 +1,5 @@
-﻿using Zolian.Enums;
+﻿using System.Numerics;
+using Zolian.Enums;
 using Zolian.Network.Client;
 using Zolian.Networking.Definitions;
 using Zolian.Sprites.Abstractions;
@@ -22,9 +23,24 @@ public class Player : Damageable, IPlayer
     public uint JobLevel { get; set; }
     public BaseClass FirstClass { get; set; }
     public BaseClass SecondClass { get; set; }
+    public bool GameMaster { get; set; }
+    
+    // Character Customized Looks
     public Race Race { get; set; }
     public Sex Gender { get; set; }
-    public bool GameMaster { get; set; }
+    public short Hair { get; set; }
+    public short HairColor { get; set; }
+    public short HairHighlightColor { get; set; }
+    public short SkinColor { get; set; }
+    public short EyeColor { get; set; }
+    public short Beard { get; set; }
+    public short Mustache { get; set; }
+    public short Bangs { get; set; }
+}
+
+public class Equipment
+{
+
 }
 
 public abstract class ComboScroll

@@ -7,12 +7,14 @@ using System.Net.Sockets;
 using Zolian.Enums;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
+using Zolian.Networking.Definitions;
 using Zolian.Networking.Entities.Server;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
 using Zolian.Sprites.Entities;
 
 using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
+using Race = Zolian.Networking.Definitions.Race;
 
 namespace Zolian.Network.Client;
 
@@ -85,7 +87,18 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
                 AdvClass = ClassStrings.BaseClassValue(player.SecondClass),
                 Job = ClassStrings.JobValue(player.JobClass),
                 Health = player.BaseHp,
-                Mana = player.BaseMp
+                Mana = player.BaseMp,
+                Race = player.Race,
+                Sex = player.Gender,
+                Hair = player.Hair,
+                HairColor = player.HairColor,
+                HairHighlightColor = player.HairHighlightColor,
+                SkinColor = player.SkinColor,
+                EyeColor = player.EyeColor,
+                Beard = player.Beard,
+                Mustache = player.Mustache,
+                Bangs = player.Bangs,
+
             });
         }
 

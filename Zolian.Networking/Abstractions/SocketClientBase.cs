@@ -17,6 +17,7 @@ namespace Zolian.Networking.Abstractions;
 public abstract class SocketClientBase : ISocketClient, IDisposable
 {
     private readonly SslStream SslStream;
+    private Lock _sendLock = new();
 
     /// <summary>
     ///     The server certificate for SSL/TLS encryption.
@@ -248,7 +249,10 @@ public abstract class SocketClientBase : ISocketClient, IDisposable
         var data = packet.ToArray();
 
         // Write the packet data to the SslStream
-        SslStream.Write(data, 0, data.Length);
+        lock (_sendLock)
+        {
+            SslStream.Write(data, 0, data.Length);
+        }
     }
 
     /// <inheritdoc />

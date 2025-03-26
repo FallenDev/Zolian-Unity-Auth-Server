@@ -24,11 +24,22 @@ public sealed class PlayerListConverter : PacketConverterBase<AccountListArgs>
             writer.WriteBoolean(player.Disabled);
             writer.WriteString(player.Name);
             writer.WriteUInt32(player.Level);
-            writer.WriteString(player.BaseClass.ToString());
-            writer.WriteString(player.AdvClass.ToString());
-            writer.WriteString(player.Job.ToString());
+            writer.WriteString(player.BaseClass);
+            writer.WriteString(player.AdvClass);
+            writer.WriteString(player.Job);
             writer.WriteInt64(player.Health);
             writer.WriteInt64(player.Mana);
+            // Visuals
+            writer.WriteString(player.Race.ToString());
+            writer.WriteString(player.Sex.ToString());
+            writer.WriteInt16(player.Hair);
+            writer.WriteInt16(player.HairColor);
+            writer.WriteInt16(player.HairHighlightColor);
+            writer.WriteInt16(player.SkinColor);
+            writer.WriteInt16(player.EyeColor);
+            writer.WriteInt16(player.Beard);
+            writer.WriteInt16(player.Mustache);
+            writer.WriteInt16(player.Bangs);
         }
     }
 }
