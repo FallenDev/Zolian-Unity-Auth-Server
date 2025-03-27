@@ -82,7 +82,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
                 SteamId = localArgs.SteamId,
                 Created = DateTime.UtcNow,
                 LastLogged = DateTime.UtcNow,
-                Username = localArgs.Username,
+                UserName = localArgs.Username,
                 BaseHp = maximumHp,
                 CurrentHp = maximumHp,
                 BaseMp = maximumMp,

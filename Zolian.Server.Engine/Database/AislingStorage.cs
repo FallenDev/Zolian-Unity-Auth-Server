@@ -12,8 +12,8 @@ namespace Zolian.Database;
 
 public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingStorage, bool>
 {
-    public const string ConnectionString = "Data Source=.;Initial Catalog=ZolianUnityPlayers;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True;";
-    private const string EncryptedConnectionString = "Data Source=.;Initial Catalog=ZolianPlayers;Integrated Security=True;Column Encryption Setting=enabled;TrustServerCertificate=True;MultipleActiveResultSets=True;";
+    public const string ConnectionString = "Data Source=.;Initial Catalog=ZolianMMOPlayers;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True;";
+    private const string EncryptedConnectionString = "Data Source=.;Initial Catalog=ZolianMMOPlayers;Integrated Security=True;Column Encryption Setting=enabled;TrustServerCertificate=True;MultipleActiveResultSets=True;";
 
     #region LoginServer Operations
 
@@ -35,12 +35,12 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
             #region Parameters
 
             cmd.Parameters.Add("@Serial", SqlDbType.UniqueIdentifier).Value = serial;
-            cmd.Parameters.Add("@Steam64", SqlDbType.Decimal).Value = obj.SteamId;
-            cmd.Parameters["@Steam64"].Precision = 20;
-            cmd.Parameters["@Steam64"].Scale = 0;
-            cmd.Parameters.Add("@Created", SqlDbType.DateTime).Value = obj.Created;
-            cmd.Parameters.Add("@LastLogged", SqlDbType.DateTime).Value = obj.LastLogged;
-            cmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = obj.Username;
+            cmd.Parameters.Add("@SteamId", SqlDbType.Decimal).Value = obj.SteamId;
+            cmd.Parameters["@SteamId"].Precision = 20;
+            cmd.Parameters["@SteamId"].Scale = 0;
+            cmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = obj.UserName;
+            cmd.Parameters.Add("@Created", SqlDbType.DateTime).Value = DateTime.Now;
+            cmd.Parameters.Add("@LastLogged", SqlDbType.DateTime).Value = DateTime.Now;
             cmd.Parameters.Add("@BaseHp", SqlDbType.Decimal).Value = obj.BaseHp;
             cmd.Parameters["@BaseHp"].Precision = 10;
             cmd.Parameters["@BaseHp"].Scale = 0;
@@ -94,13 +94,14 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
             cmd.Parameters["@JobLevel"].Precision = 10;
             cmd.Parameters["@JobLevel"].Scale = 0;
 
-            var cmd2 = ConnectToDatabaseSqlCommandWithProcedure("PlayerCreationLooks", connection);
+            var cmd2 = ConnectToDatabaseSqlCommandWithProcedure("PlayerLooksCreation", connection);
             cmd2.Parameters.Add("@Serial", SqlDbType.UniqueIdentifier).Value = serial;
-            cmd2.Parameters.Add("@Steam64", SqlDbType.Decimal).Value = obj.SteamId;
-            cmd2.Parameters["@Steam64"].Precision = 20;
-            cmd2.Parameters["@Steam64"].Scale = 0;
+            cmd2.Parameters.Add("@SteamId", SqlDbType.Decimal).Value = obj.SteamId;
+            cmd2.Parameters["@SteamId"].Precision = 20;
+            cmd2.Parameters["@SteamId"].Scale = 0;
+            cmd2.Parameters.Add("UserName", SqlDbType.VarChar).Value = obj.UserName;
             cmd2.Parameters.Add("@Race", SqlDbType.VarChar).Value = obj.Race;
-            cmd2.Parameters.Add("@Gender", SqlDbType.Bit).Value = obj.Gender;
+            cmd2.Parameters.Add("@Gender", SqlDbType.VarChar).Value = obj.Gender.ToString();
             cmd2.Parameters.Add("@Hair", SqlDbType.SmallInt).Value = obj.Hair;
             cmd2.Parameters.Add("@HairColor", SqlDbType.SmallInt).Value = obj.HairColor;
             cmd2.Parameters.Add("@HairHighlightColor", SqlDbType.SmallInt).Value = obj.HairHighlightColor;
@@ -131,7 +132,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
         try
         {
             var sConn = ConnectToDatabase(ConnectionString);
-            var values = new { Steam64 = steamId };
+            var values = new { SteamId = steamId };
             var records = await sConn.QueryAsync<Player>("[SelectAccount]", values, commandType: CommandType.StoredProcedure);
             account = records.AsList();
             sConn.Close();
@@ -147,17 +148,14 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// <summary>
     /// Loads a player's data from the LoginServer
     /// </summary>
-    public async Task<Player> LoadPlayer(Guid serial)
+    public async Task<Player> LoadPlayer(Guid serial, long steamId, string userName)
     {
         var player = new Player();
 
         try
         {
-            var continueLoad = await CheckIfSerialExists(serial);
-            if (!continueLoad) return null;
-
             var sConn = ConnectToDatabase(ConnectionString);
-            var values = new { Serial = serial };
+            var values = new { Serial = serial, SteamId = steamId, UserName = userName };
             player = await sConn.QueryFirstAsync<Player>("[SelectPlayer]", values, commandType: CommandType.StoredProcedure);
             sConn.Close();
         }

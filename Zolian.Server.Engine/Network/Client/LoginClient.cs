@@ -14,7 +14,6 @@ using Zolian.Packets.Abstractions;
 using Zolian.Sprites.Entities;
 
 using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
-using Race = Zolian.Networking.Definitions.Race;
 
 namespace Zolian.Network.Client;
 
@@ -81,11 +80,11 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
             {
                 Serial = player.Serial,
                 Disabled = player.Disabled,
-                Name = player.Username,
+                Name = player.UserName,
                 Level = player.EntityLevel + player.JobLevel,
                 BaseClass = ClassStrings.BaseClassValue(player.FirstClass),
                 AdvClass = ClassStrings.BaseClassValue(player.SecondClass),
-                Job = ClassStrings.JobValue(player.JobClass),
+                Job = ClassStrings.JobValue(player.Job),
                 Health = player.BaseHp,
                 Mana = player.BaseMp,
                 Race = player.Race,

@@ -3,31 +3,19 @@
 namespace Zolian.Enums;
 
 [Flags]
-public enum SClassMapper
-{
-    Berserker = 1 << 1,
-    Defender = 1 << 2,
-    Assassin = 1 << 3,
-    Cleric = 1 << 4,
-    Arcanus = 1 << 5,
-    Monk = 1 << 6
-}
-
-[Flags]
 public enum Class
 {
-    Peasant = 1,
-    Berserker = 1 << 1,
-    Defender = 1 << 2,
-    Assassin = 1 << 3,
-    Cleric = 1 << 4,
-    Arcanus = 1 << 5,
-    Monk = 1 << 6,
+    Berserker = 1,
+    Defender = 1 << 1,
+    Assassin = 1 << 2,
+    Cleric = 1 << 3,
+    Arcanus = 1 << 4,
+    Monk = 1 << 5,
     DualBash = Berserker | Defender,
     DualCast = Cleric | Arcanus,
-    Racial = 1 << 7,
-    Monster = 1 << 8,
-    Quest = 1 << 9
+    Racial = 1 << 6,
+    Monster = 1 << 7,
+    Quest = 1 << 8
 }
 
 [Flags]
@@ -49,36 +37,13 @@ public enum Job
 }
 
 [Flags]
-public enum Race
-{
-    UnDecided = 0,
-    Human = 1,
-    HalfElf = 2,
-    HighElf = 3,
-    DarkElf = 4,
-    WoodElf = 5,
-    Orc = 6,
-    Dwarf = 7,
-    Halfling = 8,
-    Dragonkin = 9,
-    HalfBeast = 10,
-    Merfolk = 11
-}
-
-[Flags]
 public enum ClassStage
 {
-    Class = 1,
-    Dedicated = 1 << 1,
-    Advance = 1 << 2,
-    Master = 1 << 3,
-    Job = 1 << 4 | Master,
-    Quest = 1 << 5,
-
-    MasterLearn = Class | Dedicated | Advance | Master,
-    DedicatedLearn = Class | Dedicated,
-    AdvanceLearn = Class | Advance,
-    ForsakenLearn = Class | Dedicated | Advance | Master | Job
+    Class = 1, // Stage 1
+    Advance = 1 << 1, // Stage 2
+    Job = 1 << 2, // Stage 3
+    Master = 1 << 3 | Job, // Stage 4
+    Quest = 1 << 4 // Quest Restricted
 }
 
 [Flags]
@@ -147,7 +112,6 @@ public static class ClassStrings
     {
         return c switch
         {
-            Class.Peasant => "Peasant",
             Class.Berserker => "Berserker",
             Class.Defender => "Defender",
             Class.Assassin => "Assassin",
@@ -250,15 +214,10 @@ public static class ClassStrings
         return c switch
         {
             ClassStage.Class => "Class",
-            ClassStage.Dedicated => "Dedicated",
             ClassStage.Advance => "Advance",
-            ClassStage.Master => "Master",
             ClassStage.Job => "Job",
+            ClassStage.Master => "Master",
             ClassStage.Quest => "Quest",
-            ClassStage.MasterLearn => "MasterLearn",
-            ClassStage.DedicatedLearn => "DedicatedLearn",
-            ClassStage.AdvanceLearn => "AdvanceLearn",
-            ClassStage.ForsakenLearn => "ForsakenLearn",
             _ => "Class"
         };
     }

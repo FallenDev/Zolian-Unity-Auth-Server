@@ -1,13 +1,5 @@
 ﻿namespace Zolian.Enums;
 
-[Flags]
-public enum Gender : byte
-{
-    Male = 1,
-    Female = 2,
-    Unisex = Male | Female
-}
-
 public enum ListColor : byte
 {
     Brown = 0xA7,

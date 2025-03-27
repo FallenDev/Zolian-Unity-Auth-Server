@@ -3,7 +3,6 @@ using Zolian.Enums;
 using Zolian.Network.Client;
 using Zolian.Networking.Definitions;
 using Zolian.Sprites.Abstractions;
-using Race = Zolian.Networking.Definitions.Race;
 
 namespace Zolian.Sprites.Entities;
 
@@ -17,9 +16,9 @@ public class Player : Damageable, IPlayer
     public bool Disabled { get; set; }
     public DateTime Created { get; set; }
     public DateTime LastLogged { get; set; }
-    public string Username { get; set; }
+    public string UserName { get; set; }
     public ClassStage Stage { get; set; }
-    public Job JobClass { get; set; }
+    public Job Job { get; set; }
     public uint JobLevel { get; set; }
     public BaseClass FirstClass { get; set; }
     public BaseClass SecondClass { get; set; }

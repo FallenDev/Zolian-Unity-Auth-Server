@@ -54,6 +54,6 @@ public enum Race
 [Flags]
 public enum Sex
 {
-    Male = 1,
-    Female = 2
+    Male = 0,
+    Female = 1
 }

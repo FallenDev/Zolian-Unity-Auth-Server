@@ -135,16 +135,16 @@ public class ServerSetup : IServerContext
 
     public void SetGoodActors()
     {
-        const string sql = "SELECT LastIP FROM ZolianPlayers.dbo.Players";
-        var cmd = new SqlCommand(sql, ServerSaveConnection);
-        cmd.CommandTimeout = 5;
-        var reader = cmd.ExecuteReader();
+        //const string sql = "SELECT LastIP FROM ZolianPlayers.dbo.Players";
+        //var cmd = new SqlCommand(sql, ServerSaveConnection);
+        //cmd.CommandTimeout = 5;
+        //var reader = cmd.ExecuteReader();
 
-        while (reader.Read())
-        {
-            var iP = reader["LastIP"].ToString();
-            TempGlobalKnownGoodActorsCache.TryAdd(EphemeralRandomIdGenerator<uint>.Shared.NextId, iP);
-        }
+        //while (reader.Read())
+        //{
+        //    var iP = reader["LastIP"].ToString();
+        //    TempGlobalKnownGoodActorsCache.TryAdd(EphemeralRandomIdGenerator<uint>.Shared.NextId, iP);
+        //}
 
         GlobalKnownGoodActorsCache = TempGlobalKnownGoodActorsCache.ToFrozenDictionary();
         TempGlobalKnownGoodActorsCache.Clear();

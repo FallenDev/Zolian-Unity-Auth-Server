@@ -15,7 +15,7 @@ public abstract class Entity
     }
 
     public Guid Serial { get; set; }
-    public uint CurrentMapId { get; set; }
+    public uint CurrentZoneId { get; set; }
     public float PositionX { get; set; }
     public float PositionY { get; set; }
     public float PositionZ { get; set; }
