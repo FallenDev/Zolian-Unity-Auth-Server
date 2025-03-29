@@ -21,15 +21,15 @@ public sealed record AccountListArgs : IPacketSerializable
         public long Mana { get; set; }
 
         // Visuals
-        public required Race Race { get; set; }
-        public required Sex Sex { get; set; }
-        public required short Hair { get; set; }
-        public required short HairColor { get; set; }
-        public required short HairHighlightColor { get; set; }
-        public required short SkinColor { get; set; }
-        public required short EyeColor { get; set; }
-        public required short Beard { get; set; }
-        public required short Mustache { get; set; }
-        public required short Bangs { get; set; }
+        public Race Race { get; set; }
+        public Sex Sex { get; set; }
+        public short Hair { get; set; }
+        public short HairColor { get; set; }
+        public short HairHighlightColor { get; set; }
+        public short SkinColor { get; set; }
+        public short EyeColor { get; set; }
+        public short Beard { get; set; }
+        public short Mustache { get; set; }
+        public short Bangs { get; set; }
     }
 }
