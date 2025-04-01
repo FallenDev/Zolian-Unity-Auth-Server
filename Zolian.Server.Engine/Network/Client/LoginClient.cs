@@ -104,6 +104,11 @@ public class LoginClient([NotNull] ILoginServer<ILoginClient> server, [NotNull] 
         Send(args);
     }
 
+    public void SendCharacterData(Player player)
+    {
+        
+    }
+
     public void SendCharacterFinalized()
     {
         var args = new CharacterFinalizedArgs();

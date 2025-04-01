@@ -9,7 +9,6 @@ using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
 using Zolian.Network.Client.Abstractions;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
-using Zolian.Networking.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
@@ -135,7 +134,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     }
 
     /// <summary>
-    /// 0x03 - Player Login and Redirect
+    /// 0x01 - Player's character list on Login
     /// </summary>
     public ValueTask OnLogin(ILoginClient client, in Packet packet)
     {
@@ -154,11 +153,31 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
             }
 
             var characters = await AislingStorage.LoadAccount(localArgs.SteamId);
-
-            // ToDo: Send characters back to client to display them, so they can be picked for loading. 
-            // Need to create converter to send the data like a list. Already created it on the client end. 
-
             localClient.SendAccountData(characters);
+        }
+    }
+
+    /// <summary>
+    /// 0x02 - Player's character on Login to World Server
+    /// </summary>
+    public ValueTask OnEnterGame(ILoginClient client, in Packet packet)
+    {
+        var args = PacketSerializer.Deserialize<EnterGameArgs>(in packet);
+        if (ServerSetup.Instance.Running) return ExecuteHandler(client, args, InnerOnEnterGame);
+
+        client.SendLoginMessage(PopupMessageType.Screen, "Server is down for maintenance");
+        return default;
+
+        async ValueTask InnerOnEnterGame(ILoginClient localClient, EnterGameArgs localArgs)
+        {
+            if (localArgs.SteamId == 0)
+            {
+                localClient.SendLoginMessage(PopupMessageType.System, "Invalid ID");
+                return;
+            }
+
+            var character = await AislingStorage.LoadPlayer(localArgs.Serial, localArgs.SteamId, localArgs.UserName);
+            localClient.SendCharacterData(character);
         }
     }
 
@@ -209,6 +228,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         ClientHandlers[(byte)ClientOpCode.CreateCharacter] = OnCreateChar;
         ClientHandlers[(byte)ClientOpCode.DeleteCharacter] = OnDeleteChar;
         ClientHandlers[(byte)ClientOpCode.OnClientLogin] = OnLogin;
+        ClientHandlers[(byte)ClientOpCode.EnterGame] = OnEnterGame;
     }
 
     protected override void OnConnected(Socket clientSocket)

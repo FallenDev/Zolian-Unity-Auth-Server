@@ -148,7 +148,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
     /// <summary>
     /// Loads a player's data from the LoginServer
     /// </summary>
-    public async Task<Player> LoadPlayer(Guid serial, long steamId, string userName)
+    public static async Task<Player> LoadPlayer(Guid serial, long steamId, string userName)
     {
         var player = new Player();
 

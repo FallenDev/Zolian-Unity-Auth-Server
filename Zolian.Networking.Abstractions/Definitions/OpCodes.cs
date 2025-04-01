@@ -3,6 +3,7 @@
 public enum ClientOpCode : byte
 {
     OnClientLogin = 0x01,
+    EnterGame = 0x02,
     Version = 0x0A,
     ClientRedirected = 0x0B,
     CreateCharacter = 0x0C,
