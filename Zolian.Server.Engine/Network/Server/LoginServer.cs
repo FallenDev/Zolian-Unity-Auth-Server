@@ -176,8 +176,9 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
                 return;
             }
 
+            localClient.SendConnectionInfo((ushort)ServerSetup.Instance.Config.SERVER_PORT);
             var character = await AislingStorage.LoadPlayer(localArgs.Serial, localArgs.SteamId, localArgs.UserName);
-            localClient.SendCharacterData(character);
+            localClient.SendCharacterData(character, UpdateType.FullSend);
         }
     }
 
