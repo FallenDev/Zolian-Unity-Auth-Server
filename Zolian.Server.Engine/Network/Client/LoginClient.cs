@@ -7,7 +7,6 @@ using System.Net.Sockets;
 using Zolian.Enums;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
-using Zolian.Networking.Definitions;
 using Zolian.Networking.Entities.Server;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;

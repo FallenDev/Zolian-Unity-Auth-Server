@@ -6,19 +6,36 @@ using IWorldClient = Zolian.Network.Client.Abstractions.IWorldClient;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Packets.Abstractions;
+using Zolian.Packets;
 
 namespace Zolian.Network.Client;
 
 [UsedImplicitly]
-public class WorldClient : WorldClientBase, IWorldClient
+public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] Socket socket,
+    [NotNull] IPacketSerializer packetSerializer,
+    [NotNull] ILogger<WorldClient> logger)
+    : WorldClientBase(socket, packetSerializer, logger), IWorldClient
 {
-    public WorldClient(Socket socket, IPacketSerializer packetSerializer, ILogger<ConnectedClientBase> logger) : base(socket, packetSerializer, logger)
-    {
-    }
-
     protected override ValueTask HandlePacketAsync(Span<byte> span)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Fully parse the Packet from the span
+            var packet = new Packet(ref span);
+
+            if (packet.Payload.Length == 0)
+            {
+                Logger.LogWarning("Received packet with empty payload. OpCode={OpCode}", packet.OpCode);
+            }
+
+            // Pass the packet to the server for further handling
+            return server.HandlePacketAsync(this, in packet);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error parsing packet from span: {RawBuffer}", BitConverter.ToString(span.ToArray()));
+            return default;
+        }
     }
 
     public Stopwatch Latency { get; set; }
