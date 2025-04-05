@@ -11,6 +11,5 @@ public interface ILoginClient : IConnectedClient
     void SendConnectionInfo(ushort port);
     void SendLoginMessage(PopupMessageType loginMessageType, [CanBeNull] string message = null);
     void SendAccountData(List<Player> players);
-    void SendCharacterData(Player player, UpdateType type);
     void SendCharacterFinalized();
 }

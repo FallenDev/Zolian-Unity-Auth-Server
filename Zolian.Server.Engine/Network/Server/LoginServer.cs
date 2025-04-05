@@ -17,7 +17,7 @@ using Zolian.Sprites.Entities;
 namespace Zolian.Network.Server;
 
 [UsedImplicitly]
-public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer<ILoginClient>
+public sealed class LoginServer : ServerBase<ILoginClient>, ILoginServer<ILoginClient>
 {
     private readonly IClientFactory<LoginClient> _clientProvider;
 
@@ -55,9 +55,10 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         {
             if (localArgs.Message == "Redirect Successful")
             {
-                localClient.SendLoginMessage(PopupMessageType.System, "Redirected.. Welcome!");
+                return default;
             }
 
+            localClient.SendLoginMessage(PopupMessageType.System, "Redirect Failed");
             return default;
         }
     }
@@ -158,27 +159,16 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
     }
 
     /// <summary>
-    /// 0x02 - Player's character on Login to World Server
+    /// 0x03 - Send Port Number to Enter World Server
     /// </summary>
-    public ValueTask OnEnterGame(ILoginClient client, in Packet packet)
+    public ValueTask OnWorldEnter(ILoginClient client, in Packet packet)
     {
-        var args = PacketSerializer.Deserialize<EnterGameArgs>(in packet);
-        if (ServerSetup.Instance.Running) return ExecuteHandler(client, args, InnerOnEnterGame);
-
-        client.SendLoginMessage(PopupMessageType.Screen, "Server is down for maintenance");
-        return default;
-
-        async ValueTask InnerOnEnterGame(ILoginClient localClient, EnterGameArgs localArgs)
+        var args = PacketSerializer.Deserialize<EnterWorldServerArgs>(in packet);
+        return ExecuteHandler(client, args, InnerOnWorldEnter);
+        ValueTask InnerOnWorldEnter(ILoginClient localClient, EnterWorldServerArgs localArgs)
         {
-            if (localArgs.SteamId == 0)
-            {
-                localClient.SendLoginMessage(PopupMessageType.System, "Invalid ID");
-                return;
-            }
-
-            localClient.SendConnectionInfo((ushort)ServerSetup.Instance.Config.SERVER_PORT);
-            var character = await AislingStorage.LoadPlayer(localArgs.Serial, localArgs.SteamId, localArgs.UserName);
-            localClient.SendCharacterData(character, UpdateType.FullSend);
+            localClient.SendConnectionInfo(localArgs.Port);
+            return default;
         }
     }
 
@@ -229,7 +219,7 @@ public sealed partial class LoginServer : ServerBase<ILoginClient>, ILoginServer
         ClientHandlers[(byte)ClientOpCode.CreateCharacter] = OnCreateChar;
         ClientHandlers[(byte)ClientOpCode.DeleteCharacter] = OnDeleteChar;
         ClientHandlers[(byte)ClientOpCode.OnClientLogin] = OnLogin;
-        ClientHandlers[(byte)ClientOpCode.EnterGame] = OnEnterGame;
+        ClientHandlers[(byte)ClientOpCode.EnterWorld] = OnWorldEnter;
     }
 
     protected override void OnConnected(Socket clientSocket)

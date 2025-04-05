@@ -13,6 +13,7 @@ using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
+using Zolian.Database;
 
 namespace Zolian.Network.Server;
 
@@ -104,12 +105,38 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
 
         ValueTask InnerOnClientRedirected(IWorldClient localClient, ClientRedirectedArgs localArgs)
         {
-            //if (localArgs.Message != null)
-            //{
-            //    // display welcome message to client.
-            //}
+            if (localArgs.Message == "Redirect Successful")
+            {
+                localClient.SendLoginMessage(PopupMessageType.System, "Established");
+                return default;
+            }
 
+            localClient.SendLoginMessage(PopupMessageType.System, "Redirect Failed");
             return default;
+        }
+    }
+
+    /// <summary>
+    /// 0x02 - Player's character on Login to World Server
+    /// </summary>
+    public ValueTask OnEnterGame(IWorldClient client, in Packet packet)
+    {
+        var args = PacketSerializer.Deserialize<EnterGameArgs>(in packet);
+        if (ServerSetup.Instance.Running) return ExecuteHandler(client, args, InnerOnEnterGame);
+
+        client.SendLoginMessage(PopupMessageType.Screen, "Server is down for maintenance");
+        return default;
+
+        async ValueTask InnerOnEnterGame(IWorldClient localClient, EnterGameArgs localArgs)
+        {
+            if (localArgs.SteamId == 0)
+            {
+                localClient.SendLoginMessage(PopupMessageType.System, "Invalid ID");
+                return;
+            }
+
+            var character = await AislingStorage.LoadPlayer(localArgs.Serial, localArgs.SteamId, localArgs.UserName);
+            localClient.SendCharacterData(character, UpdateType.FullSend);
         }
     }
 
@@ -123,7 +150,7 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
         var handler = ClientHandlers[packet.OpCode];
 
         // ToDo: Packet logging
-        //ServerSetup.PacketLogger($"{packet.OpCode}");
+        ServerSetup.EventsLogger($"{packet.OpCode}");
 
         try
         {
@@ -147,8 +174,8 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
     protected override void IndexHandlers()
     {
         base.IndexHandlers();
-
         ClientHandlers[(byte)ClientOpCode.ClientRedirected] = OnClientRedirected; // 0x10
+        ClientHandlers[(byte)ClientOpCode.EnterGame] = OnEnterGame;
     }
 
     protected override void OnConnected(Socket clientSocket)
@@ -245,7 +272,7 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
 
     private static bool IsManualAction(ClientOpCode opCode) => opCode switch
     {
-        ClientOpCode.ClientRedirected => true,
+        ClientOpCode.ClientRedirected => false,
         _ => false
     };
 

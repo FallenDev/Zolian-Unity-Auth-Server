@@ -40,6 +40,9 @@ public class LobbyClient([NotNull] ILobbyServer<ILobbyClient> server, [NotNull] 
         }
     }
 
+    /// <summary>
+    /// Sends the connection information to the client and disconnects. Transfers to the next Scene.
+    /// </summary>
     public void SendConnectionInfo(ushort port)
     {
         var args = new ConnectionInfoArgs
@@ -48,8 +51,6 @@ public class LobbyClient([NotNull] ILobbyServer<ILobbyClient> server, [NotNull] 
         };
 
         Send(args);
-
-        // After sending the connection info for login client redirection, disconnect the lobby client, recovering resources
         Disconnect();
     }
 
