@@ -69,6 +69,7 @@ public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] 
             JobLevel = player.JobLevel,
             GameMaster = player.GameMaster,
             Position = player.Position,
+            CameraYaw = player.CameraYaw,
             CurrentHealth = player.CurrentHp,
             MaxHealth = player.CalculatedMaxHp,
             CurrentMana = player.CurrentMp,

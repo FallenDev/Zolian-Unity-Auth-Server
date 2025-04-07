@@ -32,6 +32,7 @@ public sealed class CharacterDataConverter : PacketConverterBase<CharacterDataAr
             writer.WriteUInt32(args.JobLevel);
             writer.WriteBoolean(args.GameMaster);
             writer.WriteVector3(args.Position);
+            writer.WriteFloat(args.CameraYaw);
             writer.WriteInt64(args.CurrentHealth);
             writer.WriteInt64(args.MaxHealth);
             writer.WriteInt64(args.CurrentMana);
@@ -85,6 +86,7 @@ public sealed class CharacterDataConverter : PacketConverterBase<CharacterDataAr
         if (args.Type.ServerUpdateTypeFlagIsSet(UpdateType.Position))
         {
             writer.WriteVector3(args.Position);
+            writer.WriteFloat(args.CameraYaw);
         }
 
         // Stats
