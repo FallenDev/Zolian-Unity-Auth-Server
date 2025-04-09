@@ -6,4 +6,5 @@ public interface IWorldServer<in TClient> : IServer<TClient> where TClient: ICon
 {
     ValueTask OnClientRedirected(TClient client, in Packet packet);
     ValueTask OnEnterGame(TClient client, in Packet packet);
+    ValueTask OnEntityMovement(TClient client, in Packet packet);
 }

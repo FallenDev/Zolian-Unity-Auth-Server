@@ -95,7 +95,7 @@ public sealed class LobbyServer : ServerBase<ILobbyClient>, ILobbyServer<ILobbyC
     protected override void IndexHandlers()
     {
         base.IndexHandlers();
-        ClientHandlers[(byte)ClientOpCode.Version] = OnVersion;
+        ClientHandlers[(byte)ClientOpCode.Version] = OnVersion; // 0x0A
     }
 
     protected override void OnConnected(Socket clientSocket)

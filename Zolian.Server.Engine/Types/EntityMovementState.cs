@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
 using Zolian.Common;
+using Zolian.Network.Server;
+using Zolian.Packets;
 
 namespace Zolian.Types
 {
@@ -52,6 +54,8 @@ namespace Zolian.Types
             {
                 IsGrounded = false;
             }
+
+            ServerSetup.EventsLogger($"{Position} - EntityMovementState\n");
         }
     }
 

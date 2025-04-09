@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
+using Zolian.Network.Server;
 using IWorldClient = Zolian.Network.Client.Abstractions.IWorldClient;
 using Zolian.Networking.Abstractions;
 using Zolian.Networking.Abstractions.Definitions;
@@ -18,6 +19,9 @@ public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] 
     [NotNull] ILogger<WorldClient> logger)
     : WorldClientBase(socket, packetSerializer, logger), IWorldClient
 {
+    public Guid PlayerSerial { get; set; }
+    public Player Player { get; set; }
+
     protected override ValueTask HandlePacketAsync(Span<byte> span)
     {
         try
@@ -134,8 +138,12 @@ public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] 
         throw new NotImplementedException();
     }
 
-    public WorldClient LoggedIn(bool state)
+    public WorldClient LoggedIn(Player player)
     {
-        throw new NotImplementedException();
+        Player = player;
+        PlayerSerial = player.Serial;
+        Player.Client = this;
+        ServerSetup.Instance.Game.ActivePlayers[Player.Serial] = Player;
+        return this;
     }
 }

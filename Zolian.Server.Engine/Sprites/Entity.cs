@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 
 using Zolian.Enums;
+using Zolian.Types;
 
 namespace Zolian.Sprites;
 
@@ -9,17 +10,21 @@ namespace Zolian.Sprites;
 /// </summary>
 public abstract class Entity
 {
-    protected Entity()
-    {
-        Position = new Vector3(PositionX, PositionY, PositionZ);
-    }
+    protected Entity() { }
 
     public Guid Serial { get; set; }
     public uint CurrentZoneId { get; set; }
     public float PositionX { get; set; }
     public float PositionY { get; set; }
     public float PositionZ { get; set; }
-    public Vector3 Position { get; set; }
+    public EntityMovementState MovementState { get; } = new();
+
+    public Vector3 Position
+    {
+        get => MovementState.Position;
+        set => MovementState.Position = value;
+    }
+
     public uint EntityLevel { get; set; }
 
     #region Stats

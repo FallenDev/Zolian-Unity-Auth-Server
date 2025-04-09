@@ -215,11 +215,12 @@ public sealed class LoginServer : ServerBase<ILoginClient>, ILoginServer<ILoginC
     protected override void IndexHandlers()
     {
         base.IndexHandlers();
-        ClientHandlers[(byte)ClientOpCode.ClientRedirected] = OnClientRedirected;
-        ClientHandlers[(byte)ClientOpCode.CreateCharacter] = OnCreateChar;
-        ClientHandlers[(byte)ClientOpCode.DeleteCharacter] = OnDeleteChar;
-        ClientHandlers[(byte)ClientOpCode.OnClientLogin] = OnLogin;
-        ClientHandlers[(byte)ClientOpCode.EnterWorld] = OnWorldEnter;
+        ClientHandlers[(byte)ClientOpCode.OnClientLogin] = OnLogin; // 0x01
+        ClientHandlers[(byte)ClientOpCode.EnterWorld] = OnWorldEnter; // 0x03
+        ClientHandlers[(byte)ClientOpCode.ClientRedirected] = OnClientRedirected; // 0x0B
+        ClientHandlers[(byte)ClientOpCode.CreateCharacter] = OnCreateChar; // 0x0C
+        ClientHandlers[(byte)ClientOpCode.DeleteCharacter] = OnDeleteChar; // 0x0D
+
     }
 
     protected override void OnConnected(Socket clientSocket)

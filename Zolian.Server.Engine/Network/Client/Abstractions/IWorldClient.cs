@@ -9,6 +9,7 @@ namespace Zolian.Network.Client.Abstractions;
 
 public interface IWorldClient : IConnectedClient
 {
+    public Guid PlayerSerial { get; set; }
     Stopwatch Latency { get; set; }
     void SendCharacterData(Player player, UpdateType type);
     void SendConfirmExit();
@@ -17,5 +18,5 @@ public interface IWorldClient : IConnectedClient
     void SendSound(byte sound, bool isMusic);
     WorldClient SystemMessage(string message);
     Task<bool> Save();
-    WorldClient LoggedIn(bool state);
+    WorldClient LoggedIn(Player player);
 }

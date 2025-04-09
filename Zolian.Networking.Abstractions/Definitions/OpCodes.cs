@@ -5,6 +5,7 @@ public enum ClientOpCode : byte
     OnClientLogin = 0x01,
     EnterGame = 0x02,
     EnterWorld = 0x03,
+    MovementInput = 0x04,
     Version = 0x0A,
     ClientRedirected = 0x0B,
     CreateCharacter = 0x0C,

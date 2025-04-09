@@ -14,6 +14,7 @@ using Zolian.Networking.Entities.Client;
 using Zolian.Packets;
 using Zolian.Packets.Abstractions;
 using Zolian.Database;
+using Zolian.Sprites.Entities;
 
 namespace Zolian.Network.Server;
 
@@ -23,10 +24,12 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
     private readonly IClientFactory<WorldClient> _clientProvider;
     public ServerPacketLogger ServerPacketLogger { get; } = new();
     public ClientPacketLogger ClientPacketLogger { get; } = new();
+    public readonly ConcurrentDictionary<Guid, Player> ActivePlayers = [];
+
     private static readonly string[] GameMastersIPs = ServerSetup.Instance.GameMastersIPs;
     private ConcurrentDictionary<Type, WorldServerComponent> _serverComponents;
-    private const int GameSpeed = 50;
-    
+    private const int GameSpeed = 30;
+
     public WorldServer(
         IClientRegistry<IWorldClient> clientRegistry,
         IClientFactory<WorldClient> clientProvider,
@@ -93,11 +96,11 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
         foreach (var component in _serverComponents.Values)
             Task.Run(component.Update);
     }
-    
+
     #endregion
 
     #region OnHandlers
-    
+
     public ValueTask OnClientRedirected(IWorldClient client, in Packet clientPacket)
     {
         var args = PacketSerializer.Deserialize<ClientRedirectedArgs>(in clientPacket);
@@ -137,6 +140,26 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
 
             var character = await AislingStorage.LoadPlayer(localArgs.Serial, localArgs.SteamId, localArgs.UserName);
             localClient.SendCharacterData(character, UpdateType.FullSend);
+            localClient.LoggedIn(character);
+        }
+    }
+
+    public ValueTask OnEntityMovement(IWorldClient client, in Packet packet)
+    {
+        var args = PacketSerializer.Deserialize<MovementInputArgs>(in packet);
+        return ServerSetup.Instance.Running ? ExecuteHandler(client, args, InnerOnEntityMovement) : default;
+
+        ValueTask InnerOnEntityMovement(IWorldClient localClient, MovementInputArgs localArgs)
+        {
+            const float TickRate = 1f / GameSpeed; // 30 ticks per second
+
+            if (ActivePlayers.TryGetValue(localArgs.Serial, out var entity))
+            {
+                entity.MovementState.Simulate(localArgs.MoveDirection, localArgs.CameraYaw, TickRate);
+                entity.CameraYaw = localArgs.CameraYaw;
+            }
+
+            return default;
         }
     }
 
@@ -174,8 +197,9 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
     protected override void IndexHandlers()
     {
         base.IndexHandlers();
-        ClientHandlers[(byte)ClientOpCode.ClientRedirected] = OnClientRedirected; // 0x10
-        ClientHandlers[(byte)ClientOpCode.EnterGame] = OnEnterGame;
+        ClientHandlers[(byte)ClientOpCode.EnterGame] = OnEnterGame; // 0x02
+        ClientHandlers[(byte)ClientOpCode.MovementInput] = OnEntityMovement; // 0x04
+        ClientHandlers[(byte)ClientOpCode.ClientRedirected] = OnClientRedirected; // 0x0B
     }
 
     protected override void OnConnected(Socket clientSocket)
@@ -267,11 +291,18 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
 
     private async void OnDisconnect(object sender, EventArgs e)
     {
-
+        var client = (IWorldClient)sender!;
+        ClientRegistry.TryRemove(client.Id, out _);
+        ActivePlayers.TryRemove(client.PlayerSerial, out _);
     }
 
+    /// <summary>
+    /// Manual Actions within World Server
+    /// </summary>
     private static bool IsManualAction(ClientOpCode opCode) => opCode switch
     {
+        ClientOpCode.EnterGame => true,
+        ClientOpCode.MovementInput => true,
         ClientOpCode.ClientRedirected => false,
         _ => false
     };
