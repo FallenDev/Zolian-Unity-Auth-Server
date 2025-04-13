@@ -9,6 +9,7 @@ using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Packets.Abstractions;
 using Zolian.Packets;
 using Zolian.Networking.Entities.Server;
+using Zolian.Sprites;
 using Zolian.Sprites.Entities;
 
 namespace Zolian.Network.Client;
@@ -44,7 +45,32 @@ public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] 
         }
     }
 
+    /// <summary>
+    /// Updated latency by the PingComponent
+    /// </summary>
     public Stopwatch Latency { get; set; }
+
+    /// <summary>
+    /// Player setup method after login
+    /// </summary>
+    public WorldClient LoggedIn(Player player)
+    {
+        Player = player;
+        PlayerSerial = player.Serial;
+        Player.Client = this;
+        ServerSetup.Instance.Game.ActivePlayers[Player.Serial] = Player;
+        return this;
+    }
+
+    /// <summary>
+    /// Player Save method called by the server
+    /// </summary>
+    public Task<bool> Save()
+    {
+        throw new NotImplementedException();
+    }
+
+    #region Handlers
 
     public void SendLoginMessage(PopupMessageType loginMessageType, string message = null)
     {
@@ -128,22 +154,66 @@ public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] 
         throw new NotImplementedException();
     }
 
-    public WorldClient SystemMessage(string message)
+    public void SendEntityPlayerSpawn(Player player)
+    {
+        var args = new EntitySpawnArgs
+        {
+            EntityType = EntityType.Player,
+            Serial = player.Serial,
+            Position = player.Position,
+            CameraYaw = player.CameraYaw,
+            EntityLevel = player.EntityLevel,
+            CurrentHealth = player.CurrentHp,
+            MaxHealth = player.CalculatedMaxHp,
+            CurrentMana = player.CurrentMp,
+            MaxMana = player.CalculatedMaxMp,
+            UserName = player.UserName,
+            Job = player.Job.ToString(),
+            FirstClass = player.FirstClass.ToString(),
+            SecondClass = player.SecondClass.ToString(),
+            JobLevel = player.JobLevel,
+            Race = player.Race,
+            Sex = player.Gender,
+            Hair = player.Hair,
+            HairColor = player.HairColor,
+            HairHighlightColor = player.HairHighlightColor,
+            SkinColor = player.SkinColor,
+            EyeColor = player.EyeColor,
+            Beard = player.Beard,
+            Mustache = player.Mustache,
+            Bangs = player.Bangs
+        };
+
+        Send(args);
+    }
+
+    public void SendEntityDespawn(Guid entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> Save()
+    /// <summary>
+    /// Sends a player position update to a nearby client 
+    /// </summary>
+    /// <param name="entity"></param>
+    public void SendPlayerPositionUpdate(Player entity)
+    {
+        var args = new EntityMovementArgs
+        {
+            EntityType = EntityType.Player,
+            Serial = entity.Serial,
+            Position = entity.Position,
+            CameraYaw = entity.CameraYaw
+        };
+
+        Send(args);
+    }
+
+    public void SendEntityPositionUpdate(Movable entity)
     {
         throw new NotImplementedException();
     }
 
-    public WorldClient LoggedIn(Player player)
-    {
-        Player = player;
-        PlayerSerial = player.Serial;
-        Player.Client = this;
-        ServerSetup.Instance.Game.ActivePlayers[Player.Serial] = Player;
-        return this;
-    }
+    #endregion
+
 }

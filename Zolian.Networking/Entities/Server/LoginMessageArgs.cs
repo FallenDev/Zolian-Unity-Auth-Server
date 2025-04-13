@@ -16,5 +16,5 @@ public sealed record LoginMessageArgs : IPacketSerializable
     /// <summary>
     ///     If the login message type can have a custom message, this will be the message displayed.
     /// </summary>
-    public string? Message { get; set; }
+    public string Message { get; set; }
 }

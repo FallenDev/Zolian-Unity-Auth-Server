@@ -1,5 +1,4 @@
 using Zolian.Networking.Abstractions.Definitions;
-using Zolian.Networking.Definitions;
 using Zolian.Networking.Entities.Client;
 using Zolian.Packets.Abstractions;
 using Zolian.Packets.Abstractions.Memory;

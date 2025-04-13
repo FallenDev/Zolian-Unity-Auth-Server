@@ -5,36 +5,25 @@ namespace Zolian.Common;
 public static class VectorExtensions
 {
     /// <summary>
-    /// Replaces the Y component of a Vector3.
+    /// Returns a copy of the vector with the Y value set to the given value.
     /// </summary>
-    public static Vector3 WithY(this Vector3 vector, float newY)
-    {
-        return new Vector3(vector.X, newY, vector.Z);
-    }
+    public static Vector3 WithY(this Vector3 vector, float newY) => new(vector.X, newY, vector.Z);
 
     /// <summary>
-    /// Removes verticality (Y axis) from a Vector3, returning the XZ direction only.
+    /// Returns the vector with Y set to 0 (flattened in XZ space).
     /// </summary>
-    public static Vector3 FlattenY(this Vector3 vector)
-    {
-        return new Vector3(vector.X, 0f, vector.Z);
-    }
+    public static Vector3 FlattenY(this Vector3 vector) => new(vector.X, 0f, vector.Z);
 
     /// <summary>
-    /// Removes X and Z components, keeping Y only.
+    /// Returns the vector with X and Z set to 0 (flattened in Y space).
     /// </summary>
-    public static Vector3 FlattenXZ(this Vector3 vector)
-    {
-        return new Vector3(0f, vector.Y, 0f);
-    }
+    public static Vector3 FlattenXZ(this Vector3 vector) => new(0f, vector.Y, 0f);
 
     /// <summary>
-    /// Returns true if the vectors are roughly equal within a given tolerance.
+    /// Returns true if the vector is approximately equal to another vector within a small tolerance.
     /// </summary>
-    public static bool IsRoughlyEqual(this Vector3 a, Vector3 b, float tolerance = 0.001f)
-    {
-        return Vector3.DistanceSquared(a, b) < tolerance * tolerance;
-    }
+    public static bool NearlyEquals(this Vector3 a, Vector3 b, float tolerance = 0.01f) =>
+        Vector3.DistanceSquared(a, b) <= tolerance * tolerance;
 
     /// <summary>
     /// Gets a normalized XZ direction from one point to another.
@@ -97,5 +86,22 @@ public static class VectorExtensions
 
         var angle = MathF.Acos(Vector3.Dot(normalizedForward, normalizedToTarget)) * (180f / MathF.PI);
         return angle <= coneAngleDegrees * 0.5f;
+    }
+
+    /// <summary>
+    /// Returns true if the target is within range on the XZ plane (ignores Y).
+    /// </summary>
+    public static bool IsInRangeXZ(this Vector3 origin, Vector3 target, float range)
+    {
+        var delta = target - origin;
+        return (delta.X * delta.X + delta.Z * delta.Z) <= range * range;
+    }
+
+    /// <summary>
+    /// Returns true if the target is within full 3D range (includes Y).
+    /// </summary>
+    public static bool IsInRange(this Vector3 origin, Vector3 target, float range)
+    {
+        return Vector3.DistanceSquared(origin, target) <= range * range;
     }
 }

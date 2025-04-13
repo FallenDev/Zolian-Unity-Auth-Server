@@ -63,7 +63,7 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
         try
         {
             ServerSetup.Instance.Running = true;
-            Task.Run(UpdateComponentsRoutine, stoppingToken);
+            UpdateComponentsRoutine();
         }
         catch (Exception ex)
         {
@@ -79,6 +79,7 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
     {
         _serverComponents = new ConcurrentDictionary<Type, WorldServerComponent>
         {
+            [typeof(EntityUpdateComponent)] = new EntityUpdateComponent(this),
             [typeof(PingComponent)] = new PingComponent(this),
             [typeof(ClientCreationLimit)] = new ClientCreationLimit(this)
         };

@@ -1,4 +1,4 @@
-﻿using Zolian.Networking.Definitions;
+﻿using Zolian.Networking.Abstractions.Definitions;
 
 namespace Zolian.Enums;
 

@@ -1,7 +1,6 @@
-﻿using System.Numerics;
-using Zolian.Enums;
+﻿using Zolian.Enums;
 using Zolian.Network.Client;
-using Zolian.Networking.Definitions;
+using Zolian.Networking.Abstractions.Definitions;
 using Zolian.Sprites.Abstractions;
 
 namespace Zolian.Sprites.Entities;
