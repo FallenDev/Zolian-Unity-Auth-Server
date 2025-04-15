@@ -1,56 +1,39 @@
 ﻿using System.Numerics;
+
 using Zolian.Common;
 
 namespace Zolian.Types;
 
-public class EntityMovementState
+public struct EntityMovementState
 {
     public Vector3 Position;
-    public Vector3 Velocity;
-    public bool IsGrounded;
+    public Vector3 InputDirection; // XZ plane
+    public Vector3 Velocity;       // Only Y is used
+    public float Speed;            // Magnitude of movement
+    public float CameraYaw;
 
-    private const float Gravity = -9.81f;
-    private const float Acceleration = 20f;
-    private const float MaxSpeed = 5f;
-    private const float JumpForce = 7f;
-    private const float GroundLevel = 0f;
+    private const float Gravity = -9.81f; // ToDo: Check if this actually matches the game engine
 
-    public void Simulate(Vector3 inputDirection, float cameraYaw, float deltaTime)
+    public void Simulate(float deltaTime)
     {
-        // Align input with camera yaw
-        var rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathExtensions.ToRadians(cameraYaw));
-        var alignedInput = Vector3.Transform(inputDirection, rotation);
+        // Rotate input to align with camera yaw
+        var rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathExtensions.ToRadians(CameraYaw));
+        var moveDir = Vector3.Transform(InputDirection, rotation);
 
-        // Apply acceleration
-        var acceleration = alignedInput * Acceleration;
-        Velocity.X += acceleration.X * deltaTime;
-        Velocity.Z += acceleration.Z * deltaTime;
+        // Calculate horizontal movement
+        var movement = moveDir * Speed;
 
-        // Clamp horizontal speed
-        var horizontal = new Vector2(Velocity.X, Velocity.Z);
-        if (horizontal.LengthSquared() > MaxSpeed * MaxSpeed)
-        {
-            horizontal = Vector2.Normalize(horizontal) * MaxSpeed;
-            Velocity.X = horizontal.X;
-            Velocity.Z = horizontal.Y;
-        }
-
-        // Apply gravity
+        // Apply gravity to vertical velocity
         Velocity.Y += Gravity * deltaTime;
 
-        // Apply velocity to position
-        Position += Velocity * deltaTime;
+        // Final position update
+        Position += new Vector3(movement.X, Velocity.Y, movement.Z) * deltaTime;
 
-        // Simple ground detection
-        if (Position.Y <= GroundLevel)
+        // Ground collision detection
+        if (Position.Y <= 0f)
         {
-            Position.Y = GroundLevel;
+            Position.Y = 0;
             Velocity.Y = 0;
-            IsGrounded = true;
-        }
-        else
-        {
-            IsGrounded = false;
         }
     }
 }

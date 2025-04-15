@@ -16,9 +16,12 @@ public sealed class EntityMovementConverter : PacketConverterBase<EntityMovement
 
     public override void Serialize(ref SpanWriter writer, EntityMovementArgs args)
     {
-        writer.WriteString(args.EntityType.ToString());
+        writer.WriteByte((byte)args.EntityType);
         writer.WriteGuid(args.Serial);
         writer.WriteVector3(args.Position);
+        writer.WriteVector3(args.InputDirection);
         writer.WriteFloat(args.CameraYaw);
+        writer.WriteFloat(args.Speed);
+        writer.WriteFloat(args.VerticalVelocity);
     }
 }

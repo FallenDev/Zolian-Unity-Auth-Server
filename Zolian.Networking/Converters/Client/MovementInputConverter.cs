@@ -12,14 +12,20 @@ public sealed class MovementInputConverter : PacketConverterBase<MovementInputAr
     public override MovementInputArgs Deserialize(ref SpanReader reader)
     {
         var serial = reader.ReadGuid();
-        var unPackedVector3 = reader.ReadVector3();
+        var pos = reader.ReadVector3();
+        var inputDir = reader.ReadVector3();
         var cameraYaw = reader.ReadFloat();
+        var speed = reader.ReadFloat();
+        var verticalVelocity = reader.ReadFloat();
 
         return new MovementInputArgs
         {
             Serial = serial,
-            MoveDirection = unPackedVector3,
-            CameraYaw = cameraYaw
+            Position = pos,
+            InputDirection = inputDir,
+            CameraYaw = cameraYaw,
+            Speed = speed,
+            VerticalVelocity = verticalVelocity
         };
     }
 }

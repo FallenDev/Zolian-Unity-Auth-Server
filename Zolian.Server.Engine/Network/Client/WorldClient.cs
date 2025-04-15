@@ -203,7 +203,10 @@ public class WorldClient([NotNull] IWorldServer<IWorldClient> server, [NotNull] 
             EntityType = EntityType.Player,
             Serial = entity.Serial,
             Position = entity.Position,
-            CameraYaw = entity.CameraYaw
+            InputDirection = entity.InputDirection,
+            CameraYaw = entity.CameraYaw,
+            Speed = entity.Speed,
+            VerticalVelocity = entity.Velocity.Y
         };
 
         Send(args);

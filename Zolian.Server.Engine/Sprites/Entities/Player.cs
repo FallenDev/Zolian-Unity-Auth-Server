@@ -22,7 +22,6 @@ public class Player : Damageable, IPlayer
     public BaseClass FirstClass { get; set; }
     public BaseClass SecondClass { get; set; }
     public bool GameMaster { get; set; }
-    public float CameraYaw { get; set; }
     
     // Character Customized Looks
     public Race Race { get; set; }
