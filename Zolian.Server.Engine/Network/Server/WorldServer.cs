@@ -155,14 +155,15 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
             const float TickRate = 1f / GameSpeed; // 30 ticks per second
 
             if (!ActivePlayers.TryGetValue(localArgs.Serial, out var entity)) return default;
-            var state = entity.MovementState;
-            state.Position = localArgs.Position;
-            state.InputDirection = localArgs.InputDirection;
-            state.Velocity = new System.Numerics.Vector3(0, localArgs.VerticalVelocity, 0);
-            state.CameraYaw = localArgs.CameraYaw;
-            state.Speed = localArgs.Speed;
-            state.Simulate(TickRate);
+            entity.MovementState.Position = localArgs.Position;
+            entity.MovementState.InputDirection = localArgs.InputDirection;
+            entity.MovementState.Velocity = new System.Numerics.Vector3(0, localArgs.VerticalVelocity, 0);
+            entity.MovementState.CameraYaw = localArgs.CameraYaw;
+            entity.MovementState.Speed = localArgs.Speed;
 
+            // Simulate and Sync
+            entity.MovementState.Simulate(TickRate);
+            entity.SyncFromMovementState();
             return default;
         }
     }

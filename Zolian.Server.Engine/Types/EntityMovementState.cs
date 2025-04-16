@@ -12,7 +12,7 @@ public struct EntityMovementState
     public float Speed;            // Magnitude of movement
     public float CameraYaw;
 
-    private const float Gravity = -9.81f; // ToDo: Check if this actually matches the game engine
+    private const float Gravity = 20.0f; // Matches Gravity in RPGMotor
 
     public void Simulate(float deltaTime)
     {

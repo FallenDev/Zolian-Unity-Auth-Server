@@ -34,6 +34,15 @@ public class Player : Damageable, IPlayer
     public short Beard { get; set; }
     public short Mustache { get; set; }
     public short Bangs { get; set; }
+
+    public void SyncFromMovementState()
+    {
+        Position = MovementState.Position;
+        InputDirection = MovementState.InputDirection;
+        Velocity = MovementState.Velocity;
+        Speed = MovementState.Speed;
+        CameraYaw = MovementState.CameraYaw;
+    }
 }
 
 public class Equipment

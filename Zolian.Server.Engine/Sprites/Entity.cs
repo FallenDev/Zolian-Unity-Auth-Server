@@ -17,16 +17,15 @@ public abstract class Entity
     public float PositionX { get; set; }
     public float PositionY { get; set; }
     public float PositionZ { get; set; }
-    public EntityMovementState MovementState { get; } = new();
+    public EntityMovementState MovementState;
 
     #region EntityMovement
 
-    // MovementState is a struct that contains the current position, velocity, and input direction of the entity.
-    public Vector3 Position => MovementState.Position;
-    public Vector3 InputDirection => MovementState.InputDirection;
-    public Vector3 Velocity => MovementState.Velocity;
-    public float CameraYaw => MovementState.CameraYaw;
-    public float Speed => MovementState.Speed;
+    public Vector3 Position { get; set; }
+    public Vector3 InputDirection { get; set; }
+    public Vector3 Velocity { get; set; }
+    public float CameraYaw { get; set; }
+    public float Speed { get; set; } = 0;
 
     #endregion
 
