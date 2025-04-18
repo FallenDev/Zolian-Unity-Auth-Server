@@ -152,8 +152,6 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
 
         ValueTask InnerOnEntityMovement(IWorldClient localClient, MovementInputArgs localArgs)
         {
-            const float TickRate = 1f / GameSpeed; // 30 ticks per second
-
             if (!ActivePlayers.TryGetValue(localArgs.Serial, out var entity)) return default;
             entity.MovementState.Position = localArgs.Position;
             entity.MovementState.InputDirection = localArgs.InputDirection;
@@ -162,7 +160,6 @@ public sealed class WorldServer : ServerBase<IWorldClient>, IWorldServer<IWorldC
             entity.MovementState.Speed = localArgs.Speed;
 
             // Simulate and Sync
-            entity.MovementState.Simulate(TickRate);
             entity.SyncFromMovementState();
             return default;
         }
