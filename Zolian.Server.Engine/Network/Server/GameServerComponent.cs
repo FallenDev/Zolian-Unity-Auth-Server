@@ -1,8 +1,8 @@
 ﻿namespace Zolian.Network.Server;
 
-public abstract class WorldServerComponent
+public abstract class GameServerComponent
 {
-    protected WorldServerComponent(WorldServer server) => Server = ServerSetup.Instance.Game;
-    protected static WorldServer Server { get; private set; }
+    protected GameServerComponent(LoginServer server) => Server = ServerSetup.Instance.LoginServer;
+    protected static LoginServer Server { get; private set; }
     protected internal abstract Task Update();
 }

@@ -12,7 +12,6 @@ using RestSharp;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Zolian.Common.Identity;
 using Zolian.Networking.Options;
 
 namespace Zolian.Network.Server;
@@ -28,7 +27,6 @@ public class ServerSetup : IServerContext
     public bool Running { get; set; }
     public SqlConnection ServerSaveConnection { get; set; }
     public IServerConstants Config { get; set; }
-    public WorldServer Game { get; set; }
     public LoginServer LoginServer { get; set; }
     public LobbyServer LobbyServer { get; set; }
     public string StoragePath { get; set; }

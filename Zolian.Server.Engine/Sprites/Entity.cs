@@ -29,9 +29,9 @@ public abstract class Entity
 
     #endregion
 
-    public uint EntityLevel { get; set; }
-
     #region Stats
+
+    public uint EntityLevel { get; set; }
 
     // Health
     public long BaseHp { get; set; }

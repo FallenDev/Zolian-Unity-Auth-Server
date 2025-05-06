@@ -4,7 +4,7 @@ using Zolian.Network.Server;
 
 namespace Zolian.Network.Components;
 
-public class PingComponent(WorldServer server) : WorldServerComponent(server)
+public class PingComponent(LoginServer server) : GameServerComponent(server)
 {
     private const int ComponentSpeed = 7000;
 

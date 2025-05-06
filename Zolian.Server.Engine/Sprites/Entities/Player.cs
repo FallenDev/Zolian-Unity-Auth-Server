@@ -1,16 +1,13 @@
 ﻿using Zolian.Enums;
-using Zolian.Network.Client;
 using Zolian.Networking.Abstractions.Definitions;
-using Zolian.Sprites.Abstractions;
 
 namespace Zolian.Sprites.Entities;
 
 /// <summary>
 /// Represents a player entity in the game.
 /// </summary>
-public class Player : Damageable, IPlayer
+public class Player : Damageable
 {
-    public WorldClient Client { get; set; }
     public long SteamId { get; set; }
     public bool Disabled { get; set; }
     public DateTime Created { get; set; }

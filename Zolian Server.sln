@@ -19,16 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Packets", "Zolian.Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Packets.Abstractions", "Zolian.Packets.Abstractions\Zolian.Packets.Abstractions.csproj", "{1FCF7E5A-DED1-49DD-92B3-F92E75E1B6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Common", "Zolian.Common\Zolian.Common.csproj", "{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Common.Abstractions", "Zolian.Common.Abstractions\Zolian.Common.Abstractions.csproj", "{4D807B2E-0CE6-4A82-A403-A082C32417FC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Extensions", "Zolian.Extensions\Zolian.Extensions.csproj", "{873369BB-F7B6-4790-B8FD-986109D4BBDD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Geometry", "Zolian.Geometry\Zolian.Geometry.csproj", "{B848E234-6F27-40BD-A749-443FE05B4CD4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zolian.Geometry.Abstractions", "Zolian.Geometry.Abstractions\Zolian.Geometry.Abstractions.csproj", "{576597F5-8837-466F-BBFC-2BD41FD8F7C6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Global
@@ -65,37 +55,12 @@ Global
 		{1FCF7E5A-DED1-49DD-92B3-F92E75E1B6F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FCF7E5A-DED1-49DD-92B3-F92E75E1B6F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FCF7E5A-DED1-49DD-92B3-F92E75E1B6F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D807B2E-0CE6-4A82-A403-A082C32417FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D807B2E-0CE6-4A82-A403-A082C32417FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D807B2E-0CE6-4A82-A403-A082C32417FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D807B2E-0CE6-4A82-A403-A082C32417FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{873369BB-F7B6-4790-B8FD-986109D4BBDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{873369BB-F7B6-4790-B8FD-986109D4BBDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{873369BB-F7B6-4790-B8FD-986109D4BBDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{873369BB-F7B6-4790-B8FD-986109D4BBDD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B848E234-6F27-40BD-A749-443FE05B4CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B848E234-6F27-40BD-A749-443FE05B4CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B848E234-6F27-40BD-A749-443FE05B4CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B848E234-6F27-40BD-A749-443FE05B4CD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{576597F5-8837-466F-BBFC-2BD41FD8F7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{576597F5-8837-466F-BBFC-2BD41FD8F7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{576597F5-8837-466F-BBFC-2BD41FD8F7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{576597F5-8837-466F-BBFC-2BD41FD8F7C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{398955D1-BAB0-4495-A672-966371167D76} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{18E458FE-612A-4BBF-9EF9-7A5E9F09AED9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{4D807B2E-0CE6-4A82-A403-A082C32417FC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{873369BB-F7B6-4790-B8FD-986109D4BBDD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{B848E234-6F27-40BD-A749-443FE05B4CD4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{576597F5-8837-466F-BBFC-2BD41FD8F7C6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FF53ACE-247E-42A8-9832-7B757ED739F0}

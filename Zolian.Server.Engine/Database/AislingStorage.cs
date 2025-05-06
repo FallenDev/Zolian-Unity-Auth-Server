@@ -161,6 +161,7 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
             SentrySdk.CaptureException(e);
         }
 
+        player.Position = new Vector3(player.PositionX, player.PositionY, player.PositionZ);
         return player;
     }
 
@@ -201,7 +202,6 @@ public record AislingStorage : Sql, IEqualityOperators<AislingStorage, AislingSt
 
     private static Task PlayerSaveRoutine(Player player, SqlConnection connection)
     {
-        if (player.Client == null) return Task.CompletedTask;
         //player.Client.LastSave = DateTime.UtcNow;
         var dt = PlayerDataTable();
         //var qDt = QuestDataTable();

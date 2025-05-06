@@ -9,6 +9,18 @@
     <Import_RootNamespace>Server.Configurations</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)ZolianDB\ZolianAbilities.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)ZolianDB\ZolianBoardsMail.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)ZolianDB\ZolianMundanes.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)ZolianDB\ZolianWorldMaps.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)ZolianPlayers\PlayersDatabaseBuild.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

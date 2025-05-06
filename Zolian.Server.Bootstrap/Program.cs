@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Chaos.Extensions.DependencyInjection;
 using Zolian.Models;
 using Zolian.Network.Client;
@@ -28,7 +27,6 @@ using Zolian.Packets.Extensions;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using ILobbyClient = Zolian.Network.Client.Abstractions.ILobbyClient;
 using ILoginClient = Zolian.Network.Client.Abstractions.ILoginClient;
-using IWorldClient = Zolian.Network.Client.Abstractions.IWorldClient;
 
 namespace Zolian.Server.Bootstrap;
 
@@ -115,11 +113,6 @@ public class Program
             serviceCollection.AddSingleton<IClientFactory<LoginClient>, ClientFactory<LoginClient>>();
             serviceCollection.AddSingleton<ILoginServer<ILoginClient>, IHostedService, LoginServer>();
             serviceCollection.AddSingleton<IClientRegistry<ILoginClient>, ClientRegistry<ILoginClient>>();
-
-            // World
-            serviceCollection.AddSingleton<IClientFactory<WorldClient>, ClientFactory<WorldClient>>();
-            serviceCollection.AddSingleton<IWorldServer<IWorldClient>, IHostedService, WorldServer>();
-            serviceCollection.AddSingleton<IClientRegistry<IWorldClient>, ClientRegistry<IWorldClient>>();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
             serviceProvider.GetService<IServer>();
