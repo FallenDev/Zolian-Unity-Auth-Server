@@ -42,6 +42,7 @@ public sealed class LoginServer : ServerBase<ILoginClient>, ILoginServer<ILoginC
         ServerSetup.Instance.LoginServer = this;
         _clientProvider = clientProvider;
         IndexHandlers();
+        ServerSetup.Instance.Running = true;
     }
 
     #region OnHandlers

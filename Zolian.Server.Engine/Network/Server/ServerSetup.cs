@@ -70,16 +70,6 @@ public class ServerSetup : IServerContext
         _eventsLogger?.Log(logLevel, "{logMessage}", logMessage);
     }
 
-    public static void PacketLogger(string logMessage, LogLevel logLevel = LogLevel.Critical)
-    {
-        _packetLogger.Write(LogEventLevel.Error, logMessage);
-    }
-
-    public static void EventsLogger(string logMessage, LogLevel logLevel = LogLevel.Information)
-    {
-        _eventsLogger?.Log(logLevel, "{logMessage}", logMessage);
-    }
-
     private static (RestClientOptions, RestClientOptions) SetupRestClients()
     {
         var optionsCheck = new RestClientOptions("https://api.abuseipdb.com/api/v2/check")
